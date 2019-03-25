@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
+    <xs:element name="Korisnik" type="TKorisnik"/>
+    <xs:complexType abstract="true" name="TKorisnik">
+        <xs:sequence>
+            <xs:element name="Ime">
+                <xs:simpleType>
+                    <xs:restriction base="xs:string">
+                        <xs:maxLength value="18"/>
+                        <xs:minLength value="1"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:element>
+            <xs:element name="Prezime">
+                <xs:simpleType>
+                    <xs:restriction base="xs:string">
+                        <xs:maxLength value="18"/>
+                        <xs:minLength value="1"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:element>
+            <xs:element name="Username">
+                <xs:simpleType>
+                    <xs:restriction base="xs:string">
+                        <xs:minLength value="1"/>
+                        <xs:maxLength value="18"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:element>
+            <xs:element name="Password">
+                <xs:simpleType>
+                    <xs:restriction base="xs:string">
+                        <xs:minLength value="1"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:element>
+            <xs:element name="Email">
+                <xs:simpleType>
+                    <xs:restriction base="xs:string">
+                        <xs:minLength value="3"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:element>
+        </xs:sequence>
+        <xs:attribute name="id" type="xs:long"/>
+    </xs:complexType>
+    <xs:complexType name="TAdmin">
+        <xs:complexContent>
+            <xs:extension base="TKorisnik"/>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="TAgent">
+        <xs:complexContent>
+            <xs:extension base="TKorisnik">
+                <xs:sequence>
+                    <xs:element default="0000000000000" name="PosMatBroj">
+                        <xs:simpleType>
+                            <xs:restriction base="xs:string">
+                                <xs:pattern value="([0-9]{13})"/>
+                            </xs:restriction>
+                        </xs:simpleType>
+                    </xs:element>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="TRegKorisnik">
+        <xs:complexContent>
+            <xs:extension base="TKorisnik"/>
+        </xs:complexContent>
+    </xs:complexType>
+</xs:schema>

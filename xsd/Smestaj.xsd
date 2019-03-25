@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
+
+    <xs:element name="Smestaj">
+        <xs:complexType>
+            <xs:sequence maxOccurs="1" minOccurs="1">
+                <xs:element maxOccurs="unbounded" name="SJedinica">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="Cena"/>
+                            <xs:element name="BrojKreveta"/>
+                            <xs:element default="true" name="Dostupnost" type="xs:boolean"/>
+                        </xs:sequence>
+                        <xs:attribute name="Id"/>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element default="hotel" name="TipSmestaja" type="TTipSmestaja"/>
+                <xs:element ref="Adresa"/>
+                <xs:element name="Opis"/>
+                <xs:element name="DodatneUsluge">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element maxOccurs="unbounded" minOccurs="0" ref="Usluga"/>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element name="PeriodOtkaza"/>
+                <xs:element maxOccurs="unbounded" name="Slika">
+                    <xs:complexType>
+                        <xs:attribute name="src"/>
+                    </xs:complexType>
+                </xs:element>
+            </xs:sequence>
+            <xs:attribute name="Id"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:simpleType name="TTipSmestaja">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="hotel"/>
+            <xs:enumeration value="bed&amp;breakfast"/>
+            <xs:enumeration value="apartman"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:element name="Adresa">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="Latitude"/>
+                <xs:element name="Longitude"/>
+                <xs:element name="Mesto"/>
+                <xs:element name="PosBroj"/>
+                <xs:element name="Ulica"/>
+                <xs:element name="Broj"/>
+                <xs:element minOccurs="0" name="BrojStana"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="Usluga">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="Naziv"/>
+                <xs:element name="Opis"/>
+                <xs:element name="Cena"/>
+            </xs:sequence>
+            <xs:attribute name="Id"/>
+        </xs:complexType>
+    </xs:element>
+</xs:schema>
