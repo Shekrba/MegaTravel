@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified"
+    targetNamespace="https://github.com/Shekrba/MegaTravel/Korisnik"
+    xmlns="https://github.com/Shekrba/MegaTravel/Korisnik">
     <xs:element name="Korisnik" type="TKorisnik"/>
     <xs:complexType abstract="true" name="TKorisnik">
         <xs:sequence>

@@ -1,22 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified"
+    targetNamespace="https://github.com/Shekrba/MegaTravel/Smestaj"
+    xmlns="https://github.com/Shekrba/MegaTravel/Smestaj">
 
     <xs:element name="Smestaj">
         <xs:complexType>
             <xs:sequence maxOccurs="1" minOccurs="1">
-                <xs:element maxOccurs="unbounded" name="SJedinica">
-                    <xs:complexType>
-                        <xs:sequence>
-                            <xs:element name="Cena"/>
-                            <xs:element name="BrojKreveta"/>
-                            <xs:element default="true" name="Dostupnost" type="xs:boolean"/>
-                        </xs:sequence>
-                        <xs:attribute name="Id"/>
-                    </xs:complexType>
-                </xs:element>
+                <xs:element maxOccurs="unbounded" ref="SJedinica"/>
                 <xs:element default="hotel" name="TipSmestaja" type="TTipSmestaja"/>
                 <xs:element ref="Adresa"/>
-                <xs:element name="Opis"/>
+                <xs:element name="Opis" type="xs:string"/>
                 <xs:element name="DodatneUsluge">
                     <xs:complexType>
                         <xs:sequence>
@@ -24,7 +17,13 @@
                         </xs:sequence>
                     </xs:complexType>
                 </xs:element>
-                <xs:element name="PeriodOtkaza"/>
+                <xs:element name="PeriodOtkaza">
+                    <xs:simpleType>
+                        <xs:restriction base="xs:int">
+                            <xs:minInclusive value="0"/>
+                        </xs:restriction>
+                    </xs:simpleType>
+                </xs:element>
                 <xs:element maxOccurs="unbounded" name="Slika">
                     <xs:complexType>
                         <xs:attribute name="src"/>
@@ -44,22 +43,70 @@
     <xs:element name="Adresa">
         <xs:complexType>
             <xs:sequence>
-                <xs:element name="Latitude"/>
-                <xs:element name="Longitude"/>
-                <xs:element name="Mesto"/>
-                <xs:element name="PosBroj"/>
-                <xs:element name="Ulica"/>
-                <xs:element name="Broj"/>
-                <xs:element minOccurs="0" name="BrojStana"/>
+                <xs:element name="Latitude" type="xs:double"/>
+                <xs:element name="Longitude" type="xs:double"/>
+                <xs:element name="Mesto" type="xs:string"/>
+                <xs:element name="PosBroj">
+                    <xs:simpleType>
+                        <xs:restriction base="xs:string">
+                            <xs:pattern value="[0-9]{5,5}"/>
+                        </xs:restriction>
+                    </xs:simpleType>
+                </xs:element>
+                <xs:element name="Ulica" type="xs:string"/>
+                <xs:element name="Broj">
+                    <xs:simpleType>
+                        <xs:restriction base="xs:int">
+                            <xs:minInclusive value="0"/>
+                            <xs:maxInclusive value="2000"/>
+                        </xs:restriction>
+                    </xs:simpleType>
+                </xs:element>
+                <xs:element minOccurs="0" name="BrojStana">
+                    <xs:simpleType>
+                        <xs:restriction base="xs:int">
+                            <xs:minInclusive value="0"/>
+                            <xs:maxInclusive value="10000"/>
+                        </xs:restriction>
+                    </xs:simpleType>
+                </xs:element>
             </xs:sequence>
         </xs:complexType>
     </xs:element>
     <xs:element name="Usluga">
         <xs:complexType>
             <xs:sequence>
-                <xs:element name="Naziv"/>
-                <xs:element name="Opis"/>
-                <xs:element name="Cena"/>
+                <xs:element name="Naziv" type="xs:string"/>
+                <xs:element name="Opis" type="xs:string"/>
+                <xs:element name="Cena">
+                    <xs:simpleType>
+                        <xs:restriction base="xs:double">
+                            <xs:minInclusive value="0"/>
+                        </xs:restriction>
+                    </xs:simpleType>
+                </xs:element>
+            </xs:sequence>
+            <xs:attribute name="Id"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="SJedinica">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="Cena">
+                    <xs:simpleType>
+                        <xs:restriction base="xs:double">
+                            <xs:minInclusive value="0"/>
+                        </xs:restriction>
+                    </xs:simpleType>
+                </xs:element>
+                <xs:element name="BrojKreveta">
+                    <xs:simpleType>
+                        <xs:restriction base="xs:int">
+                            <xs:minInclusive value="0"/>
+                        </xs:restriction>
+                    </xs:simpleType>
+                </xs:element>
+                <xs:element default="true" name="Dostupnost" type="xs:boolean"/>
             </xs:sequence>
             <xs:attribute name="Id"/>
         </xs:complexType>
