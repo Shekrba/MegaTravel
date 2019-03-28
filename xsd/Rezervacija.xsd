@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
+
+    <xs:import schemaLocation="file:/E:/XML/MegaTravel/xsd/Korisnik.xsd"/>
+    <xs:import schemaLocation="file:/E:/XML/MegaTravel/xsd/Smestaj.xsd"/>
+    <xs:element name="Rezervacija">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="Korisnik"/>
+                <xs:element maxOccurs="unbounded" name="SJedinica">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="Cena"/>
+                            <xs:element name="BrojKreveta"/>
+                            <xs:element default="true" name="Dostupnost" type="xs:boolean"/>
+                        </xs:sequence>
+                        <xs:attribute name="Id"/>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element name="Od" type="xs:date"/>
+                <xs:element name="Do" type="xs:date"/>
+                <xs:element name="UCena" type="xs:int"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+</xs:schema>
