@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified"
+    targetNamespace="https://github.com/Shekrba/MegaTravel/Komentar"
+    xmlns="https://github.com/Shekrba/MegaTravel/Komentar"
+    xmlns:sj="https://github.com/Shekrba/MegaTravel/Smestaj"
+    xmlns:user="https://github.com/Shekrba/MegaTravel/Korisnik">
+
+    <xs:import namespace="https://github.com/Shekrba/MegaTravel/Korisnik"
+        schemaLocation="Korisnik.xsd"/>
+    <xs:import namespace="https://github.com/Shekrba/MegaTravel/Smestaj"
+        schemaLocation="Smestaj.xsd"/>
+    <xs:element name="Komentar">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="user:Korisnik"/>
+                <xs:element ref="sj:SJedinica"/>
+                <xs:element default="false" name="Odobren" type="xs:boolean"/>
+                <xs:element name="Tekst" type="xs:string"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+</xs:schema>
