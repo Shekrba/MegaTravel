@@ -1,7 +1,8 @@
-package com.opencodez.config;
+package com.megatravel.config;
 
 import javax.xml.ws.Endpoint;
 
+import com.megatravel.service.AgentServiceImpl;
 import org.apache.cxf.Bus;
 import org.apache.cxf.bus.spring.SpringBus;
 import org.apache.cxf.ext.logging.LoggingFeature;
@@ -11,9 +12,8 @@ import org.springframework.boot.web.servlet.ServletRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import com.opencodez.service.InfoServiceImpl;
-import com.opencodez.service.interceptors.AppInboundInterceptor;
-import com.opencodez.service.interceptors.AppOutboundInterceptor;
+import com.megatravel.service.interceptors.AppInboundInterceptor;
+import com.megatravel.service.interceptors.AppOutboundInterceptor;
 
 @Configuration
 public class CXFConfig {
@@ -33,9 +33,9 @@ public class CXFConfig {
     
     @Bean
     public Endpoint endpoint() {
-        EndpointImpl endpoint = new EndpointImpl(springBus(), new InfoServiceImpl());
+        EndpointImpl endpoint = new EndpointImpl(springBus(), new AgentServiceImpl());
         endpoint.getFeatures().add(new LoggingFeature());
-        endpoint.publish("/InfoService");
+        endpoint.publish("/AgentService");
         return endpoint;
     }
 }

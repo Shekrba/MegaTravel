@@ -1,5 +1,5 @@
 
-package com.opencodez.service.interceptors;
+package com.megatravel.service.interceptors;
 
 import org.apache.cxf.ext.logging.LoggingInInterceptor;
 import org.apache.cxf.interceptor.Fault;
