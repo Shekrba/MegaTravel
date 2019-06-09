@@ -33,9 +33,9 @@ public class CXFConfig {
     
     @Bean
     public Endpoint endpoint() {
-        EndpointImpl endpoint = new EndpointImpl(springBus(), new AgentServiceImpl());
-        endpoint.getFeatures().add(new LoggingFeature());
-        endpoint.publish("/AgentService");
-        return endpoint;
+        EndpointImpl ep = new EndpointImpl(springBus(), new AgentServiceImpl());
+        ep.getFeatures().add(new LoggingFeature());
+        ep.publish("/AgentService");
+        return ep;
     }
 }
