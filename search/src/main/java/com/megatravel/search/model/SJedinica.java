@@ -8,6 +8,7 @@
 
 package com.megatravel.search.model;
 
+import javax.persistence.*;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
@@ -58,22 +59,44 @@ import javax.xml.bind.annotation.XmlType;
     "dostupnost"
 })
 @XmlRootElement(name = "SJedinica")
+@Entity
 public class SJedinica {
 
     @XmlElement(name = "Cena")
+    @Column(name = "cena", unique = false, nullable = false)
     protected double cena;
+
     @XmlElement(name = "BrojKreveta")
+    @Column(name = "brojKreveta", unique = false, nullable = false)
     protected int brojKreveta;
+
     @XmlElement(name = "Dostupnost", defaultValue = "true")
+    @Column(name = "dostupnost", unique = false, nullable = false)
     protected boolean dostupnost;
+
     @XmlAttribute(name = "Id")
     @XmlSchemaType(name = "anySimpleType")
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     protected String id;
+
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    protected Smestaj smestaj;
+
+    public Smestaj getSmestaj() {
+        return smestaj;
+    }
+
+    public void setSmestaj(Smestaj smestaj) {
+        this.smestaj = smestaj;
+    }
 
     /**
      * Gets the value of the cena property.
      * 
      */
+
+
     public double getCena() {
         return cena;
     }

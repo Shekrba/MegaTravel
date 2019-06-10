@@ -8,6 +8,7 @@
 
 package com.megatravel.search.model;
 
+import javax.persistence.*;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
@@ -71,22 +72,43 @@ import javax.xml.bind.annotation.XmlType;
     "brojStana"
 })
 @XmlRootElement(name = "Adresa")
+@Entity
 public class Adresa {
 
     @XmlElement(name = "Latitude")
+    @Column(name = "latitude", unique = false, nullable = false)
     protected double latitude;
+
     @XmlElement(name = "Longitude")
+    @Column(name = "longitude", unique = false, nullable = false)
     protected double longitude;
+
     @XmlElement(name = "Mesto", required = true)
+    @Column(name = "mesto", unique = false, nullable = false)
     protected String mesto;
+
     @XmlElement(name = "PosBroj", required = true)
+    @Column(name = "posBroj", unique = false, nullable = false)
     protected String posBroj;
+
     @XmlElement(name = "Ulica", required = true)
+    @Column(name = "ulica", unique = false, nullable = false)
     protected String ulica;
+
     @XmlElement(name = "Broj")
+    @Column(name = "broj", unique = false, nullable = false)
     protected int broj;
+
     @XmlElement(name = "BrojStana")
+    @Column(name = "brojStana", unique = false, nullable = true)
     protected Integer brojStana;
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    protected Long id;
+
+    @OneToOne(mappedBy="adresa",fetch=FetchType.EAGER, cascade=CascadeType.ALL, optional=true)
+    protected Smestaj smestaj;
 
     /**
      * Gets the value of the latitude property.

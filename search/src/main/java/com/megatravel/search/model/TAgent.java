@@ -8,6 +8,8 @@
 
 package com.megatravel.search.model;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
@@ -43,11 +45,13 @@ import javax.xml.bind.annotation.XmlType;
 @XmlType(name = "TAgent", namespace = "https://github.com/Shekrba/MegaTravel/Korisnik", propOrder = {
     "posMatBroj"
 })
+@Entity
 public class TAgent
     extends TKorisnik
 {
 
     @XmlElement(name = "PosMatBroj", required = true, defaultValue = "0000000000000")
+    @Column(name = "posMatBroj", unique = false, nullable = false)
     protected String posMatBroj;
 
     /**

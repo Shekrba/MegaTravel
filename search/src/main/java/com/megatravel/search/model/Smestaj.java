@@ -10,6 +10,7 @@ package com.megatravel.search.model;
 
 import java.util.ArrayList;
 import java.util.List;
+import javax.persistence.*;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
@@ -75,31 +76,78 @@ import javax.xml.bind.annotation.XmlType;
     "tipSmestaja",
     "adresa",
     "opis",
-    "dodatneUsluge",
     "periodOtkaza",
     "slika"
 })
 @XmlRootElement(name = "Smestaj")
+@Entity
 public class Smestaj {
 
+    @Column(name = "naziv", unique = false, nullable = false)
+    protected String naziv;
+
     @XmlElement(name = "SJedinica", required = true)
+    @OneToMany(mappedBy = "smestaj")
     protected List<SJedinica> sJedinica;
+
     @XmlElement(name = "TipSmestaja", required = true, defaultValue = "hotel")
     @XmlSchemaType(name = "string")
+    @Column(name = "tip", unique = false, nullable = false)
     protected TTipSmestaja tipSmestaja;
+
     @XmlElement(name = "Adresa", required = true)
+    @OneToOne(fetch=FetchType.LAZY, cascade=CascadeType.ALL, optional=true)
     protected Adresa adresa;
+
     @XmlElement(name = "Opis", required = true)
+    @Column(name = "opis", unique = false, nullable = true)
     protected String opis;
+
     @XmlElement(name = "DodatneUsluge", required = true)
-    protected DodatneUsluge dodatneUsluge;
+    @OneToMany(mappedBy="smestaj", cascade=CascadeType.ALL)
+    protected List<Usluga> usluge;
+
     @XmlElement(name = "PeriodOtkaza")
+    @Column(name = "periodOtkaza", unique = false, nullable = false)
     protected int periodOtkaza;
+
     @XmlElement(name = "Slika", required = true)
+    @OneToMany(mappedBy = "smestaj")
     protected List<Slika> slika;
+
     @XmlAttribute(name = "Id")
     @XmlSchemaType(name = "anySimpleType")
-    protected String id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    protected Long id;
+
+    public String getNaziv() {
+        return naziv;
+    }
+
+    public void setNaziv(String naziv) {
+        this.naziv = naziv;
+    }
+
+    public List<SJedinica> getsJedinica() {
+        return sJedinica;
+    }
+
+    public void setsJedinica(List<SJedinica> sJedinica) {
+        this.sJedinica = sJedinica;
+    }
+
+    public List<Usluga> getUsluge() {
+        return usluge;
+    }
+
+    public void setUsluge(List<Usluga> usluge) {
+        this.usluge = usluge;
+    }
+
+    public void setSlika(List<Slika> slika) {
+        this.slika = slika;
+    }
 
     /**
      * Gets the value of the sJedinica property.
@@ -202,29 +250,9 @@ public class Smestaj {
         this.opis = value;
     }
 
-    /**
-     * Gets the value of the dodatneUsluge property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link DodatneUsluge }
-     *     
-     */
-    public DodatneUsluge getDodatneUsluge() {
-        return dodatneUsluge;
-    }
 
-    /**
-     * Sets the value of the dodatneUsluge property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link DodatneUsluge }
-     *     
-     */
-    public void setDodatneUsluge(DodatneUsluge value) {
-        this.dodatneUsluge = value;
-    }
+
+
 
     /**
      * Gets the value of the periodOtkaza property.
@@ -279,19 +307,19 @@ public class Smestaj {
      *     {@link String }
      *     
      */
-    public String getId() {
+    public Long getId() {
         return id;
     }
 
     /**
      * Sets the value of the id property.
-     * 
+     *
      * @param value
      *     allowed object is
      *     {@link String }
      *     
      */
-    public void setId(String value) {
+    public void setId(Long value) {
         this.id = value;
     }
 
@@ -315,45 +343,6 @@ public class Smestaj {
      * 
      * 
      */
-    @XmlAccessorType(XmlAccessType.FIELD)
-    @XmlType(name = "", propOrder = {
-        "usluga"
-    })
-    public static class DodatneUsluge {
-
-        @XmlElement(name = "Usluga")
-        protected List<Usluga> usluga;
-
-        /**
-         * Gets the value of the usluga property.
-         * 
-         * <p>
-         * This accessor method returns a reference to the live list,
-         * not a snapshot. Therefore any modification you make to the
-         * returned list will be present inside the JAXB object.
-         * This is why there is not a <CODE>set</CODE> method for the usluga property.
-         * 
-         * <p>
-         * For example, to add a new item, do as follows:
-         * <pre>
-         *    getUsluga().add(newItem);
-         * </pre>
-         * 
-         * 
-         * <p>
-         * Objects of the following type(s) are allowed in the list
-         * {@link Usluga }
-         * 
-         * 
-         */
-        public List<Usluga> getUsluga() {
-            if (usluga == null) {
-                usluga = new ArrayList<Usluga>();
-            }
-            return this.usluga;
-        }
-
-    }
 
 
     /**
@@ -373,38 +362,5 @@ public class Smestaj {
      * 
      * 
      */
-    @XmlAccessorType(XmlAccessType.FIELD)
-    @XmlType(name = "")
-    public static class Slika {
-
-        @XmlAttribute(name = "src")
-        @XmlSchemaType(name = "anySimpleType")
-        protected String src;
-
-        /**
-         * Gets the value of the src property.
-         * 
-         * @return
-         *     possible object is
-         *     {@link String }
-         *     
-         */
-        public String getSrc() {
-            return src;
-        }
-
-        /**
-         * Sets the value of the src property.
-         * 
-         * @param value
-         *     allowed object is
-         *     {@link String }
-         *     
-         */
-        public void setSrc(String value) {
-            this.src = value;
-        }
-
-    }
 
 }
