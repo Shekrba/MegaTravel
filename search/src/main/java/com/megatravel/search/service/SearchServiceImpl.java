@@ -25,13 +25,8 @@ public class SearchServiceImpl implements SearchService{
     }
 
     @Override
-    public Smestaj getSmestaj(Long id){
-        return new Smestaj();
-    }
-
-    @Override
-    public List<Usluga> getUsluge(Long id){
-        return new ArrayList<Usluga>();
+    public Smestaj getSmestaj(Long id) {
+        return smestajRepository.findOneById(id);
     }
 
     @Override

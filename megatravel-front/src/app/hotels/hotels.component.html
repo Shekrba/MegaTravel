@@ -1,7 +1,7 @@
 <div class="container">
   <div class="row">
     <div class="col-lg-8 d-flex align-items-stretch mt-5">
-      <div *ngFor="let hotel of hotels" class="card bg-secondary text-white mr-5" style="width: 18rem;">
+      <div *ngFor="let hotel of hotels" class="card bg-dark text-white mr-5" style="width: 18rem;">
         <div id="demo-{{hotel.id}}" class="carousel slide" data-ride="carousel">
 
           <!-- The slideshow -->
@@ -28,9 +28,11 @@
 
         </div>
         <div class="card-body">
-          <h5 class="card-title">{{hotel.naziv}}</h5>
+          <h3 class="card-title mb-3">{{hotel.naziv}}</h3>
+          <p>Type: {{hotel.tip}}</p>
+          <p>Address: {{hotel.ulica}} {{hotel.broj}}, {{hotel.mesto}}</p>
           <p class="card-text">{{hotel.opis}}</p>
-          <a routerLink="/hotelProfile" class="btn btn-warning">Check out</a>
+          <a routerLink="/hotels/{{hotel.id}}" class="btn btn-warning">Check out</a>
         </div>
       </div>
     </div>

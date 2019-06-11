@@ -16,4 +16,9 @@ export class HotelServiceService {
 
     return this.http.get<Hotel[]>(this.ALL_HOTELS_URL);
   }
+
+  getOneHotel(id): Observable<Hotel> {
+
+    return this.http.get<Hotel>(this.ALL_HOTELS_URL + "/" + id);
+  }
 }

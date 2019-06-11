@@ -1,27 +1,21 @@
-<div class="container pt-3 pb-3 mt-2">
+<div *ngIf="hotel" class="container pt-3 pb-3 mt-2">
 <div id="demo" class="carousel slide" data-ride="carousel">
   <!-- Indicators -->
   <ul class="carousel-indicators">
-    <li data-target="#demo" data-slide-to="0" class="active"></li>
-    <li data-target="#demo" data-slide-to="1"></li>
-    <li data-target="#demo" data-slide-to="2"></li>
+    <li data-target="#demo" class="active"></li>
+    <li *ngFor = "let slika of hotel.slike | slice:1" data-target="#demo"></li>
   </ul>
 
   <!-- The slideshow -->
   <div class="carousel-inner">
     <div class="carousel-item active">
       <div class="item">
-        <img src="assets/img/h1.jpg" class="card-img-top" alt="Los Angeles">
+        <img src="{{hotel.slike[0]}}" class="card-img-top" alt="Los Angeles">
       </div>
     </div>
-    <div class="carousel-item">
+    <div *ngFor="let slika of hotel.slike | slice:1" class="carousel-item">
       <div class="item">
-        <img src="assets/img/h2.jpg" class="card-img-top" alt="Chicago">
-      </div>
-    </div>
-    <div class="carousel-item">
-      <div class="item">
-        <img src="assets/img/h3.jpg" class="card-img-top" alt="New York">
+        <img src="{{slika}}" class="card-img-top" alt="Chicago">
       </div>
     </div>
   </div>
@@ -36,45 +30,86 @@
 
 </div>
   <div class="row ml-3 mt-3 white">
-    <h3>Four Seasons</h3>
+    <h1>{{hotel.naziv}}</h1>
   </div>
   <div class="row ml-3 white">
     <div class="col">
-    <table class="table table-striped table-dark">
-      <tr>
+    <table class="table table-striped">
+      <tr class="white">
         <td>Type:</td>
-        <td>Hotel</td>
+        <td>{{hotel.tip}}</td>
       </tr>
-      <tr>
+      <tr class="white">
         <td>Address:</td>
-        <td>57 E 57th St, New York, NY‎</td>
+        <td>{{hotel.ulica}} {{hotel.broj}}, {{hotel.mesto}}</td>
       </tr>
-      <tr>
+      <tr class="white">
         <td>Description:</td>
-        <td>The most luxurious hotel in Manhattan.</td>
+        <td>{{hotel.opis}}</td>
       </tr>
-      <tr>
-        <td><a routerLink="/hotelProfile" class="btn btn-warning">Check out rooms</a></td>
+      <tr class="white">
+        <td>
+          <button class="btn btn-warning mt-2" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+              Check our rooms
+          </button>
+        </td>
         <td></td>
       </tr>
     </table>
   </div>
   <div class="col">
       <h4>Services</h4>
-      <table class="table table-striped table-dark">
-        <tr class="white-background">
+      <table class="table table-striped">
+        <tr class="white">
           <th>Name:</th>
           <th>Price:</th>
+          <th>Description:</th>
         </tr>
-        <tr class="white">
+        <tr *ngFor="let usluga of hotel.usluge" class="white">
           <td>
-            Wi-Fi
+            {{usluga.naziv}}
           </td>
           <td>
-            10$
+            {{usluga.cena}}$
+          </td>
+          <td>
+            {{usluga.opis}}
           </td>
         </tr>
       </table>
   </div>
+  </div>
+  <div class="row ml-auto mr-auto mt-1 pb-3 white rooms">
+    <div class="col">
+    <div class="collapse" id="collapseExample">
+          <h4>Rooms</h4>
+          <table class="table table-striped table-light rooms">
+            <tr>
+              <th>Number:</th>
+              <th>Price:</th>
+              <th>Number of beds:</th>
+              <th>Available:</th>
+              <th></th>
+            </tr>
+            <tr *ngFor="let sj of hotel.sjedinice">
+              <td>
+                {{sj.broj}}
+              </td>
+              <td>
+                {{sj.cena}}$
+              </td>
+              <td>
+                {{sj.brojKreveta}}
+              </td>
+              <td>
+                {{sj.dostupnost}}
+              </td>
+              <td>
+                <button routerLink="/login" *ngIf="sj.dostupnost" class="btn btn-success">Book</button>
+              </td>
+            </tr>
+          </table>
+    </div>
+    </div>
   </div>
 </div>

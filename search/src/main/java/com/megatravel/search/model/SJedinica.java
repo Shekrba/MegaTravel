@@ -72,7 +72,7 @@ public class SJedinica {
 
     @XmlElement(name = "Dostupnost", defaultValue = "true")
     @Column(name = "dostupnost", unique = false, nullable = false)
-    protected boolean dostupnost;
+    protected Boolean dostupnost;
 
     @XmlAttribute(name = "Id")
     @XmlSchemaType(name = "anySimpleType")
@@ -82,6 +82,21 @@ public class SJedinica {
 
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     protected Smestaj smestaj;
+
+    @Column(name = "broj", unique = false, nullable = false)
+    protected int broj;
+
+    public Boolean getDostupnost() {
+        return dostupnost;
+    }
+
+    public int getBroj() {
+        return broj;
+    }
+
+    public void setBroj(int broj) {
+        this.broj = broj;
+    }
 
     public Smestaj getSmestaj() {
         return smestaj;
@@ -129,7 +144,7 @@ public class SJedinica {
      * Gets the value of the dostupnost property.
      * 
      */
-    public boolean isDostupnost() {
+    public Boolean isDostupnost() {
         return dostupnost;
     }
 
@@ -137,7 +152,7 @@ public class SJedinica {
      * Sets the value of the dostupnost property.
      * 
      */
-    public void setDostupnost(boolean value) {
+    public void setDostupnost(Boolean value) {
         this.dostupnost = value;
     }
 

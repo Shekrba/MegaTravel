@@ -21,8 +21,6 @@ export class HotelsComponent implements OnInit {
     this.hotelService.getAllHotels().subscribe(
       res => {
         this.hotels = res;
-        console.log(this.hotels);
-        
       },
       err => {
         alert("An error has occured while getting all hotels")

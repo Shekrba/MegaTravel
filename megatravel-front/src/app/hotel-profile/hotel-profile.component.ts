@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { Hotel } from '../model/hotel';
+import { HotelServiceService } from '../services/hotel.service';
+import { ActivatedRoute } from '@angular/router'
 
 @Component({
   selector: 'app-hotel-profile',
@@ -7,9 +10,33 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HotelProfileComponent implements OnInit {
 
-  constructor() { }
+  hotel: Hotel;
+  increment = 0;
+
+  constructor(private hotelService: HotelServiceService, private ar: ActivatedRoute) { }
 
   ngOnInit() {
+    this.getOneHotel();
+  }
+
+  public getOneHotel(){
+
+    let id;
+
+    this.ar.paramMap.subscribe(
+      params => {
+        id = params.get('id');
+      }
+    )
+
+    this.hotelService.getOneHotel(id).subscribe(
+      res => {
+        this.hotel = res;        
+      },
+      err => {
+        alert("An error has occured while getting hotel " + id);
+      }
+    )
   }
 
 }

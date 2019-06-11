@@ -6,5 +6,8 @@ export interface Hotel {
     periodOtkaza,
     mesto,
     ulica,
-    broj
+    broj,
+    slike,
+    usluge,
+    sjedinice
   }

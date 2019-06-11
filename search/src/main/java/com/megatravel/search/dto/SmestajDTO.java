@@ -1,7 +1,9 @@
 package com.megatravel.search.dto;
 
 import com.megatravel.search.model.TTipSmestaja;
+import com.megatravel.search.model.Usluga;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class SmestajDTO {
@@ -13,7 +15,25 @@ public class SmestajDTO {
     private String mesto;
     private String ulica;
     private int broj;
-    private List<String> slike;
+    private List<String> slike = new ArrayList<String>();
+    private List<UslugaDTO> usluge = new ArrayList<UslugaDTO>();
+    private List<SJedinicaDTO> sjedinice = new ArrayList<SJedinicaDTO>();
+
+    public List<SJedinicaDTO> getSjedinice() {
+        return sjedinice;
+    }
+
+    public void setSjedinice(List<SJedinicaDTO> sjedinice) {
+        this.sjedinice = sjedinice;
+    }
+
+    public List<UslugaDTO> getUsluge() {
+        return usluge;
+    }
+
+    public void setUsluge(List<UslugaDTO> usluge) {
+        this.usluge = usluge;
+    }
 
     public List<String> getSlike() {
         return slike;

@@ -19,7 +19,7 @@ import {HttpClientModule} from "@angular/common/http";
     HotelsComponent,
     RegisterComponent,
     LoginComponent,
-    HotelProfileComponent
+    HotelProfileComponent,
   ],
   imports: [
     BrowserModule,
