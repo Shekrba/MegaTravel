@@ -1,5 +1,6 @@
 package com.megatravel.search.controller;
 
+import com.megatravel.search.dto.FilterDTO;
 import com.megatravel.search.dto.SJedinicaDTO;
 import com.megatravel.search.dto.SmestajDTO;
 import com.megatravel.search.dto.UslugaDTO;
@@ -37,6 +38,20 @@ public class SearchController {
         return listDTO;
     }
 
+    @RequestMapping(value = "/hotels",method = RequestMethod.POST)
+    public List<SmestajDTO> getFilteredSmestaje(@RequestBody FilterDTO filter){
+        List<Smestaj> list = searchService.getFilteredSmetaje(filter);
+        List<SmestajDTO> listDTO = new ArrayList<>();
+
+        for (Smestaj s: list) {
+            SmestajDTO sDTO = new SmestajDTO();
+            smestajToDto(s,sDTO);
+            listDTO.add(sDTO);
+        }
+
+        return listDTO;
+    }
+
     @RequestMapping(value = "/hotels/{id}",method = RequestMethod.GET)
     public SmestajDTO getSmestaj(@PathVariable("id")Long id){
 
@@ -48,9 +63,9 @@ public class SearchController {
         return smestajDTO;
     }
 
-    @RequestMapping(value = "/rooms/{id}",method = RequestMethod.GET)
-    public List<SJedinica> getSJedinice(Long id){
-        return searchService.getSJedinice(id);
+    @RequestMapping(value = "/services", method =  RequestMethod.GET)
+    public List<String> getUslugeByNaziv(){
+        return searchService.getUslugeByNaziv();
     }
 
     public void smestajToDto(Smestaj s, SmestajDTO sDTO){

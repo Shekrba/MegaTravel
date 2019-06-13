@@ -15,6 +15,7 @@ import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlSeeAlso;
 import javax.xml.bind.annotation.XmlType;
+import java.util.List;
 
 
 /**
@@ -115,6 +116,7 @@ public abstract class TKorisnik {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     protected Long id;
+
 
     /**
      * Gets the value of the ime property.

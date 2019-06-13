@@ -10,6 +10,8 @@ import { RegisterComponent } from './register/register.component';
 import { LoginComponent } from './login/login.component';
 import { HotelProfileComponent } from './hotel-profile/hotel-profile.component';
 import {HttpClientModule} from "@angular/common/http";
+import { FormsModule } from '@angular/forms'
+
 
 @NgModule({
   declarations: [
@@ -25,6 +27,7 @@ import {HttpClientModule} from "@angular/common/http";
     BrowserModule,
     HttpClientModule,
     AppRoutingModule,
+    FormsModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

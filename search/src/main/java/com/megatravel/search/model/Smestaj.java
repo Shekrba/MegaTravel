@@ -121,6 +121,17 @@ public class Smestaj {
     @GeneratedValue(strategy = GenerationType.AUTO)
     protected Long id;
 
+    @Column(name = "kategorija", unique = false, nullable = false)
+    protected String kategorija;
+
+    public String getKategorija() {
+        return kategorija;
+    }
+
+    public void setKategorija(String kategorija) {
+        this.kategorija = kategorija;
+    }
+
     public String getNaziv() {
         return naziv;
     }

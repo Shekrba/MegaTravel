@@ -1,4 +1,117 @@
 <div class="container">
+    <div class="row ml-auto mr-auto mt-5">
+        <div class="col-lg-12">
+            <div class="row">
+                <div class="col-lg-2 col-md-3 col-sm-12 p-0">
+                    <h5>City:</h5>
+                </div>
+                <div class="col-lg-2 col-md-3 col-sm-12 p-0 ml-5">
+                    <h5>Number of beds:</h5>
+                </div>
+                <div class="col-lg-2 col-md-3 col-sm-12 p-0 ml-5">
+                    <h5>From date:</h5>
+                </div>
+                <div class="col-lg-2 col-md-3 col-sm-12 p-0 ml-5">
+                    <h5>To date:</h5>
+                </div>
+                <div class="col-lg-2 col-md-3 col-sm-12 p-0 ml-1">
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+  
+    
+    <div class="row ml-auto mr-auto">
+        <div class="col-lg-12">
+              <div class="row">
+                <div class="col-lg-2 col-md-3 col-sm-12 p-0">
+                    <input type="text" class="form-control" [(ngModel)]="filter.mesto">
+                </div>
+                 <div class="col-lg-2 col-md-3 col-sm-12 p-0 ml-5">
+                     <select class="form-control" [(ngModel)]="filter.brojKreveta">
+                         <option>1</option>
+                         <option>2</option>
+                         <option>3</option>
+                         <option>4</option>
+                     </select>
+                 </div>
+                 <div class="col-lg-2 col-md-3 col-sm-12 p-0 ml-5">
+                    <input type="date" class="form-control" [(ngModel)]="filter.dateFrom">
+                 </div>
+                 <div class="col-lg-2 col-md-3 col-sm-12 p-0 ml-5">
+                    <input type="date"  class="form-control" [(ngModel)]="filter.dateTo">
+                 </div>
+                <div class="col-lg-2 col-md-3 col-sm-12 p-0 ml-4">
+                     <button type="button" (click)="filterHotels()" class="btn btn-outline-success"><i class="fa fa-search" aria-hidden="true"></i> Search</button>
+                </div>
+             </div>
+        </div>
+     </div>
+    
+     <div id="accordion">
+      <div class="card mt-3">
+        <div class="card-header" id="headingOne">
+          <h5 class="mb-0">
+            <button class="btn btn-primary" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+              Advanced Search
+            </button>
+          </h5>
+        </div>
+    
+        <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordion">
+          <div class="card-body">
+
+              <div class="row ml-auto mr-auto">
+                  <div class="col-lg-12">
+                      <div class="row">
+                          <div class="col-lg-2 col-md-3 col-sm-12 p-0">
+                              <h5>Type:</h5>
+                          </div>
+                          <div class="col-lg-2 col-md-3 col-sm-12 p-0 ml-5">
+                              <h5>Category:</h5>
+                          </div>
+                          <div class="col-lg-2 col-md-3 col-sm-12 p-0 ml-5">
+                              <h5>Services:</h5>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+
+            <div class="row ml-auto mr-auto">
+              <div class="col-lg-2 col-md-3 col-sm-12 p-0">
+                <select [(ngModel)]="filter.tip" class="form-control">
+                  <><option>ALL</option>
+                  <option>HOTEL</option>
+                  <option>BED & BREAKFAST</option>
+                  <option>APARTMENT</option>
+              </select>
+              </div>
+              <div class="col-lg-2 col-md-3 col-sm-12 p-0 ml-5">
+                  <select [(ngModel)]="filter.kategorija" class="form-control">
+                    <option>ALL</option>
+                    <option>5 STAR</option>
+                    <option>4 STAR</option>
+                    <option>3 STAR</option>
+                    <option>2 STAR</option>
+                    <option>1 STAR</option>
+                    <option>UNCATEGORIZED</option>
+                </select>
+              </div>
+
+              <div class="col-lg-3 col-md-3 col-sm-12 p-0 ml-5">
+                <div class="card"> 
+                  <div *ngFor="let service of services" class="custom-control custom-checkbox ml-2 mt-1 mb-1">
+                      <input type="checkbox" class="custom-control-input" id="{{service}}" (change)="checkService($event,service)">
+                      <label class="custom-control-label" for="{{service}}">{{service}}</label>
+                  </div> 
+                </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
   <div class="row">
     <div class="col-lg-8 d-flex align-items-stretch mt-5">
       <div *ngFor="let hotel of hotels" class="card bg-dark text-white mr-5" style="width: 18rem;">
