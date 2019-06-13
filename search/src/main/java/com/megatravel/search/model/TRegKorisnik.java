@@ -9,9 +9,11 @@
 package com.megatravel.search.model;
 
 import javax.persistence.Entity;
+import javax.persistence.OneToMany;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlType;
+import java.util.List;
 
 
 /**
@@ -36,6 +38,14 @@ import javax.xml.bind.annotation.XmlType;
 public class TRegKorisnik
     extends TKorisnik
 {
+    @OneToMany(mappedBy = "korisnik")
+    protected List<Rezervacija> rezervacije;
 
+    public List<Rezervacija> getRezervacije() {
+        return rezervacije;
+    }
 
+    public void setRezervacije(List<Rezervacija> rezervacije) {
+        this.rezervacije = rezervacije;
+    }
 }

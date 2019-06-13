@@ -16,6 +16,7 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlSchemaType;
 import javax.xml.bind.annotation.XmlType;
+import java.util.List;
 
 
 /**
@@ -85,6 +86,17 @@ public class SJedinica {
 
     @Column(name = "broj", unique = false, nullable = false)
     protected int broj;
+
+    @OneToMany
+    protected List<Rezervacija> rezervacije;
+
+    public List<Rezervacija> getRezervacije() {
+        return rezervacije;
+    }
+
+    public void setRezervacije(List<Rezervacija> rezervacije) {
+        this.rezervacije = rezervacije;
+    }
 
     public Boolean getDostupnost() {
         return dostupnost;
