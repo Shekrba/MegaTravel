@@ -15,6 +15,11 @@ public class LoginController {
     @Autowired
     private LoginService loginService;
 
+    @RequestMapping(value = "/test", method = RequestMethod.POST)
+    public String test(){
+        return "OK";
+    }
+
     @RequestMapping(value = "/registration", method = RequestMethod.POST)
     public TKorisnik registracija(@RequestBody TKorisnik korisnik){
         return loginService.registracija(korisnik);
