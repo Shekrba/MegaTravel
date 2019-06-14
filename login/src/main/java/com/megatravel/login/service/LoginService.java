@@ -1,10 +1,11 @@
 package com.megatravel.login.service;
 
-import com.megatravel.login.model.TKorisnik;
+import com.megatravel.login.security.auth.JwtAuthenticationRequest;
+import org.springframework.stereotype.Service;
+
 
 public interface LoginService {
-    public TKorisnik registracija(TKorisnik korisnik);
-    public TKorisnik login(TKorisnik korisnik);
-    public TKorisnik logout(TKorisnik korisnik);
+
+    public boolean checkCredentials(JwtAuthenticationRequest request);
 
 }

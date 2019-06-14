@@ -65,10 +65,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 			// za neautorizovane zahteve posalji 401 gresku
 			.exceptionHandling().authenticationEntryPoint(restAuthenticationEntryPoint).and()
 			
-			// svim korisnicima dopusti da pristupe putanjama /auth/** i /h2-console/**
+
 			.authorizeRequests()
 			.antMatchers("/login-service/auth/**").permitAll()
-
+			.antMatchers("/search-service/api/**").hasRole("USER")
 			// svaki zahtev mora biti autorizovan
 			.anyRequest().authenticated().and()
 			

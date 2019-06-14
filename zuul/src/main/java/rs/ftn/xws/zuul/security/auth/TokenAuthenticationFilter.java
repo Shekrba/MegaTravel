@@ -5,6 +5,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.web.filter.OncePerRequestFilter;
+import rs.ftn.xws.zuul.model.TRegKorisnik;
 import rs.ftn.xws.zuul.security.TokenUtils;
 
 import javax.servlet.FilterChain;
@@ -33,17 +34,18 @@ public class TokenAuthenticationFilter extends OncePerRequestFilter {
 		String username;
 		String authToken = tokenUtils.getToken(request);
 
+
 		if (authToken != null) {
 			// uzmi username iz tokena
 			username = tokenUtils.getUsernameFromToken(authToken);
-			
+
 			if (username != null) {
 				// uzmi user-a na osnovu username-a
 				UserDetails userDetails = userDetailsService.loadUserByUsername(username);
-				
 				// proveri da li je prosledjeni token validan
 				if (tokenUtils.validateToken(authToken, userDetails)) {
 					// kreiraj autentifikaciju
+
 					TokenBasedAuthentication authentication = new TokenBasedAuthentication(userDetails);
 					authentication.setToken(authToken);
 					SecurityContextHolder.getContext().setAuthentication(authentication);

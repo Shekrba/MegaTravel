@@ -1,8 +1,8 @@
-package rs.ftn.xws.zuul.repository;
+package com.megatravel.login.repository;
 
 
+import com.megatravel.login.model.TRegKorisnik;
 import org.springframework.data.jpa.repository.JpaRepository;
-import rs.ftn.xws.zuul.model.TRegKorisnik;
 
 public interface TRegKorisnikRepository extends JpaRepository<TRegKorisnik, Long> {
 
