@@ -1,0 +1,46 @@
+<div class="row">
+  <div class="col-xs-4 col-md-4 col-lg-3">
+    <div class="nav-side-menu">
+        <div class="brand orange">MEGATRAVEL</div>
+      
+            <div class="menu-list">
+                
+                <ul id="menu-content" class="menu-content collapse out">
+                    <li routerLink="">
+                      <a>
+                      <i class="fa fa-dashboard fa-lg"></i> Dashboard
+                      </a>
+                    </li>
+
+                    <li  data-toggle="collapse" data-target="#products" class="collapsed">
+                      <a><i class="fa fa-book fa-lg"></i> Code Book <span class="arrow"></span></a>
+                    </li>
+                    <ul class="sub-menu collapse" id="products">
+                        <li routerLink="/types"><a>Manage Types</a></li>
+                        <li routerLink="/categorization"><a>Manage Categorization</a></li>
+                        <li routerLink="/services"><a>Manage Services</a></li>
+                    </ul>
+
+
+                    <li routerLink="/comments" class="collapsed">
+                      <a><i class="fa fa-comment-o fa-lg"></i> Comments</a>
+                    </li>  
+
+                    <li routerLink="/users" class="collapsed">
+                      <a><i class="fa fa-users fa-lg "></i> Users</a>
+                    </li>
+              
+                    <li routerLink="/agent" class="collapsed">
+                      <a>
+                        <i class="fa fa-user-secret fa-lg"></i> Agent Registration
+                      </a>
+                      </li>       
+                </ul>
+        </div>
+    </div>
+  </div>
+  <div class="col-xs-8 col-md-8 col-lg-8">
+    <router-outlet></router-outlet>
+  </div>
+  
+</div>
