@@ -8,6 +8,7 @@
 
 package com.megatravel.admin.model;
 
+import javax.persistence.*;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
@@ -45,40 +46,35 @@ import javax.xml.bind.annotation.XmlType;
     "tekst"
 })
 @XmlRootElement(name = "Komentar", namespace = "https://github.com/Shekrba/MegaTravel/Komentar")
+@Entity
 public class Komentar {
 
     @XmlElement(name = "Korisnik", namespace = "https://github.com/Shekrba/MegaTravel/Korisnik", required = true)
-    protected TKorisnik korisnik;
+    @ManyToOne(
+            cascade = CascadeType.ALL,
+            fetch = FetchType.EAGER
+    )
+    private User korisnik;
+
     @XmlElement(name = "SJedinica", required = true)
-    protected SJedinica sJedinica;
+    @ManyToOne(
+            cascade = CascadeType.ALL,
+            fetch = FetchType.EAGER
+    )
+    private SJedinica sJedinica;
+
     @XmlElement(name = "Odobren", namespace = "https://github.com/Shekrba/MegaTravel/Komentar", defaultValue = "false")
+    @Column(name = "odobren")
     protected boolean odobren;
+
     @XmlElement(name = "Tekst", namespace = "https://github.com/Shekrba/MegaTravel/Komentar", required = true)
+    @Column(name = "tekst", nullable = false)
     protected String tekst;
 
-    /**
-     * Gets the value of the korisnik property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link TKorisnik }
-     *     
-     */
-    public TKorisnik getKorisnik() {
-        return korisnik;
-    }
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
-    /**
-     * Sets the value of the korisnik property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link TKorisnik }
-     *     
-     */
-    public void setKorisnik(TKorisnik value) {
-        this.korisnik = value;
-    }
 
     /**
      * Gets the value of the sJedinica property.
@@ -89,7 +85,7 @@ public class Komentar {
      *     
      */
     public SJedinica getSJedinica() {
-        return sJedinica;
+        return getsJedinica();
     }
 
     /**
@@ -101,7 +97,7 @@ public class Komentar {
      *     
      */
     public void setSJedinica(SJedinica value) {
-        this.sJedinica = value;
+        this.setsJedinica(value);
     }
 
     /**
@@ -144,4 +140,28 @@ public class Komentar {
         this.tekst = value;
     }
 
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public User getKorisnik() {
+        return korisnik;
+    }
+
+    public void setKorisnik(User korisnik) {
+        this.korisnik = korisnik;
+    }
+
+    public SJedinica getsJedinica() {
+        return sJedinica;
+    }
+
+    public void setsJedinica(SJedinica sJedinica) {
+        this.sJedinica = sJedinica;
+    }
 }
