@@ -12,4 +12,6 @@ public interface UslugaRepository extends JpaRepository<Usluga, String> {
 
     @Query("SELECT DISTINCT u.naziv FROM Usluga u")
     List<String> findNazivUsluga();
+
+
 }
