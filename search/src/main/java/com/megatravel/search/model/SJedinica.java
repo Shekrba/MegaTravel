@@ -90,6 +90,9 @@ public class SJedinica {
     @OneToMany
     protected List<Rezervacija> rezervacije;
 
+
+
+
     public List<Rezervacija> getRezervacije() {
         return rezervacije;
     }

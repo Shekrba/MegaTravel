@@ -8,6 +8,7 @@
 
 package com.megatravel.admin.model;
 
+import javax.persistence.*;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
@@ -15,6 +16,7 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlSchemaType;
 import javax.xml.bind.annotation.XmlType;
+import java.util.List;
 
 
 /**
@@ -58,17 +60,39 @@ import javax.xml.bind.annotation.XmlType;
     "dostupnost"
 })
 @XmlRootElement(name = "SJedinica")
+@Entity
 public class SJedinica {
 
     @XmlElement(name = "Cena")
+    @Column(name = "cena", unique = false, nullable = false)
     protected double cena;
+
     @XmlElement(name = "BrojKreveta")
+    @Column(name = "brojKreveta", unique = false, nullable = false)
     protected int brojKreveta;
+
     @XmlElement(name = "Dostupnost", defaultValue = "true")
-    protected boolean dostupnost;
+    @Column(name = "dostupnost", unique = false, nullable = false)
+    protected Boolean dostupnost;
+
     @XmlAttribute(name = "Id")
     @XmlSchemaType(name = "anySimpleType")
-    protected String id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    protected Long id;
+
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    protected Smestaj smestaj;
+
+    @Column(name = "broj", unique = false, nullable = false)
+    protected int broj;
+
+    @OneToMany(
+            mappedBy = "sJedinica",
+            fetch = FetchType.LAZY,
+            cascade = CascadeType.ALL
+    )
+    protected List<Komentar> comments;
 
     /**
      * Gets the value of the cena property.
@@ -126,7 +150,7 @@ public class SJedinica {
      *     {@link String }
      *     
      */
-    public String getId() {
+    public Long getId() {
         return id;
     }
 
@@ -138,7 +162,7 @@ public class SJedinica {
      *     {@link String }
      *     
      */
-    public void setId(String value) {
+    public void setId(Long value) {
         this.id = value;
     }
 

@@ -8,6 +8,8 @@
 
 package com.megatravel.admin.model;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
@@ -43,12 +45,17 @@ import javax.xml.bind.annotation.XmlType;
 @XmlType(name = "TAgent", namespace = "https://github.com/Shekrba/MegaTravel/Korisnik", propOrder = {
     "posMatBroj"
 })
+@Entity
 public class TAgent
     extends TKorisnik
 {
 
     @XmlElement(name = "PosMatBroj", required = true, defaultValue = "0000000000000")
-    protected String posMatBroj;
+    @Column(name = "posMatBroj", unique = false, nullable = false)
+protected String posMatBroj;
+
+    @Column(name ="blava", nullable = true)
+    private String blava;
 
     /**
      * Gets the value of the posMatBroj property.
@@ -74,4 +81,12 @@ public class TAgent
         this.posMatBroj = value;
     }
 
+
+    public String getBlava() {
+        return blava;
+    }
+
+    public void setBlava(String blava) {
+        this.blava = blava;
+    }
 }

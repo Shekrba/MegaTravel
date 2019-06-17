@@ -8,6 +8,7 @@
 
 package com.megatravel.admin.model;
 
+import javax.persistence.*;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
@@ -17,9 +18,9 @@ import javax.xml.bind.annotation.XmlType;
 
 /**
  * <p>Java class for anonymous complex type.
- * 
+ *
  * <p>The following schema fragment specifies the expected content contained within this class.
- * 
+ *
  * <pre>
  * &lt;complexType>
  *   &lt;complexContent>
@@ -57,40 +58,61 @@ import javax.xml.bind.annotation.XmlType;
  *   &lt;/complexContent>
  * &lt;/complexType>
  * </pre>
- * 
- * 
+ *
+ *
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = {
-    "latitude",
-    "longitude",
-    "mesto",
-    "posBroj",
-    "ulica",
-    "broj",
-    "brojStana"
+        "latitude",
+        "longitude",
+        "mesto",
+        "posBroj",
+        "ulica",
+        "broj",
+        "brojStana"
 })
 @XmlRootElement(name = "Adresa")
+@Entity
 public class Adresa {
 
     @XmlElement(name = "Latitude")
+    @Column(name = "latitude", unique = false, nullable = false)
     protected double latitude;
+
     @XmlElement(name = "Longitude")
+    @Column(name = "longitude", unique = false, nullable = false)
     protected double longitude;
+
     @XmlElement(name = "Mesto", required = true)
+    @Column(name = "mesto", unique = false, nullable = false)
     protected String mesto;
+
     @XmlElement(name = "PosBroj", required = true)
+    @Column(name = "posBroj", unique = false, nullable = false)
     protected String posBroj;
+
     @XmlElement(name = "Ulica", required = true)
+    @Column(name = "ulica", unique = false, nullable = false)
     protected String ulica;
+
     @XmlElement(name = "Broj")
+    @Column(name = "broj", unique = false, nullable = false)
     protected int broj;
+
     @XmlElement(name = "BrojStana")
+    @Column(name = "brojStana", unique = false, nullable = true)
     protected Integer brojStana;
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    protected Long id;
+
+    @OneToOne(mappedBy="adresa",fetch=FetchType.EAGER, cascade=CascadeType.ALL, optional=true)
+    protected Smestaj smestaj;
 
     /**
      * Gets the value of the latitude property.
-     * 
+     *
      */
     public double getLatitude() {
         return latitude;
@@ -98,7 +120,7 @@ public class Adresa {
 
     /**
      * Sets the value of the latitude property.
-     * 
+     *
      */
     public void setLatitude(double value) {
         this.latitude = value;
@@ -106,7 +128,7 @@ public class Adresa {
 
     /**
      * Gets the value of the longitude property.
-     * 
+     *
      */
     public double getLongitude() {
         return longitude;
@@ -114,7 +136,7 @@ public class Adresa {
 
     /**
      * Sets the value of the longitude property.
-     * 
+     *
      */
     public void setLongitude(double value) {
         this.longitude = value;
@@ -122,11 +144,11 @@ public class Adresa {
 
     /**
      * Gets the value of the mesto property.
-     * 
+     *
      * @return
      *     possible object is
      *     {@link String }
-     *     
+     *
      */
     public String getMesto() {
         return mesto;
@@ -134,11 +156,11 @@ public class Adresa {
 
     /**
      * Sets the value of the mesto property.
-     * 
+     *
      * @param value
      *     allowed object is
      *     {@link String }
-     *     
+     *
      */
     public void setMesto(String value) {
         this.mesto = value;
@@ -146,11 +168,11 @@ public class Adresa {
 
     /**
      * Gets the value of the posBroj property.
-     * 
+     *
      * @return
      *     possible object is
      *     {@link String }
-     *     
+     *
      */
     public String getPosBroj() {
         return posBroj;
@@ -158,11 +180,11 @@ public class Adresa {
 
     /**
      * Sets the value of the posBroj property.
-     * 
+     *
      * @param value
      *     allowed object is
      *     {@link String }
-     *     
+     *
      */
     public void setPosBroj(String value) {
         this.posBroj = value;
@@ -170,11 +192,11 @@ public class Adresa {
 
     /**
      * Gets the value of the ulica property.
-     * 
+     *
      * @return
      *     possible object is
      *     {@link String }
-     *     
+     *
      */
     public String getUlica() {
         return ulica;
@@ -182,11 +204,11 @@ public class Adresa {
 
     /**
      * Sets the value of the ulica property.
-     * 
+     *
      * @param value
      *     allowed object is
      *     {@link String }
-     *     
+     *
      */
     public void setUlica(String value) {
         this.ulica = value;
@@ -194,7 +216,7 @@ public class Adresa {
 
     /**
      * Gets the value of the broj property.
-     * 
+     *
      */
     public int getBroj() {
         return broj;
@@ -202,7 +224,7 @@ public class Adresa {
 
     /**
      * Sets the value of the broj property.
-     * 
+     *
      */
     public void setBroj(int value) {
         this.broj = value;
@@ -210,11 +232,11 @@ public class Adresa {
 
     /**
      * Gets the value of the brojStana property.
-     * 
+     *
      * @return
      *     possible object is
      *     {@link Integer }
-     *     
+     *
      */
     public Integer getBrojStana() {
         return brojStana;
@@ -222,11 +244,11 @@ public class Adresa {
 
     /**
      * Sets the value of the brojStana property.
-     * 
+     *
      * @param value
      *     allowed object is
      *     {@link Integer }
-     *     
+     *
      */
     public void setBrojStana(Integer value) {
         this.brojStana = value;

@@ -8,6 +8,7 @@
 
 package com.megatravel.admin.model;
 
+import javax.persistence.*;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
@@ -86,19 +87,34 @@ import javax.xml.bind.annotation.XmlType;
     TRegKorisnik.class,
     TAgent.class
 })
+
+@Entity
 public abstract class TKorisnik {
 
     @XmlElement(name = "Ime", required = true)
+    @Column(name = "ime", unique = false, nullable = true)
     protected String ime;
+
+
     @XmlElement(name = "Prezime", required = true)
+    @Column(name = "prezime", unique = false, nullable = true)
     protected String prezime;
+
     @XmlElement(name = "Username", required = true)
+    @Column(name = "username", unique = false, nullable = true)
     protected String username;
+
     @XmlElement(name = "Password", required = true)
+    @Column(name = "password", unique = false, nullable = true)
     protected String password;
+
     @XmlElement(name = "Email", required = true)
+    @Column(name = "email", unique = false, nullable = true)
     protected String email;
+
     @XmlAttribute(name = "id")
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     protected Long id;
 
     /**
