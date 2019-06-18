@@ -23,11 +23,13 @@ public class LoginServiceImpl implements  LoginService{
     }
 
     @Override
-    public boolean checkCredentials(JwtAuthenticationRequest request) {
+    public TRegKorisnik checkCredentials(JwtAuthenticationRequest request) {
         TRegKorisnik user=userRepository.findByUsername(request.getUsername());
         if(user!=null){
-            return passwordEncoder().matches(request.getPassword(),user.getPassword());
+            if(passwordEncoder().matches(request.getPassword(),user.getPassword())){
+                return user;
+            }
         }
-        return false;
+        return null;
     }
 }

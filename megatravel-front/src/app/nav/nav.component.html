@@ -15,6 +15,9 @@
         <li class="nav-item">
           <a class="nav-link" routerLink="/register">Sign Up</a>
         </li>
+        <li class="nav-item" *ngIf="currentUser$ | async as user">
+          <a class="nav-link">{{user.ime}}</a>
+        </li>
       </ul>
     </div>
   </nav>

@@ -1,20 +1,19 @@
 package com.megatravel.login.controller;
 
-import com.megatravel.login.model.UserTokenState;
+import com.megatravel.login.dto.UserDTO;
+import com.megatravel.login.model.TRegKorisnik;
 import com.megatravel.login.security.TokenUtils;
 import com.megatravel.login.security.auth.JwtAuthenticationRequest;
 
 import com.megatravel.login.service.LoginServiceImpl;
+import com.megatravel.login.utils.ObjectMapperUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.naming.AuthenticationException;
 
@@ -23,6 +22,7 @@ import java.io.IOException;
 
 
 //Kontroler zaduzen za autentifikaciju korisnika
+
 @RestController
 @RequestMapping(value = "/auth", produces = MediaType.APPLICATION_JSON_VALUE)
 public class AuthenticationController {
@@ -41,12 +41,15 @@ public class AuthenticationController {
 
 
 
-		if(loginService.checkCredentials(authenticationRequest)){
+		TRegKorisnik user=loginService.checkCredentials(authenticationRequest);
+		if(user!=null){
 			String jwt = tokenUtils.generateToken(authenticationRequest.getUsername());
 			int expiresIn = tokenUtils.getExpiredIn();
-
-			// Vrati token kao odgovor na uspesno autentifikaciju
-			return ResponseEntity.ok(new UserTokenState(jwt, expiresIn));
+			UserDTO userDTO= ObjectMapperUtils.map(user,UserDTO.class);
+			userDTO.setExpiresIn(expiresIn);
+			userDTO.setToken(jwt);
+			// Vrati user-a sa tokenom kao odgovor na uspesno autentifikaciju
+			return ResponseEntity.ok(userDTO);
 		}else{
 			return new ResponseEntity<>("Incorrect username or password", HttpStatus.UNAUTHORIZED);
 		}

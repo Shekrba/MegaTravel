@@ -9,8 +9,9 @@ import { HotelsComponent } from './hotels/hotels.component';
 import { RegisterComponent } from './register/register.component';
 import { LoginComponent } from './login/login.component';
 import { HotelProfileComponent } from './hotel-profile/hotel-profile.component';
-import {HttpClientModule} from "@angular/common/http";
-import { FormsModule } from '@angular/forms'
+import {HttpClientModule, HTTP_INTERCEPTORS} from "@angular/common/http";
+import { FormsModule, ReactiveFormsModule } from '@angular/forms'
+import { JwtInterceptor, ErrorInterceptor } from './_helpers';
 
 
 @NgModule({
@@ -28,8 +29,12 @@ import { FormsModule } from '@angular/forms'
     HttpClientModule,
     AppRoutingModule,
     FormsModule,
+    ReactiveFormsModule
   ],
-  providers: [],
+  providers: [
+    { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
+    { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
