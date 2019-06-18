@@ -16,7 +16,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 @RestController
-@CrossOrigin
 @RequestMapping(value = "api", produces="application/json;charset=UTF-8")
 public class SearchController {
 

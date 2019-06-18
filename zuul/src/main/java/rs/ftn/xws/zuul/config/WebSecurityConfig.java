@@ -72,7 +72,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
 			.authorizeRequests()
 			.antMatchers("/login-service/auth/**").permitAll()
-			.antMatchers("/search-service/api/**").hasRole("USER")
+			.antMatchers("/search-service/api/**").permitAll()
 			// svaki zahtev mora biti autorizovan
 			.anyRequest().authenticated().and()
 			
@@ -86,9 +86,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	@Override
 	public void configure(WebSecurity web) throws Exception {
 		// TokenAuthenticationFilter ce ignorisati sve ispod navedene putanje
-		web.ignoring().antMatchers(HttpMethod.POST, "/login-service/auth/login");
+		web.ignoring().antMatchers(HttpMethod.POST, "/login-service/auth/login","/search-service/api/**");
 		
-		web.ignoring().antMatchers(HttpMethod.GET,"/","/images/**","/webjars/**", "/*.html", "/favicon.ico", "/**/*.html", "/**/*.css", "/**/*.js");
+		web.ignoring().antMatchers(HttpMethod.GET,"/","/search-service/api/**","/images/**","/webjars/**", "/*.html", "/favicon.ico", "/**/*.html", "/**/*.css", "/**/*.js");
 	}
 
 	@Bean
