@@ -1,0 +1,16 @@
+{
+  "name": "rating-system",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "NODE_ENV=production node ./app",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "Apache-2.0",
+  "dependencies": {
+    "@google/cloud-debug": "^0.9.3",
+    "mysql": "^2.17.1"
+  }
+}
