@@ -63,10 +63,7 @@ public class AdminController {
         return adminService.getUsluge();
     }
 
-    @RequestMapping(value = "/hotels", method = RequestMethod.PUT)
-    public SJedinica setTip(@RequestBody Smestaj smestaj){
-        return adminService.setTip(smestaj.getId(), smestaj.getTipSmestaja());
-    }
+
 
     @RequestMapping(value="/accomodation", method = RequestMethod.POST)
     public Smestaj addAccomodation(@RequestBody SmestajDTO smestaj)

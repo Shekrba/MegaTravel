@@ -30,6 +30,12 @@ public class AdminServiceImpl implements  AdminService{
     @Autowired
     CategoryRepository categoryRepository;
 
+    @Autowired
+    AuthorityRepository authorityRepository;
+
+    @Autowired
+    AccomodationTypeRepository accomodationTypeRepository;
+
     @Override
     public List<Usluga> getUsluge() {
         return uslugaRepository.findAll();
@@ -106,7 +112,11 @@ public class AdminServiceImpl implements  AdminService{
         newUser.setIme(agent.getIme());
         newUser.setPosMatBroj(agent.getPosMatBroj());
         newUser.setPrezime(agent.getPrezime());
-        newUser.setRole(UserType.AGENT);
+        Authority authority = authorityRepository.findOneByName("ROLE_AGENT");
+        List<Authority> authorities = new ArrayList<>();
+        authorities.add(authority);
+        newUser.setAuthorities(authorities);
+
         return userRepository.save(newUser);
     }
 
@@ -116,7 +126,8 @@ public class AdminServiceImpl implements  AdminService{
         accomodation.setNaziv(smestaj.getNaziv());
         accomodation.setAdresa(smestaj.getAdresa());
         accomodation.setOpis(smestaj.getOpis());
-        accomodation.setTipSmestaja(smestaj.getTipSmestaja());
+        AccomodationType type = accomodationTypeRepository.findOneById(smestaj.getTipSmestaja());
+        accomodation.setAccomodationType(type);
         accomodation.setPeriodOtkaza(smestaj.getPeriodOtkaza());
         List<Usluga> uslugaList = uslugaRepository.findAllById(smestaj.getAdditionalServices());
         accomodation.setUsluge(uslugaList);

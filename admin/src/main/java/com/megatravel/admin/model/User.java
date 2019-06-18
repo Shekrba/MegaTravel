@@ -1,10 +1,16 @@
 package com.megatravel.admin.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+
 import javax.persistence.*;
+import java.sql.Timestamp;
+import java.util.Collection;
 import java.util.List;
 
 @Entity
-public class User {
+public class User implements UserDetails {
 
 
     @Id
@@ -25,13 +31,11 @@ public class User {
     @Column(name = "password", unique = false, nullable = true)
     private String password;
 
+    @Column(name = "enabled")
+    private boolean enabled;
 
     @Column(name = "email", unique = false, nullable = true)
     private String email;
-
-    @Column(name = "role", unique = false, nullable = true)
-    @Enumerated(EnumType.STRING)
-    private UserType role;
 
     @Column(name = "status", nullable = false)
     @Enumerated(EnumType.STRING)
@@ -43,11 +47,34 @@ public class User {
     @Column(name = "posMatBroj", unique = false)
     private String posMatBroj;
 
+    @Column(name = "last_password_reset_date")
+    private Timestamp lastPasswordResetDate;
+
     @Column(name = "adresa", unique = false)
     private String adresa;
 
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinTable(name = "user_authority",
+            joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "authority_id", referencedColumnName = "id"))
+    private List<Authority> authorities;
+
     public User() {
 
+    }
+
+    public void setPassword(String password) {
+        Timestamp now = new Timestamp(new java.util.Date().getTime());
+        this.setLastPasswordResetDate( now );
+        this.password = password;
+    }
+
+    public Timestamp getLastPasswordResetDate() {
+        return lastPasswordResetDate;
+    }
+
+    public void setLastPasswordResetDate(Timestamp lastPasswordResetDate) {
+        this.lastPasswordResetDate = lastPasswordResetDate;
     }
 
     public Long getId() {
@@ -86,9 +113,6 @@ public class User {
         return password;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
-    }
 
     public String getEmail() {
         return email;
@@ -96,14 +120,6 @@ public class User {
 
     public void setEmail(String email) {
         this.email = email;
-    }
-
-    public UserType getRole() {
-        return role;
-    }
-
-    public void setRole(UserType role) {
-        this.role = role;
     }
 
 
@@ -139,5 +155,42 @@ public class User {
 
     public void setAdresa(String adresa) {
         this.adresa = adresa;
+    }
+
+
+    @Override
+    public boolean isEnabled() {
+        return enabled;
+    }
+
+
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return this.authorities;
+    }
+
+
+    @JsonIgnore
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @JsonIgnore
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @JsonIgnore
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @JsonIgnore
+    public void setAuthorities(List<Authority> authorities) {
+        this.authorities = authorities;
     }
 }

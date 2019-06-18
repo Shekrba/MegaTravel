@@ -75,7 +75,6 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = {
         "sJedinica",
-        "tipSmestaja",
         "adresa",
         "opis",
         "periodOtkaza"
@@ -91,11 +90,8 @@ public class Smestaj {
     @OneToMany(mappedBy = "smestaj")
     protected List<SJedinica> sJedinica;
 
-    @XmlElement(name = "TipSmestaja", required = true, defaultValue = "hotel")
-    @XmlSchemaType(name = "string")
-    @Column(name = "tip", unique = false, nullable = false)
-    @Enumerated(EnumType.STRING)
-    protected TTipSmestaja tipSmestaja;
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    private AccomodationType accomodationType;
 
     @XmlElement(name = "Adresa", required = true)
     @OneToOne(fetch=FetchType.LAZY, cascade=CascadeType.ALL, optional=true)
@@ -113,7 +109,7 @@ public class Smestaj {
             inverseJoinColumns = @JoinColumn(name = "service_id")
     )
     @JsonIgnore
-    protected List<Usluga> uslugaList = new ArrayList<>();
+    private List<Usluga> uslugaList = new ArrayList<>();
 
     @XmlElement(name = "PeriodOtkaza")
     @Column(name = "periodOtkaza", unique = false, nullable = false)
@@ -146,12 +142,12 @@ public class Smestaj {
     }
 
     public List<Usluga> getUsluge() {
-        return uslugaList;
+        return getUslugaList();
     }
 
     @JsonIgnore
     public void setUsluge(List<Usluga> usluge) {
-        this.uslugaList = usluge;
+        this.setUslugaList(usluge);
     }
 
 
@@ -185,29 +181,6 @@ public class Smestaj {
         return this.sJedinica;
     }
 
-    /**
-     * Gets the value of the tipSmestaja property.
-     *
-     * @return
-     *     possible object is
-     *     {@link TTipSmestaja }
-     *
-     */
-    public TTipSmestaja getTipSmestaja() {
-        return tipSmestaja;
-    }
-
-    /**
-     * Sets the value of the tipSmestaja property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link TTipSmestaja }
-     *
-     */
-    public void setTipSmestaja(TTipSmestaja value) {
-        this.tipSmestaja = value;
-    }
 
     /**
      * Gets the value of the adresa property.
@@ -309,6 +282,23 @@ public class Smestaj {
 
     public void setCategory(Category category) {
         this.category = category;
+    }
+
+    public AccomodationType getAccomodationType() {
+        return accomodationType;
+    }
+
+    public void setAccomodationType(AccomodationType accomodationType) {
+        this.accomodationType = accomodationType;
+    }
+
+    public List<Usluga> getUslugaList() {
+        return uslugaList;
+    }
+
+    @JsonIgnore
+    public void setUslugaList(List<Usluga> uslugaList) {
+        this.uslugaList = uslugaList;
     }
 
 
