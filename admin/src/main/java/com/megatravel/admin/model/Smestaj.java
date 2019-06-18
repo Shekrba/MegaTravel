@@ -84,22 +84,22 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 public class Smestaj {
 
     @Column(name = "naziv", unique = false, nullable = false)
-    protected String naziv;
+    private String naziv;
 
     @XmlElement(name = "SJedinica", required = true)
     @OneToMany(mappedBy = "smestaj")
-    protected List<SJedinica> sJedinica;
+    private List<SJedinica> sJedinica;
 
     @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private AccomodationType accomodationType;
 
     @XmlElement(name = "Adresa", required = true)
     @OneToOne(fetch=FetchType.LAZY, cascade=CascadeType.ALL, optional=true)
-    protected Adresa adresa;
+    private Adresa adresa;
 
     @XmlElement(name = "Opis", required = true)
     @Column(name = "opis", unique = false, nullable = true)
-    protected String opis;
+    private String opis;
 
     @XmlElement(name = "DodatneUsluge", required = true)
     @ManyToMany
@@ -113,16 +113,23 @@ public class Smestaj {
 
     @XmlElement(name = "PeriodOtkaza")
     @Column(name = "periodOtkaza", unique = false, nullable = false)
-    protected int periodOtkaza;
+    private int periodOtkaza;
 
     @XmlAttribute(name = "Id")
     @XmlSchemaType(name = "anySimpleType")
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    protected Long id;
+    private Long id;
 
     @ManyToOne(fetch = FetchType.EAGER)
     private Category category;
+
+    @OneToMany(
+            mappedBy = "smestaj",
+            fetch = FetchType.LAZY,
+            cascade = CascadeType.ALL
+    )
+    private List<Komentar> comments;
 
 
     public String getNaziv() {
@@ -175,10 +182,10 @@ public class Smestaj {
      *
      */
     public List<SJedinica> getSJedinica() {
-        if (sJedinica == null) {
-            sJedinica = new ArrayList<SJedinica>();
+        if (getsJedinica() == null) {
+            setsJedinica(new ArrayList<SJedinica>());
         }
-        return this.sJedinica;
+        return this.getsJedinica();
     }
 
 
@@ -299,6 +306,15 @@ public class Smestaj {
     @JsonIgnore
     public void setUslugaList(List<Usluga> uslugaList) {
         this.uslugaList = uslugaList;
+    }
+
+    public List<Komentar> getComments() {
+        return comments;
+    }
+
+    @JsonIgnore
+    public void setComments(List<Komentar> comments) {
+        this.comments = comments;
     }
 
 

@@ -87,12 +87,7 @@ public class SJedinica {
     @Column(name = "broj", unique = false, nullable = false)
     protected int broj;
 
-    @OneToMany(
-            mappedBy = "sJedinica",
-            fetch = FetchType.LAZY,
-            cascade = CascadeType.ALL
-    )
-    protected List<Komentar> comments;
+
 
     /**
      * Gets the value of the cena property.

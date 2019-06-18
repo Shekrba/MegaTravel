@@ -2,6 +2,7 @@ package com.megatravel.admin.dto;
 
 public class UslugaDTO {
 
+    private Long id;
 
     private String naziv;
 
@@ -34,5 +35,14 @@ public class UslugaDTO {
 
     public void setCena(double cena) {
         this.cena = cena;
+    }
+
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 }

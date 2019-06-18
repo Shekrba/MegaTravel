@@ -41,7 +41,6 @@ import javax.xml.bind.annotation.XmlType;
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = {
     "korisnik",
-    "sJedinica",
     "odobren",
     "tekst"
 })
@@ -56,49 +55,25 @@ public class Komentar {
     )
     private User korisnik;
 
-    @XmlElement(name = "SJedinica", required = true)
+
     @ManyToOne(
             cascade = CascadeType.ALL,
             fetch = FetchType.EAGER
     )
-    private SJedinica sJedinica;
+    private Smestaj smestaj;
 
     @XmlElement(name = "Odobren", namespace = "https://github.com/Shekrba/MegaTravel/Komentar", defaultValue = "false")
     @Column(name = "odobren")
-    protected boolean odobren;
+    private boolean odobren;
 
     @XmlElement(name = "Tekst", namespace = "https://github.com/Shekrba/MegaTravel/Komentar", required = true)
     @Column(name = "tekst", nullable = false)
-    protected String tekst;
+    private String tekst;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-
-    /**
-     * Gets the value of the sJedinica property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link SJedinica }
-     *     
-     */
-    public SJedinica getSJedinica() {
-        return getsJedinica();
-    }
-
-    /**
-     * Sets the value of the sJedinica property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link SJedinica }
-     *     
-     */
-    public void setSJedinica(SJedinica value) {
-        this.setsJedinica(value);
-    }
 
     /**
      * Gets the value of the odobren property.
@@ -157,11 +132,12 @@ public class Komentar {
         this.korisnik = korisnik;
     }
 
-    public SJedinica getsJedinica() {
-        return sJedinica;
+
+    public Smestaj getSmestaj() {
+        return smestaj;
     }
 
-    public void setsJedinica(SJedinica sJedinica) {
-        this.sJedinica = sJedinica;
+    public void setSmestaj(Smestaj smestaj) {
+        this.smestaj = smestaj;
     }
 }
