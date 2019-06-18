@@ -1,9 +1,6 @@
 package com.megatravel.admin.service;
 
-import com.megatravel.admin.dto.AccTypeDTO;
-import com.megatravel.admin.dto.AgentDTO;
-import com.megatravel.admin.dto.SmestajDTO;
-import com.megatravel.admin.dto.UslugaDTO;
+import com.megatravel.admin.dto.*;
 import com.megatravel.admin.model.*;
 import com.megatravel.admin.repository.*;
 import com.netflix.discovery.converters.Auto;
@@ -66,6 +63,17 @@ public class AdminServiceImpl implements  AdminService{
         return uslugaRepository.save(updateUsluga);
     }
 
+    @Override
+    public UslugaDTO getUsluga(Long id) {
+        Usluga usluga = uslugaRepository.findOneById(id);
+        UslugaDTO uslugaDTO = new UslugaDTO();
+        uslugaDTO.setOpis(usluga.getOpis());
+        uslugaDTO.setNaziv(usluga.getNaziv());
+        uslugaDTO.setCena(usluga.getCena());
+        uslugaDTO.setId(usluga.getId());
+        return  uslugaDTO;
+    }
+
 
     @Override
     public SJedinica setTip(Long id, TTipSmestaja tip){
@@ -80,8 +88,22 @@ public class AdminServiceImpl implements  AdminService{
     }
 
     @Override
-    public List<Komentar> getUnapprovedComments() {
-        return komentarRepository.findUnapprovedComments();
+    public List<KomentarDTO> getUnapprovedComments() {
+        List<Komentar> komentars = komentarRepository.findUnapprovedComments();
+        List<KomentarDTO> komentarDTOS = new ArrayList<>();
+
+        for(Komentar komentar : komentars)
+        {
+            String username = komentar.getKorisnik().getUsername();
+            String smestaj = "";
+            if(komentar.getSmestaj() != null)
+                smestaj = komentar.getSmestaj().getNaziv();
+            boolean publish = komentar.isOdobren();
+            String text = komentar.getTekst();
+            Long id = komentar.getId();
+            komentarDTOS.add(new KomentarDTO(username,smestaj,text,id,publish));
+        }
+        return komentarDTOS;
     }
 
     @Override
