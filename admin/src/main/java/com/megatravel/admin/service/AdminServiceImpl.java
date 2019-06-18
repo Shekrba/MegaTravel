@@ -1,5 +1,6 @@
 package com.megatravel.admin.service;
 
+import com.megatravel.admin.dto.AccTypeDTO;
 import com.megatravel.admin.dto.AgentDTO;
 import com.megatravel.admin.dto.SmestajDTO;
 import com.megatravel.admin.dto.UslugaDTO;
@@ -187,5 +188,25 @@ public class AdminServiceImpl implements  AdminService{
                     smestaj.setCategory(category);
             }
         }
+    }
+
+    @Override
+    public List<AccTypeDTO> getAccomodationTypes() {
+
+        List<AccomodationType> accomodationTypes = accomodationTypeRepository.findAll();
+        List<AccTypeDTO> retDtos = new ArrayList<>();
+        for(AccomodationType accomodationType: accomodationTypes){
+            retDtos.add(new AccTypeDTO(accomodationType.getId(),accomodationType.getNaziv()));
+        }
+        return retDtos;
+    }
+
+    @Override
+    public AccTypeDTO addAcomodationType(AccTypeDTO accTypeDTO) {
+        AccomodationType accomodationType = new AccomodationType();
+        accomodationType.setNaziv(accTypeDTO.getNaziv());
+        accomodationType = accomodationTypeRepository.save(accomodationType);
+        AccTypeDTO retDto = new AccTypeDTO(accomodationType.getId(), accomodationType.getNaziv());
+        return retDto;
     }
 }

@@ -1,9 +1,6 @@
 package com.megatravel.admin.controller;
 
-import com.megatravel.admin.dto.AgentDTO;
-import com.megatravel.admin.dto.ChosenServicesDTO;
-import com.megatravel.admin.dto.SmestajDTO;
-import com.megatravel.admin.dto.UslugaDTO;
+import com.megatravel.admin.dto.*;
 import com.megatravel.admin.model.*;
 import com.megatravel.admin.service.AdminService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -100,4 +97,20 @@ public class AdminController {
     public User addAgent(@RequestBody AgentDTO agent){
         return adminService.addAgent(agent);
     }
+
+
+    @RequestMapping(value = "/types", method = RequestMethod.GET)
+    public List<AccTypeDTO> getAccTypes()
+    {
+        return adminService.getAccomodationTypes();
+    }
+
+    @RequestMapping(value = "/types", method = RequestMethod.POST)
+    public AccTypeDTO addAccomodationType(@RequestBody AccTypeDTO accTypeDTO){
+        return adminService.addAcomodationType(accTypeDTO);
+    }
+
+
 }
+
+

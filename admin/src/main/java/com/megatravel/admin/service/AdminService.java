@@ -1,5 +1,6 @@
 package com.megatravel.admin.service;
 
+import com.megatravel.admin.dto.AccTypeDTO;
 import com.megatravel.admin.dto.AgentDTO;
 import com.megatravel.admin.dto.SmestajDTO;
 import com.megatravel.admin.dto.UslugaDTO;
@@ -28,6 +29,7 @@ public interface AdminService {
 
     public void setCategoryForAccomodation(Smestaj smestaj);
 
-
+    public List<AccTypeDTO> getAccomodationTypes();
+    public AccTypeDTO addAcomodationType(AccTypeDTO accTypeDTO);
 
 }
