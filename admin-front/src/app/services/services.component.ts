@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { AdminServiceService } from '../admin-service.service';
+import { Data } from '@angular/router';
 
 @Component({
   selector: 'app-services',
@@ -7,9 +9,28 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ServicesComponent implements OnInit {
 
-  constructor() { }
+  usluge: Data = {
+    naziv : null,
+    opis : null,
+    cena : null,
+    id : null
+  };
+
+  constructor(private adminService: AdminServiceService) { }
 
   ngOnInit() {
+    this.getAllServices();
+  }
+
+  public getAllServices(){
+    this.adminService.getAllServices().subscribe(
+      res => {
+        this.usluge = res;
+      },
+      err => {
+        alert("An error has occured while getting all services");
+      }
+    )
   }
 
 }

@@ -14,6 +14,7 @@ import { ServicesComponent } from './services/services.component';
 import { EditServiceComponent } from './edit-service/edit-service.component';
 import { TypesComponent } from './types/types.component';
 import { CategorizationComponent } from './categorization/categorization.component';
+import {HttpClientModule, HTTP_INTERCEPTORS} from "@angular/common/http";
 
 @NgModule({
   declarations: [
@@ -36,7 +37,8 @@ import { CategorizationComponent } from './categorization/categorization.compone
       positionClass: "toast-top-right",
       preventDuplicates: false,
     }),
-    FormsModule
+    FormsModule,
+    HttpClientModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

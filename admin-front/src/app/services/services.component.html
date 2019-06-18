@@ -61,11 +61,11 @@
           </tr>
         </thead>
         <tbody>
-          <tr>
+          <tr *ngFor="let u of usluge">
             <td>1</td>
-            <td>Wi-Fi</td>
-            <td>10$</td>
-            <td>Wireless Internet</td>
+            <td>{{u.naziv}}</td>
+            <td>{{u.cena}}$</td>
+            <td>{{u.opis}}</td>
             <td><button routerLink="/services/1" class="btn btn-warning" id="block"><i class="fa fa-edit"></i></button></td>
             <td><button class="btn btn-danger" id="delete"><i class="fa fa-trash"></i></button></td>
           </tr>
