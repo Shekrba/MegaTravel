@@ -10,7 +10,7 @@ public class SmestajDTO {
 
     private String naziv;
 
-    private TTipSmestaja tipSmestaja;
+    private Long tipSmestaja;
 
     private Adresa adresa;
 
@@ -33,11 +33,11 @@ public class SmestajDTO {
         this.naziv = naziv;
     }
 
-    public TTipSmestaja getTipSmestaja() {
+    public Long getTipSmestaja() {
         return tipSmestaja;
     }
 
-    public void setTipSmestaja(TTipSmestaja tipSmestaja) {
+    public void setTipSmestaja(Long tipSmestaja) {
         this.tipSmestaja = tipSmestaja;
     }
 
