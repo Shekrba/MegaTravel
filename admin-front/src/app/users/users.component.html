@@ -7,16 +7,17 @@
           <th scope="col">Username</th>
           <th></th>
           <th></th>
-          <th></th>
         </tr>
       </thead>
       <tbody>
-        <tr>
-          <td>1</td>
-          <td>shekrba</td>
-          <td><button (click)="activateButton()" class="btn btn-success" id="activate"><i class="fa fa-check"></i> Activate</button></td>
-          <td><button (click)="blockButton()" class="btn btn-danger" id="block" disabled><i class="fa fa-ban"></i> Block</button></td>
-          <td><button class="btn btn-dark" id="delete"><i class="fa fa-trash"></i> Delete</button></td>
+        <tr *ngFor="let u of users;let i = index">
+          <td>{{i+1}}</td>
+          <td>{{u.username}}</td>
+          <td>
+            <button *ngIf="u.status=='BLOCKED'" (click)="activateButton(u)" class="btn btn-success" id="activate{{u.id}}"><i class="fa fa-check"></i> Activate</button>
+            <button *ngIf="u.status=='ACTIVE'" (click)="blockButton(u)" class="btn btn-danger" id="block{{u.id}}"><i class="fa fa-ban"></i> Block</button>
+          </td>
+          <td><button (click)="deleteButton(u)" class="btn btn-dark" id="delete{{u.id}}"><i class="fa fa-trash"></i> Delete</button></td>
         </tr>
       </tbody>
     </table>

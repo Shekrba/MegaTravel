@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Data } from '@angular/router';
+import { AdminServiceService } from '../admin-service.service';
 
 @Component({
   selector: 'app-users',
@@ -7,25 +9,62 @@ import { Component, OnInit } from '@angular/core';
 })
 export class UsersComponent implements OnInit {
 
-  constructor() { }
+  users : Data = [{
+    username : null,
+    id : null,
+    status : null
+  }]
+
+  constructor(private adminService: AdminServiceService) { }
 
   ngOnInit() {
+    this.getAllUsers();
   }
 
-  activateButton(){
-    var activate = <HTMLInputElement> document.getElementById("activate");
-    var block = <HTMLInputElement> document.getElementById("block");
-    
-    activate.disabled=true;
-    block.disabled=false;
+  getAllUsers(){
+    this.adminService.getAllUsers().subscribe(
+      res => {
+        this.users = res;
+      },
+      err => {
+        alert("An error has occured while getting all users.");
+      }
+    )
   }
 
-  blockButton(){
-    var activate = <HTMLInputElement> document.getElementById("activate");
-    var block = <HTMLInputElement> document.getElementById("block");
-
-    activate.disabled=false;
-    block.disabled=true;
+  activateButton(u){
+    this.adminService.activateUser(u).subscribe(
+      res => {
+        let indexOfUser = this.users.indexOf(u);
+        this.users[indexOfUser].status = 'ACTIVE';
+      },
+      err => {
+        alert("An error has occured while activating a user.");
+      }
+    )
   }
 
+  blockButton(u){
+    this.adminService.blockUser(u).subscribe(
+      res => {
+        let indexOfUser = this.users.indexOf(u);
+        this.users[indexOfUser].status = 'BLOCKED';
+      },
+      err => {
+        alert("An error has occured while blocking a user.");
+      }
+    )
+  }
+
+  deleteButton(u){
+    this.adminService.deleteUser(u).subscribe(
+      res => {
+        let indexOfUser = this.users.indexOf(u);
+        this.users.splice(indexOfUser,1);
+      },
+      err => {
+        alert("An error has occured while deleting a user.");
+      }
+    )
+  }
 }

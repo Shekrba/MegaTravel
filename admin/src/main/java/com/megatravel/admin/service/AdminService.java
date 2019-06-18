@@ -14,12 +14,13 @@ public interface AdminService {
     public UslugaDTO getUsluga(Long id);
     public List<Usluga> getUsluge();
     public SJedinica setTip(Long id, TTipSmestaja tip);
-    public Komentar odobriKomentar(Long id);
+    public KomentarDTO odobriKomentar(Long id);
     public List<KomentarDTO> getUnapprovedComments();
     public User blockKorisnik(Long id);
     public User activateKorisnik(Long id);
     public User deleteKorisnik(Long id);
     public User addAgent(AgentDTO agent);
+    public List<UserDTO> getKorisnike();
 
     public Smestaj addAccomodation(SmestajDTO smestaj);
     public List<Category> getCategories();

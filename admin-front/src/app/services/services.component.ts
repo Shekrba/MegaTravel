@@ -9,12 +9,18 @@ import { Data } from '@angular/router';
 })
 export class ServicesComponent implements OnInit {
 
-  usluge: Data = {
+  usluge: Data = [{
     naziv : null,
     opis : null,
     cena : null,
     id : null
-  };
+  }];
+
+  usl: Data = {
+    naziv : null,
+    opis : null,
+    cena :null
+  }
 
   constructor(private adminService: AdminServiceService) { }
 
@@ -31,6 +37,34 @@ export class ServicesComponent implements OnInit {
         alert("An error has occured while getting all services");
       }
     )
+  }
+
+  public deleteService(usluga){
+
+    this.adminService.deleteService(usluga.id).subscribe(
+      res => {
+        let indexOfService = this.usluge.indexOf(usluga);
+        this.usluge.splice(indexOfService,1);
+      },
+      err => {
+        alert("Could not delete service");
+      }
+    );
+  }
+
+  public addService(){
+
+    this.adminService.addService(this.usl).subscribe(
+      res => {
+        this.usluge.push(res);
+        this.usl.naziv=null;
+        this.usl.opis=null;
+        this.usl.cena=null;
+      },
+      err => {
+        alert("Could not add service");
+      }
+    );
   }
 
 }

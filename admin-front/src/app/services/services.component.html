@@ -32,16 +32,16 @@
   
               <div class="row ml-auto mr-auto">
                 <div class="col-lg-2 col-md-3 col-sm-12 p-0">
-                    <input type="text" class="form-control">
+                    <input [(ngModel)]=usl.naziv type="text" class="form-control">
                 </div>
                 <div class="col-lg-2 col-md-3 col-sm-12 p-0 ml-5">
-                    <input type="text" class="form-control">
+                    <input [(ngModel)]=usl.cena type="text" class="form-control">
                 </div>
                 <div class="col-lg-4 col-md-3 col-sm-12 p-0 ml-5">
-                    <input type="text" class="form-control">
+                    <input [(ngModel)]=usl.opis type="text" class="form-control">
                 </div>
                 <div class="col-lg-2 col-md-3 col-sm-12 p-0 ml-5">
-                    <button class="btn btn-primary">Submit</button>
+                    <button (click)="addService()" class="btn btn-primary">Submit</button>
                 </div>
             </div>
           </div>
@@ -61,13 +61,13 @@
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let u of usluge">
-            <td>1</td>
+          <tr *ngFor="let u of usluge;let i = index">
+            <td>{{i+1}}</td>
             <td>{{u.naziv}}</td>
             <td>{{u.cena}}$</td>
             <td>{{u.opis}}</td>
-            <td><button routerLink="/services/1" class="btn btn-warning" id="block"><i class="fa fa-edit"></i></button></td>
-            <td><button class="btn btn-danger" id="delete"><i class="fa fa-trash"></i></button></td>
+            <td><button routerLink="/services/{{u.id}}" class="btn btn-warning"><i class="fa fa-edit"></i></button></td>
+            <td><button (click)="deleteService(u)" class="btn btn-danger" id="delete"><i class="fa fa-trash"></i></button></td>
           </tr>
         </tbody>
       </table>
