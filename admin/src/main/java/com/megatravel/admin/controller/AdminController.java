@@ -55,6 +55,11 @@ public class AdminController {
         return adminService.updateUsluga(usluga, id);
     }
 
+    @RequestMapping(value = "/service/{id}", method = RequestMethod.GET)
+    public UslugaDTO getUsluga(@PathVariable("id") Long id) {
+        return adminService.getUsluga(id);
+    }
+
     @RequestMapping(value = "/services", method = RequestMethod.GET)
     public List<Usluga> getUsluge(){
         return adminService.getUsluge();
@@ -69,7 +74,7 @@ public class AdminController {
     }
 
     @RequestMapping(value = "/comments", method = RequestMethod.GET)
-    public List<Komentar> getComments()
+    public List<KomentarDTO> getComments()
     {
         return adminService.getUnapprovedComments();
     }
@@ -109,6 +114,7 @@ public class AdminController {
     public AccTypeDTO addAccomodationType(@RequestBody AccTypeDTO accTypeDTO){
         return adminService.addAcomodationType(accTypeDTO);
     }
+
 
 
 }
