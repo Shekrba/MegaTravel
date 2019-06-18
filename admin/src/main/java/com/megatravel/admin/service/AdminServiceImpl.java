@@ -4,10 +4,7 @@ import com.megatravel.admin.dto.AgentDTO;
 import com.megatravel.admin.dto.SmestajDTO;
 import com.megatravel.admin.dto.UslugaDTO;
 import com.megatravel.admin.model.*;
-import com.megatravel.admin.repository.KomentarRepository;
-import com.megatravel.admin.repository.SmestajRepository;
-import com.megatravel.admin.repository.UserRepository;
-import com.megatravel.admin.repository.UslugaRepository;
+import com.megatravel.admin.repository.*;
 import com.netflix.discovery.converters.Auto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -29,6 +26,9 @@ public class AdminServiceImpl implements  AdminService{
 
     @Autowired
     SmestajRepository smestajRepository;
+
+    @Autowired
+    CategoryRepository categoryRepository;
 
     @Override
     public List<Usluga> getUsluge() {
@@ -120,6 +120,61 @@ public class AdminServiceImpl implements  AdminService{
         accomodation.setPeriodOtkaza(smestaj.getPeriodOtkaza());
         List<Usluga> uslugaList = uslugaRepository.findAllById(smestaj.getAdditionalServices());
         accomodation.setUsluge(uslugaList);
+        setCategoryForAccomodation(accomodation);
+
         return smestajRepository.save(accomodation);
+    }
+
+    @Override
+    public List<Category> getCategories() {
+        return categoryRepository.findAll();
+    }
+
+    @Override
+    public String setServicesForCategory(Long id, List<Long> services) {
+        Category category = categoryRepository.findOneById(id);
+        List<Usluga> foundServices = uslugaRepository.findAllById(services);
+        category.setUslugaList(foundServices);
+        categoryRepository.save(category);
+        return "Change success!";
+    }
+
+    @Override
+    public void setCategoryForAccomodation(Smestaj smestaj) {
+        List<Category> categories = categoryRepository.findAll();
+        List<Category> foundCategories = new ArrayList<>();
+        for(Category category: categories)
+        {
+            List<Usluga> categoryServices = category.getUslugaList();
+            List<Usluga> accomodationServices = smestaj.getUsluge();
+            if(accomodationServices.size() >= categoryServices.size())
+            {
+                boolean isOk = true;
+                for(Usluga categoryService : categoryServices)
+                {
+                    boolean foundService = false;
+                    for(Usluga accomodationService : accomodationServices)
+                    {
+                        if(accomodationService.getId() == categoryService.getId()) {
+                            foundService = true;
+                            break;
+                        }
+                    }
+                    if(!foundService) {
+                        isOk = false;
+                        break;
+                    }
+                }
+                if(isOk)
+                    foundCategories.add(category);
+            }
+        }
+        if(foundCategories.size() > 0){
+            smestaj.setCategory(foundCategories.get(0));
+            for(Category category : foundCategories){
+                if(category.getVrednost() > smestaj.getCategory().getVrednost())
+                    smestaj.setCategory(category);
+            }
+        }
     }
 }

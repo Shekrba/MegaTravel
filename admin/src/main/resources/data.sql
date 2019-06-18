@@ -17,3 +17,9 @@ insert into komentar(odobren, tekst, korisnik_id ) values ( false, 'asd',1);
 insert into komentar(odobren, tekst, korisnik_id ) values ( true, 'Msadars',1);
 insert into komentar(odobren, tekst, korisnik_id ) values ( true, 'Mdasars',2);
 insert into komentar(odobren, tekst, korisnik_id ) values ( false, 'Maasrs',2);
+
+insert into category(naziv, vrednost) values ('FIVE STAR',5);
+insert into category(naziv, vrednost) values ('FOUR STAR',4);
+insert into category(naziv, vrednost) values ('THREE STAR',3);
+insert into category(naziv, vrednost) values ('TWO STAR',2);
+insert into category(naziv, vrednost) values ('ONE STAR',1);

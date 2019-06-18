@@ -1,6 +1,7 @@
 package com.megatravel.admin.controller;
 
 import com.megatravel.admin.dto.AgentDTO;
+import com.megatravel.admin.dto.ChosenServicesDTO;
 import com.megatravel.admin.dto.SmestajDTO;
 import com.megatravel.admin.dto.UslugaDTO;
 import com.megatravel.admin.model.*;
@@ -20,6 +21,21 @@ public class AdminController {
     @Autowired
     AdminService adminService;
 
+
+    @RequestMapping(value = "/categories", method = RequestMethod.GET)
+    public List<Category> getAllCategories(){
+        return adminService.getCategories();
+    }
+
+    @RequestMapping(value="/serviceForCategory/{id}", method = RequestMethod.POST)
+    public ResponseEntity<String> setServicesForCategory(@PathVariable("id") Long id, @RequestBody ChosenServicesDTO services){
+        try {
+            String message = adminService.setServicesForCategory(id,services.getServices());
+            return new ResponseEntity<String>(message,HttpStatus.OK);
+        }catch (Exception e){
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+    }
 
     @RequestMapping(value = "/services", method = RequestMethod.POST)
     public Usluga addUsluga(@RequestBody UslugaDTO usluga){

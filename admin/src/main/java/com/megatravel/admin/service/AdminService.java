@@ -23,6 +23,10 @@ public interface AdminService {
     public User addAgent(AgentDTO agent);
 
     public Smestaj addAccomodation(SmestajDTO smestaj);
+    public List<Category> getCategories();
+    public String setServicesForCategory(Long id, List<Long> services);
+
+    public void setCategoryForAccomodation(Smestaj smestaj);
 
 
 
