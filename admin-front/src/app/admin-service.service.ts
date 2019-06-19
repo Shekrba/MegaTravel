@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { AngularWaitBarrier } from 'blocking-proxy/built/lib/angular_wait_barrier';
 
 const BASE_URL = "http://localhost:8762/admin-service";
 
@@ -15,6 +14,7 @@ export class AdminServiceService {
   private ALL_COMMENTS_URL = `${BASE_URL}/api/admin/comments`;
   private ALL_USERS_URL = `${BASE_URL}/api/admin/user`;
   private ALL_AGENTS_URL = `${BASE_URL}/api/admin/agent`;
+  private ALL_TYPES_URL = `${BASE_URL}/api/admin/types`;
 
   constructor( private http: HttpClient) { }
 
@@ -93,6 +93,34 @@ export class AdminServiceService {
       headers: new HttpHeaders({
         'Content-Type': 'application/json'
       })
+    });
+  }
+
+  getAllTypes(): Observable<any>{
+    return this.http.get(this.ALL_TYPES_URL);
+  }
+
+  addType(t): Observable<any>{
+    return this.http.post(this.ALL_TYPES_URL, t,{
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json'
+      })
+    });
+  }
+
+  deleteType(id): Observable<any>{
+    return this.http.delete(this.ALL_TYPES_URL+"/"+id,{responseType: 'text'});
+  }
+
+  setServicesForCategory(catId,services): Observable<any>{
+
+    console.log(services);
+
+    return this.http.post(`${BASE_URL}/api/admin/serviceForCategory/`+catId, services,{
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json'
+      }),
+      responseType: 'text'
     });
   }
 }

@@ -34,7 +34,7 @@ export class ServicesComponent implements OnInit {
         this.usluge = res;
       },
       err => {
-        alert("An error has occured while getting all services");
+        alert("An error has occured while getting all services.");
       }
     )
   }

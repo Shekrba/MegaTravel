@@ -30,5 +30,5 @@ public interface AdminService {
 
     public List<AccTypeDTO> getAccomodationTypes();
     public AccTypeDTO addAcomodationType(AccTypeDTO accTypeDTO);
-
+    public String deleteType(Long id);
 }

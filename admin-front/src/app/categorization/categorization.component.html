@@ -17,15 +17,15 @@
             
                 <div id="collapseFive" class="collapse" aria-labelledby="headingFive" data-parent="#accordionFive">
                   <div class="card-body">
-                      <div class="custom-control custom-checkbox ml-2 mt-1 mb-1">
-                          <input type="checkbox" class="custom-control-input" id="Five1">
-                          <label class="custom-control-label" for="Five1">Wi-Fi</label>
+                      <div *ngFor="let u of five.in" class="custom-control custom-checkbox ml-2 mt-1 mb-1">                                           
+                        <input (change)="checkFive($event,u)" checked type="checkbox" class="custom-control-input" id="Five{{u.id}}">
+                        <label class="custom-control-label" for="Five{{u.id}}">{{u.naziv}}</label>                                                                     
                       </div>
-                      <div class="custom-control custom-checkbox ml-2 mt-1 mb-1">
-                          <input type="checkbox" class="custom-control-input" id="Five2">
-                          <label class="custom-control-label" for="Five2">Parking Garage</label>
+                      <div *ngFor="let u of five.out" class="custom-control custom-checkbox ml-2 mt-1 mb-1">                                           
+                          <input (change)="checkFive($event,u)" type="checkbox" class="custom-control-input" id="Five{{u.id}}">
+                          <label class="custom-control-label" for="Five{{u.id}}">{{u.naziv}}</label>                                                                     
                       </div>
-                      <button (click)="showSuccess()" class="btn btn-primary mt-5">Apply</button>  
+                      <button (click)="setServicesForCategory(1,five.in)" class="btn btn-primary mt-5">Apply</button>  
                   </div>
                 </div>
               </div>
@@ -45,15 +45,15 @@
             
                 <div id="collapseFour" class="collapse" aria-labelledby="headingFour" data-parent="#accordionFour">
                   <div class="card-body">
-                      <div class="custom-control custom-checkbox ml-2 mt-1 mb-1">
-                          <input type="checkbox" class="custom-control-input" id="Four1">
-                          <label class="custom-control-label" for="Four1">Wi-Fi</label>
-                      </div>
-                      <div class="custom-control custom-checkbox ml-2 mt-1 mb-1">
-                          <input type="checkbox" class="custom-control-input" id="Four2">
-                          <label class="custom-control-label" for="Four2">Parking Garage</label>
-                      </div>
-                      <button (click)="showSuccess()" class="btn btn-primary mt-5">Apply</button>  
+                      <div *ngFor="let u of four.in" class="custom-control custom-checkbox ml-2 mt-1 mb-1">                                           
+                          <input (change)="checkFour($event,u)" checked type="checkbox" class="custom-control-input" id="Four{{u.id}}">
+                          <label class="custom-control-label" for="Four{{u.id}}">{{u.naziv}}</label>                                                                     
+                        </div>
+                        <div *ngFor="let u of four.out" class="custom-control custom-checkbox ml-2 mt-1 mb-1">                                           
+                            <input (change)="checkFour($event,u)" type="checkbox" class="custom-control-input" id="Four{{u.id}}">
+                            <label class="custom-control-label" for="Four{{u.id}}">{{u.naziv}}</label>                                                                     
+                        </div>
+                      <button (click)="setServicesForCategory(2,four.in)" class="btn btn-primary mt-5">Apply</button>  
                   </div>
                 </div>
               </div>
@@ -72,15 +72,15 @@
             
                 <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordionThree">
                   <div class="card-body">
-                      <div class="custom-control custom-checkbox ml-2 mt-1 mb-1">
-                          <input type="checkbox" class="custom-control-input" id="Three1">
-                          <label class="custom-control-label" for="Three1">Wi-Fi</label>
-                      </div>
-                      <div class="custom-control custom-checkbox ml-2 mt-1 mb-1">
-                          <input type="checkbox" class="custom-control-input" id="Three2">
-                          <label class="custom-control-label" for="Three2">Parking Garage</label>
-                      </div>
-                      <button (click)="showSuccess()" class="btn btn-primary mt-5">Apply</button>  
+                      <div *ngFor="let u of three.in" class="custom-control custom-checkbox ml-2 mt-1 mb-1">                                           
+                          <input (change)="checkThree($event,u)" checked type="checkbox" class="custom-control-input" id="Three{{u.id}}">
+                          <label class="custom-control-label" for="Three{{u.id}}">{{u.naziv}}</label>                                                                     
+                        </div>
+                        <div *ngFor="let u of three.out" class="custom-control custom-checkbox ml-2 mt-1 mb-1">                                           
+                            <input (change)="checkThree($event,u)" type="checkbox" class="custom-control-input" id="Three{{u.id}}">
+                            <label class="custom-control-label" for="Three{{u.id}}">{{u.naziv}}</label>                                                                     
+                        </div>
+                      <button (click)="setServicesForCategory(3,three.in)" class="btn btn-primary mt-5">Apply</button>  
                   </div>
                 </div>
               </div>
@@ -99,15 +99,15 @@
             
                 <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionTwo">
                   <div class="card-body">
-                      <div class="custom-control custom-checkbox ml-2 mt-1 mb-1">
-                          <input type="checkbox" class="custom-control-input" id="Two1">
-                          <label class="custom-control-label" for="Two1">Wi-Fi</label>
-                      </div>
-                      <div class="custom-control custom-checkbox ml-2 mt-1 mb-1">
-                          <input type="checkbox" class="custom-control-input" id="Two2">
-                          <label class="custom-control-label" for="Two2">Parking Garage</label>
-                      </div>
-                      <button (click)="showSuccess()" class="btn btn-primary mt-5">Apply</button>  
+                      <div *ngFor="let u of two.in" class="custom-control custom-checkbox ml-2 mt-1 mb-1">                                           
+                          <input (change)="checkTwo($event,u)" checked type="checkbox" class="custom-control-input" id="Two{{u.id}}">
+                          <label class="custom-control-label" for="Two{{u.id}}">{{u.naziv}}</label>                                                                     
+                        </div>
+                        <div *ngFor="let u of two.out" class="custom-control custom-checkbox ml-2 mt-1 mb-1">                                           
+                            <input (change)="checkTwo($event,u)" type="checkbox" class="custom-control-input" id="Two{{u.id}}">
+                            <label class="custom-control-label" for="Two{{u.id}}">{{u.naziv}}</label>                                                                     
+                        </div>
+                      <button (click)="setServicesForCategory(4,two.in)" class="btn btn-primary mt-5">Apply</button>  
                   </div>
                 </div>
               </div>
@@ -125,15 +125,15 @@
             
                 <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordionOne">
                   <div class="card-body">
-                      <div class="custom-control custom-checkbox ml-2 mt-1 mb-1">
-                          <input type="checkbox" class="custom-control-input" id="One1">
-                          <label class="custom-control-label" for="One1">Wi-Fi</label>
-                      </div>
-                      <div class="custom-control custom-checkbox ml-2 mt-1 mb-1">
-                          <input type="checkbox" class="custom-control-input" id="One2">
-                          <label class="custom-control-label" for="One2">Parking Garage</label>
-                      </div>
-                      <button (click)="showSuccess()" class="btn btn-primary mt-5">Apply</button>  
+                      <div *ngFor="let u of one.in" class="custom-control custom-checkbox ml-2 mt-1 mb-1">                                           
+                          <input (change)="checkOne($event,u)" checked type="checkbox" class="custom-control-input" id="One{{u.id}}">
+                          <label class="custom-control-label" for="One{{u.id}}">{{u.naziv}}</label>                                                                     
+                        </div>
+                        <div *ngFor="let u of one.out" class="custom-control custom-checkbox ml-2 mt-1 mb-1">                                           
+                            <input (change)="checkOne($event,u)" type="checkbox" class="custom-control-input" id="One{{u.id}}">
+                            <label class="custom-control-label" for="One{{u.id}}">{{u.naziv}}</label>                                                                     
+                        </div>
+                      <button (click)="setServicesForCategory(5,one.in)" class="btn btn-primary mt-5">Apply</button>  
                   </div>
                 </div>
               </div>

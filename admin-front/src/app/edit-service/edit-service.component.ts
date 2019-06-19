@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
-import { ActivatedRoute, Data, RouterLink } from '@angular/router'
+import { ActivatedRoute, Data } from '@angular/router'
 import { AdminServiceService } from '../admin-service.service';
 import { Router } from '@angular/router';
 

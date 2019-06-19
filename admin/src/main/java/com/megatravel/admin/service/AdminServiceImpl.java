@@ -260,4 +260,19 @@ public class AdminServiceImpl implements  AdminService{
         AccTypeDTO retDto = new AccTypeDTO(accomodationType.getId(), accomodationType.getNaziv());
         return retDto;
     }
+
+    @Override
+    public String deleteType(Long id){
+
+        List<AccomodationType> act = accomodationTypeRepository.findAllNonSmestaj();
+
+        for (AccomodationType a: act) {
+            if(a.getId() == id){
+                accomodationTypeRepository.deleteById(id);
+                return "Deleted successfully";
+            }
+        }
+
+        return "Can not delete type. It is contained in one or more accommodations";
+    }
 }

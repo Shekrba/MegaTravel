@@ -122,7 +122,16 @@ public class AdminController {
         return adminService.addAcomodationType(accTypeDTO);
     }
 
-
+    @RequestMapping(value = "/types/{id}", method = RequestMethod.DELETE)
+    public ResponseEntity<String> deleteAccomodationType(@PathVariable("id")Long id){
+        try {
+            String message = adminService.deleteType(id);
+            return new ResponseEntity<String>(message, HttpStatus.OK);
+        }catch (Exception e)
+        {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+    }
 
 }
 
