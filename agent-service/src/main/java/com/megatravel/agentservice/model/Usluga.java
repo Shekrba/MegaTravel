@@ -72,7 +72,7 @@ public class Usluga {
     @XmlSchemaType(name = "anySimpleType")
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    protected String id;
+    protected Long id;
 
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     protected Smestaj smestaj;
@@ -158,7 +158,7 @@ public class Usluga {
      *     {@link String }
      *
      */
-    public String getId() {
+    public Long getId() {
         return id;
     }
 
@@ -167,10 +167,10 @@ public class Usluga {
      *
      * @param value
      *     allowed object is
-     *     {@link String }
+     *     {@link Long }
      *
      */
-    public void setId(String value) {
+    public void setId(Long value) {
         this.id = value;
     }
 
