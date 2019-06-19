@@ -133,6 +133,12 @@ public class AdminController {
         }
     }
 
+    @RequestMapping(value = "/add", method = RequestMethod.POST)
+    public AdminDTO addAdmin(@RequestBody AdminDTO adminDTO)
+    {
+        return adminService.addAdmin(adminDTO);
+    }
+
 }
 
 

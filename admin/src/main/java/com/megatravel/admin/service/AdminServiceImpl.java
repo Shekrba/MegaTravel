@@ -118,6 +118,24 @@ public class AdminServiceImpl implements  AdminService{
     }
 
     @Override
+    public AdminDTO addAdmin(AdminDTO adminDTO) {
+        User user = new User();
+        user.setPrezime(adminDTO.getPrezime());
+        user.setIme(adminDTO.getIme());
+        user.setUsername(adminDTO.getUsername());
+        user.setStatus(UserStatus.ACTIVE);
+        Authority authority = authorityRepository.findOneByName("ROLE_AGENT");
+        List<Authority> authorities = new ArrayList<>();
+        authorities.add(authority);
+        user.setAuthorities(authorities);
+
+        user = userRepository.save(user);
+        adminDTO.setId(user.getId());
+        adminDTO.setStatus(UserStatus.ACTIVE);
+        return adminDTO;
+    }
+
+    @Override
     public User blockKorisnik(Long id){
         User user = userRepository.findOneById(id);
         user.setStatus(UserStatus.BLOCKED);
@@ -199,6 +217,15 @@ public class AdminServiceImpl implements  AdminService{
         List<Usluga> foundServices = uslugaRepository.findAllById(services);
         category.setUslugaList(foundServices);
         categoryRepository.save(category);
+
+        List<Smestaj> smestajList = smestajRepository.findAll();
+        for(Smestaj smestaj : smestajList)
+        {
+            setCategoryForAccomodation(smestaj);
+            smestajRepository.save(smestaj);
+        }
+
+
         return "Change success!";
     }
 
@@ -213,8 +240,11 @@ public class AdminServiceImpl implements  AdminService{
             if(accomodationServices.size() >= categoryServices.size())
             {
                 boolean isOk = true;
+                if(categoryServices.size() == 0)
+                    isOk = false;
                 for(Usluga categoryService : categoryServices)
                 {
+
                     boolean foundService = false;
                     for(Usluga accomodationService : accomodationServices)
                     {
@@ -238,6 +268,10 @@ public class AdminServiceImpl implements  AdminService{
                 if(category.getVrednost() > smestaj.getCategory().getVrednost())
                     smestaj.setCategory(category);
             }
+        }
+        else
+        {
+            smestaj.setCategory(null);
         }
     }
 

@@ -16,6 +16,8 @@ public interface AdminService {
     public SJedinica setTip(Long id, TTipSmestaja tip);
     public KomentarDTO odobriKomentar(Long id);
     public List<KomentarDTO> getUnapprovedComments();
+
+    public AdminDTO addAdmin(AdminDTO adminDTO);
     public User blockKorisnik(Long id);
     public User activateKorisnik(Long id);
     public User deleteKorisnik(Long id);
