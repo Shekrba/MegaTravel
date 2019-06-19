@@ -57,13 +57,13 @@ public class SearchServiceImpl implements SearchService{
                 continue;
             }
 
-            if(!filter.getKategorija().equals(s.getKategorija()) && !filter.getKategorija().equals("ALL")){
+            if(!filter.getKategorija().equals(s.getCategory().getNaziv()) && !filter.getKategorija().equals("ALL")){
                 continue;
             }
 
             ArrayList<String> usluge = new ArrayList();
 
-            for (Usluga u : s.getUsluge()) {
+            for (Usluga u : s.getUslugaList()) {
                 usluge.add(u.getNaziv());
             }
 

@@ -8,6 +8,8 @@
 
 package com.megatravel.search.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
@@ -16,6 +18,7 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlSchemaType;
 import javax.xml.bind.annotation.XmlType;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -75,17 +78,20 @@ public class Usluga {
     @GeneratedValue(strategy = GenerationType.AUTO)
     protected String id;
 
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    protected Smestaj smestaj;
+    @ManyToMany(mappedBy = "uslugaList")
+    @JsonIgnore
+    protected List<Smestaj> smestajList = new ArrayList<>();
 
 
-    public Smestaj getSmestaj() {
-        return smestaj;
+
+    public List<Smestaj> getSmestajList() {
+        return smestajList;
     }
 
-    public void setSmestaj(Smestaj smestaj) {
-        this.smestaj = smestaj;
+    public void setSmestajList(List<Smestaj> smestajList) {
+        this.smestajList = smestajList;
     }
+
 
     /**
      * Gets the value of the naziv property.

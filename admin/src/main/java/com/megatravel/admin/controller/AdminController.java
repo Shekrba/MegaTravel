@@ -55,7 +55,7 @@ public class AdminController {
         return adminService.updateUsluga(usluga, id);
     }
 
-    @RequestMapping(value = "/service/{id}", method = RequestMethod.GET)
+    @RequestMapping(value = "/services/{id}", method = RequestMethod.GET)
     public UslugaDTO getUsluga(@PathVariable("id") Long id) {
         return adminService.getUsluga(id);
     }
@@ -79,30 +79,37 @@ public class AdminController {
         return adminService.getUnapprovedComments();
     }
     @RequestMapping(value = "/comments/{id}", method = RequestMethod.PUT)
-    public Komentar odobriKomentar(@PathVariable("id")Long id){
+    public KomentarDTO odobriKomentar(@PathVariable("id")Long id){
         return adminService.odobriKomentar(id);
     }
 
     @RequestMapping(value = "/user/{id}", method = RequestMethod.PUT)
-    public User blockKorisnik(@PathVariable("id")Long id){
-        return adminService.blockKorisnik(id);
+    public UserDTO blockKorisnik(@PathVariable("id")Long id){
+        adminService.blockKorisnik(id);
+        return new UserDTO();
     }
 
     @RequestMapping(value = "/user/{id}", method = RequestMethod.POST)
-    public User activatKorisnik(@PathVariable("id")Long id){
-        return adminService.activateKorisnik(id);
+    public UserDTO activateKorisnik(@PathVariable("id")Long id){
+        adminService.activateKorisnik(id);
+        return new UserDTO();
     }
 
     @RequestMapping(value = "/user/{id}", method = RequestMethod.DELETE)
-    public User deleteKorisnik(@PathVariable("id")Long id){
-        return adminService.deleteKorisnik(id);
+    public UserDTO deleteKorisnik(@PathVariable("id")Long id){
+        adminService.deleteKorisnik(id);
+        return new UserDTO();
+    }
+
+    @RequestMapping(value = "/user", method = RequestMethod.GET)
+    public List<UserDTO> getKorisnike(){
+        return adminService.getKorisnike();
     }
 
     @RequestMapping(value = "/agent", method = RequestMethod.POST)
     public User addAgent(@RequestBody AgentDTO agent){
         return adminService.addAgent(agent);
     }
-
 
     @RequestMapping(value = "/types", method = RequestMethod.GET)
     public List<AccTypeDTO> getAccTypes()

@@ -12,6 +12,8 @@ public class AgentDTO {
 
     private String adresa;
 
+    private String email;
+
     public AgentDTO() {
 
     }
@@ -56,4 +58,11 @@ public class AgentDTO {
         this.adresa = adresa;
     }
 
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
 }

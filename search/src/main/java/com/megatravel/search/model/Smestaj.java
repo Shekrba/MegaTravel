@@ -8,6 +8,8 @@
 
 package com.megatravel.search.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.*;
@@ -104,8 +106,14 @@ public class Smestaj {
     protected String opis;
 
     @XmlElement(name = "DodatneUsluge", required = true)
-    @OneToMany(mappedBy="smestaj", cascade=CascadeType.ALL)
-    protected List<Usluga> usluge;
+    @ManyToMany
+    @JoinTable(
+            name = "services_smestaj",
+            joinColumns = @JoinColumn(name = "smestaj_id"),
+            inverseJoinColumns = @JoinColumn(name = "service_id")
+    )
+    @JsonIgnore
+    protected List<Usluga> uslugaList = new ArrayList<>();
 
     @XmlElement(name = "PeriodOtkaza")
     @Column(name = "periodOtkaza", unique = false, nullable = false)
@@ -121,15 +129,15 @@ public class Smestaj {
     @GeneratedValue(strategy = GenerationType.AUTO)
     protected Long id;
 
-    @Column(name = "kategorija", unique = false, nullable = false)
-    protected String kategorija;
+    @ManyToOne(fetch = FetchType.EAGER)
+    private Category category;
 
-    public String getKategorija() {
-        return kategorija;
+    public Category getCategory() {
+        return category;
     }
 
-    public void setKategorija(String kategorija) {
-        this.kategorija = kategorija;
+    public void setCategory(Category category) {
+        this.category = category;
     }
 
     public String getNaziv() {
@@ -148,12 +156,12 @@ public class Smestaj {
         this.sJedinica = sJedinica;
     }
 
-    public List<Usluga> getUsluge() {
-        return usluge;
+    public List<Usluga> getUslugaList() {
+        return uslugaList;
     }
 
-    public void setUsluge(List<Usluga> usluge) {
-        this.usluge = usluge;
+    public void setUslugaList(List<Usluga> uslugaList) {
+        this.uslugaList = uslugaList;
     }
 
     public void setSlika(List<Slika> slika) {

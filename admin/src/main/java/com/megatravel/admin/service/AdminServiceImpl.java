@@ -81,15 +81,26 @@ public class AdminServiceImpl implements  AdminService{
     }
 
     @Override
-    public Komentar odobriKomentar(Long id){
+    public KomentarDTO odobriKomentar(Long id){
         Komentar komentar = komentarRepository.findOneById(id);
-        komentar.setOdobren(true);
-        return komentarRepository.save(komentar);
+        komentar.setOdobren(!komentar.isOdobren());
+        komentarRepository.save(komentar);
+
+        String username = komentar.getKorisnik().getUsername();
+        String smestaj = "";
+        if(komentar.getSmestaj() != null)
+            smestaj = komentar.getSmestaj().getNaziv();
+        boolean publish = komentar.isOdobren();
+        String text = komentar.getTekst();
+
+        KomentarDTO kdto = new KomentarDTO(username,smestaj,text,id,publish);
+
+        return kdto;
     }
 
     @Override
     public List<KomentarDTO> getUnapprovedComments() {
-        List<Komentar> komentars = komentarRepository.findUnapprovedComments();
+        List<Komentar> komentars = komentarRepository.findAll();
         List<KomentarDTO> komentarDTOS = new ArrayList<>();
 
         for(Komentar komentar : komentars)
@@ -128,6 +139,23 @@ public class AdminServiceImpl implements  AdminService{
     }
 
     @Override
+    public List<UserDTO> getKorisnike(){
+        List<User> users = userRepository.findAllNonRemoved();
+        List<UserDTO> usersDTO = new ArrayList<>();
+
+        for (User u: users) {
+            UserDTO uDTO = new UserDTO();
+            uDTO.setId(u.getId());
+            uDTO.setUsername(u.getUsername());
+            uDTO.setStatus(u.getStatus());
+
+            usersDTO.add(uDTO);
+        }
+
+        return usersDTO;
+    }
+
+    @Override
     public User addAgent(AgentDTO agent){
         User newUser = new User();
         newUser.setAdresa(agent.getAdresa());
@@ -135,6 +163,7 @@ public class AdminServiceImpl implements  AdminService{
         newUser.setIme(agent.getIme());
         newUser.setPosMatBroj(agent.getPosMatBroj());
         newUser.setPrezime(agent.getPrezime());
+        newUser.setEmail(agent.getEmail());
         Authority authority = authorityRepository.findOneByName("ROLE_AGENT");
         List<Authority> authorities = new ArrayList<>();
         authorities.add(authority);

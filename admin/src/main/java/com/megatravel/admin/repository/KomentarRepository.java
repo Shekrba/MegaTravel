@@ -10,8 +10,6 @@ import java.util.List;
 @Repository
 public interface KomentarRepository extends JpaRepository<Komentar, Long> {
 
-    @Query("SELECT k FROM Komentar k where k.odobren = FALSE")
-    List<Komentar> findUnapprovedComments();
 
     Komentar findOneById(Long id);
 

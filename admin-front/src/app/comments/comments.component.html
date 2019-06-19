@@ -1,16 +1,16 @@
 <div class="container mt-5">
     <h2 class="orange mb-4">Comments</h2>
     <div class="row mb-5">
-      <div class="card mt-3">
+      <div *ngFor="let k of komentari" class="card mt-3">
           <div class="card-header" id="headingOne">
-            <h5 class="mb-0">shekrba</h5>
+            <h5 class="mb-0">{{k.username}}</h5>
           </div>
           <div class="card-body">
-            <p>This is a test comment. This is a test comment. This is a test comment. This is a test comment.</p>
-            <p class="mt-5">Accomodation: Four Seasons</p>
+            <p>{{k.text}}</p>
+            <p class="mt-5"><b>Accomodation:</b> {{k.smestaj}}</p>
             <div class="form-group">
-                <button id="publish" (click)="publishButton()" class="btn btn-primary mt-2"><i class="fa fa-check"></i> Publish</button>
-                <button id="remove" (click)="removeButton()" hidden class="btn btn-danger mt-2"><i class="fa fa-close"></i> Remove</button>
+                <button id="publish" *ngIf="k.publish==false" (click)="publishButton(k)" class="btn btn-primary mt-2"><i class="fa fa-check"></i> Publish</button>
+                <button id="remove" *ngIf="k.publish==true" (click)="removeButton(k)" class="btn btn-danger mt-2"><i class="fa fa-close"></i> Remove</button>
             </div>  
           </div>
       </div>
