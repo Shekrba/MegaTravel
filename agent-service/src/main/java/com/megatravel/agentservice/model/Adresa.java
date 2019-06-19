@@ -109,6 +109,15 @@ public class Adresa {
     @OneToOne(mappedBy="adresa",fetch=FetchType.EAGER, cascade=CascadeType.ALL, optional=true)
     protected Smestaj smestaj;
 
+    public Adresa(String mesto, String ulica, int broj) {
+        this.mesto = mesto;
+        this.ulica = ulica;
+        this.broj = broj;
+    }
+
+    public Adresa() {
+    }
+
     /**
      * Gets the value of the latitude property.
      *
