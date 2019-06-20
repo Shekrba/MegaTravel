@@ -20,7 +20,7 @@ public class CXFConfig {
 
 	@Bean
 	public ServletRegistrationBean dispatcherServlet() {
-        return new ServletRegistrationBean(new CXFServlet(), "/services/*");
+        return new ServletRegistrationBean(new CXFServlet(), "/api/*");
     }
 	
     @Bean(name=Bus.DEFAULT_BUS_ID)
@@ -35,7 +35,8 @@ public class CXFConfig {
     public Endpoint endpoint() {
         EndpointImpl ep = new EndpointImpl(springBus(), new AgentServiceImpl());
         ep.getFeatures().add(new LoggingFeature());
-        ep.publish("/AgentService");
+        ep.publish("/");
         return ep;
     }
+
 }
