@@ -10,14 +10,18 @@ import com.megatravel.agentservice.model.*;
 import com.megatravel.agentservice.service.AgentService;
 import generated.GetTestResponse;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.xml.ws.Response;
 import java.util.ArrayList;
 import java.util.List;
 
 @RestController
 @RequestMapping(value = "api", produces = "application/json;charset=UTF-8")
+@CrossOrigin(origins = "http://localhost:4200")
 public class AgentController {
 
     @Autowired
@@ -39,6 +43,13 @@ public class AgentController {
         }
 
         return listDTO;
+    }
+
+
+    @RequestMapping(value = "/services", method = RequestMethod.GET)
+    public List<UslugaDTO> getServices()
+    {
+        return agentService.allServices();
     }
 
     @RequestMapping(value = "/hoteli/{id}",method = RequestMethod.GET)
@@ -79,17 +90,18 @@ public class AgentController {
     }
 
     @RequestMapping(value = "/accomodationUnit/{smestajId}",method = RequestMethod.POST)
-    public SJedinica addSJedinica(@PathVariable("smestajId")Long smestajId, @RequestBody SJedinicaDTO sJedinica){
+    public ResponseEntity<SJedinica> addSJedinica(@PathVariable("smestajId")Long smestajId, @RequestBody SJedinicaDTO sJedinica){
 
         SJedinica addedSJedinica = null;
 
         try {
             addedSJedinica = agentService.addSJedinica(sJedinica, smestajId);
+            return new ResponseEntity<SJedinica>(addedSJedinica, HttpStatus.OK);
         } catch (Exception e) {
-            e.printStackTrace();
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
 
-        return addedSJedinica;
+
     }
 
     @RequestMapping(value = "/accomodationUnit/{id}",method = RequestMethod.PUT)
@@ -143,11 +155,13 @@ public class AgentController {
     }
 
     @RequestMapping(value = "/smestajDelete/{id}",method = RequestMethod.DELETE)
-    public List<Smestaj> deleteSmestaj(@PathVariable("id")Long id){
-
+    public ResponseEntity<List<Smestaj>> deleteSmestaj(@PathVariable("id")Long id){
+        List<Smestaj> smestajs = agentService.getSmestaje();
         List<Smestaj> smestaji = agentService.deleteSmestaj(id);
-
-        return smestaji;
+        if(smestaji.size() == smestajs.size())
+            return new ResponseEntity<>(HttpStatus.METHOD_NOT_ALLOWED);
+        else
+            return  new ResponseEntity<List<Smestaj>>(smestaji, HttpStatus.OK);
     }
 
 
@@ -164,7 +178,6 @@ public class AgentController {
         sDTO.setNaziv(s.getNaziv());
         sDTO.setOpis(s.getOpis());
         sDTO.setPeriodOtkaza(s.getPeriodOtkaza());
-        sDTO.setTip(s.getTipSmestaja());
         sDTO.setMesto(s.getAdresa().getMesto());
         sDTO.setBroj(s.getAdresa().getBroj());
         sDTO.setUlica(s.getAdresa().getUlica());
@@ -189,7 +202,6 @@ public class AgentController {
             sjDTO.setBroj(sj.getBroj());
             sjDTO.setBrojKreveta(sj.getBrojKreveta());
             sjDTO.setCena(sj.getCena());
-            sjDTO.setDostupnost(sj.getDostupnost());
 
             sDTO.getSjedinice().add(sjDTO);
         }
@@ -201,7 +213,6 @@ public class AgentController {
         sDTO.setBroj(s.getBroj());
         sDTO.setBrojKreveta(s.getBrojKreveta());
         sDTO.setCena(s.getCena());
-        sDTO.setDostupnost(s.getDostupnost());
 
     }
 }
