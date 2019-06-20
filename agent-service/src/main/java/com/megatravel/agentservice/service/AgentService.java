@@ -2,6 +2,7 @@ package com.megatravel.agentservice.service;
 
 import com.megatravel.agentservice.dto.SJedinicaDTO;
 import com.megatravel.agentservice.dto.SmestajDTO;
+import com.megatravel.agentservice.dto.UslugaDTO;
 import com.megatravel.agentservice.model.*;
 
 import java.util.ArrayList;
@@ -20,6 +21,8 @@ public interface AgentService {
     public SJedinica updateSJedinica(SJedinicaDTO sjed);
     public ArrayList<SJedinica> deleteSJedinica(Long id, Long smestajId);
     public List<Smestaj> deleteSmestaj(Long id);
+
+    public List<UslugaDTO> allServices();
 
 
 }

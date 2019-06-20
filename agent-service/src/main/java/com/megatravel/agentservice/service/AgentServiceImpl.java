@@ -2,12 +2,14 @@ package com.megatravel.agentservice.service;
 
 import com.megatravel.agentservice.dto.SJedinicaDTO;
 import com.megatravel.agentservice.dto.SmestajDTO;
+import com.megatravel.agentservice.dto.UslugaDTO;
 import com.megatravel.agentservice.model.Adresa;
 import com.megatravel.agentservice.model.SJedinica;
 import com.megatravel.agentservice.model.Smestaj;
 import com.megatravel.agentservice.model.Usluga;
 import com.megatravel.agentservice.repository.SJedinicaRepository;
 import com.megatravel.agentservice.repository.SmestajRepository;
+import com.megatravel.agentservice.repository.UslugaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -23,6 +25,9 @@ public class AgentServiceImpl implements AgentService {
 
     @Autowired
     SJedinicaRepository sjedinicaRepository;
+
+    @Autowired
+    UslugaRepository uslugaRepository;
 
 
 
@@ -50,7 +55,7 @@ public class AgentServiceImpl implements AgentService {
 
         SJedinica sJedinicaNew = new SJedinica();
 
-        sJedinicaNew.setDostupnost(true);
+
         sJedinicaNew.setBroj(sjed.getBroj());
         sJedinicaNew.setBrojKreveta(sjed.getBrojKreveta());
         sJedinicaNew.setCena(sjed.getCena());
@@ -71,7 +76,7 @@ public class AgentServiceImpl implements AgentService {
 
         sJedinicaToUpdate.setId(sjed.getId());
         sJedinicaToUpdate.setBroj(sjed.getBroj());
-        sJedinicaToUpdate.setDostupnost(sjed.getDostupnost());
+
         sJedinicaToUpdate.setBrojKreveta(sjed.getBrojKreveta());
         sJedinicaToUpdate.setCena(sjed.getCena());
 
@@ -101,10 +106,28 @@ public class AgentServiceImpl implements AgentService {
 
     @Override
     public List<Smestaj> deleteSmestaj(Long id) {
-
+        Smestaj smestaj = getSmestaj(id);
+        if(smestaj.getSJedinica().size() > 0)
+        {
+            return getSmestaje();
+        }
         smestajRepository.delete(getSmestaj(id));
 
         return getSmestaje();
+    }
+
+    @Override
+    public List<UslugaDTO> allServices() {
+        List<Usluga> uslugaList = uslugaRepository.findAll();
+        List<UslugaDTO> uslugaDTOS = new ArrayList<>();
+        for(Usluga usluga : uslugaList)
+        {
+            UslugaDTO dto = new UslugaDTO();
+            dto.setId(usluga.getId());
+            dto.setNaziv(usluga.getNaziv());
+            uslugaDTOS.add(dto);
+        }
+        return uslugaDTOS;
     }
 
     @Override
@@ -113,10 +136,16 @@ public class AgentServiceImpl implements AgentService {
         Smestaj smestajNew = new Smestaj();
 
         smestajNew.setNaziv(smestaj.getNaziv());
-        smestajNew.setAdresa(new Adresa(smestaj.getMesto(), smestaj.getUlica(), smestaj.getBroj()));
-        smestajNew.setTipSmestaja(smestaj.getTip());
+        Adresa adresa = new Adresa(smestaj.getMesto(), smestaj.getUlica(), smestaj.getBroj());
+        adresa.setLatitude(smestaj.getLatitude());
+        adresa.setLongitude(smestaj.getLongitude());
+        adresa.setPosBroj(smestaj.getPosBroj());
+        smestajNew.setAdresa(adresa);
+
         smestajNew.setOpis(smestaj.getOpis());
         smestajNew.setPeriodOtkaza(smestaj.getPeriodOtkaza());
+        List<Usluga> uslugaList = uslugaRepository.findAllById(smestaj.getAdditionalServices());
+        smestajNew.setUslugaList(uslugaList);
 
         smestajRepository.save(smestajNew);
 
@@ -126,15 +155,24 @@ public class AgentServiceImpl implements AgentService {
     @Override
     public Smestaj updateSmestaj(SmestajDTO smestaj) {
 
-        Smestaj smestajUpdate = new Smestaj();
+
+        Smestaj smestajUpdate = smestajRepository.findOneById(smestaj.getId());
 
         smestajUpdate.setId(smestaj.getId());
         smestajUpdate.setNaziv(smestaj.getNaziv());
-        smestajUpdate.setAdresa(new Adresa(smestaj.getMesto(), smestaj.getUlica(), smestaj.getBroj()));
+
+        Adresa adresa = new Adresa(smestaj.getMesto(), smestaj.getUlica(), smestaj.getBroj());
+        adresa.setId(smestajUpdate.getAdresa().getId());
+        adresa.setLongitude(smestaj.getLongitude());
+        adresa.setLatitude(smestaj.getLatitude());
+        adresa.setPosBroj(smestaj.getPosBroj());
+
+        smestajUpdate.setAdresa(adresa);
         smestajUpdate.setOpis(smestaj.getOpis());
         smestajUpdate.setPeriodOtkaza(smestaj.getPeriodOtkaza());
-        smestajUpdate.setTipSmestaja(smestaj.getTip());
 
+        List<Usluga> uslugaList = uslugaRepository.findAllById(smestaj.getAdditionalServices());
+        smestajUpdate.setUslugaList(uslugaList);
         smestajRepository.save(smestajUpdate);
 
         return smestajUpdate;
