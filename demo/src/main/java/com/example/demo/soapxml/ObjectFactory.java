@@ -24,8 +24,9 @@ import javax.xml.namespace.QName;
 @XmlRegistry
 public class ObjectFactory {
 
-    private final static QName _SayHowAreYouResponse_QNAME = new QName("http://service.megatravel.com/", "sayHowAreYouResponse");
-    private final static QName _SayHowAreYou_QNAME = new QName("http://service.megatravel.com/", "sayHowAreYou");
+    private final static QName _UserCredentials_QNAME = new QName("http://service.megatravel.com/", "UserCredentials");
+    private final static QName _Login_QNAME = new QName("http://service.megatravel.com/", "login");
+    private final static QName _LoginResponse_QNAME = new QName("http://service.megatravel.com/", "loginResponse");
 
     /**
      * Create a new ObjectFactory that can be used to create new instances of schema derived classes for package: client2
@@ -35,37 +36,54 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link SayHowAreYou }
+     * Create an instance of {@link LoginResponse }
      * 
      */
-    public SayHowAreYou createSayHowAreYou() {
-        return new SayHowAreYou();
+    public LoginResponse createLoginResponse() {
+        return new LoginResponse();
     }
 
     /**
-     * Create an instance of {@link SayHowAreYouResponse }
+     * Create an instance of {@link UserCredentials }
      * 
      */
-    public SayHowAreYouResponse createSayHowAreYouResponse() {
-        return new SayHowAreYouResponse();
+    public UserCredentials createUserCredentials() {
+        return new UserCredentials();
     }
 
     /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link SayHowAreYouResponse }{@code >}}
+     * Create an instance of {@link Login }
      * 
      */
-    @XmlElementDecl(namespace = "http://service.megatravel.com/", name = "sayHowAreYouResponse")
-    public JAXBElement<SayHowAreYouResponse> createSayHowAreYouResponse(SayHowAreYouResponse value) {
-        return new JAXBElement<SayHowAreYouResponse>(_SayHowAreYouResponse_QNAME, SayHowAreYouResponse.class, null, value);
+    public Login createLogin() {
+        return new Login();
     }
 
     /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link SayHowAreYou }{@code >}}
+     * Create an instance of {@link JAXBElement }{@code <}{@link UserCredentials }{@code >}}
      * 
      */
-    @XmlElementDecl(namespace = "http://service.megatravel.com/", name = "sayHowAreYou")
-    public JAXBElement<SayHowAreYou> createSayHowAreYou(SayHowAreYou value) {
-        return new JAXBElement<SayHowAreYou>(_SayHowAreYou_QNAME, SayHowAreYou.class, null, value);
+    @XmlElementDecl(namespace = "http://service.megatravel.com/", name = "UserCredentials")
+    public JAXBElement<UserCredentials> createUserCredentials(UserCredentials value) {
+        return new JAXBElement<UserCredentials>(_UserCredentials_QNAME, UserCredentials.class, null, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link Login }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://service.megatravel.com/", name = "login")
+    public JAXBElement<Login> createLogin(Login value) {
+        return new JAXBElement<Login>(_Login_QNAME, Login.class, null, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link LoginResponse }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://service.megatravel.com/", name = "loginResponse")
+    public JAXBElement<LoginResponse> createLoginResponse(LoginResponse value) {
+        return new JAXBElement<LoginResponse>(_LoginResponse_QNAME, LoginResponse.class, null, value);
     }
 
 }

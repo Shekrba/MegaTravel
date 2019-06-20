@@ -8,16 +8,16 @@ import javax.xml.bind.annotation.XmlType;
 
 
 /**
- * <p>Java class for sayHowAreYou complex type.
+ * <p>Java class for login complex type.
  * 
  * <p>The following schema fragment specifies the expected content contained within this class.
  * 
  * <pre>
- * &lt;complexType name="sayHowAreYou">
+ * &lt;complexType name="login">
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
- *         &lt;element name="GreetingsRequest" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
+ *         &lt;element name="LoginRequest" type="{http://service.megatravel.com/}userCredentials" minOccurs="0"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -27,36 +27,36 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "sayHowAreYou", propOrder = {
-    "greetingsRequest"
+@XmlType(name = "login", propOrder = {
+    "loginRequest"
 })
-public class SayHowAreYou {
+public class Login {
 
-    @XmlElement(name = "GreetingsRequest")
-    protected String greetingsRequest;
+    @XmlElement(name = "LoginRequest")
+    protected UserCredentials loginRequest;
 
     /**
-     * Gets the value of the greetingsRequest property.
+     * Gets the value of the loginRequest property.
      * 
      * @return
      *     possible object is
-     *     {@link String }
+     *     {@link UserCredentials }
      *     
      */
-    public String getGreetingsRequest() {
-        return greetingsRequest;
+    public UserCredentials getLoginRequest() {
+        return loginRequest;
     }
 
     /**
-     * Sets the value of the greetingsRequest property.
+     * Sets the value of the loginRequest property.
      * 
      * @param value
      *     allowed object is
-     *     {@link String }
+     *     {@link UserCredentials }
      *     
      */
-    public void setGreetingsRequest(String value) {
-        this.greetingsRequest = value;
+    public void setLoginRequest(UserCredentials value) {
+        this.loginRequest = value;
     }
 
 }

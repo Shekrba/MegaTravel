@@ -8,16 +8,16 @@ import javax.xml.bind.annotation.XmlType;
 
 
 /**
- * <p>Java class for sayHowAreYouResponse complex type.
+ * <p>Java class for loginResponse complex type.
  * 
  * <p>The following schema fragment specifies the expected content contained within this class.
  * 
  * <pre>
- * &lt;complexType name="sayHowAreYouResponse">
+ * &lt;complexType name="loginResponse">
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
- *         &lt;element name="Greeting" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
+ *         &lt;element name="Token" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -27,36 +27,36 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "sayHowAreYouResponse", propOrder = {
-    "greeting"
+@XmlType(name = "loginResponse", propOrder = {
+    "token"
 })
-public class SayHowAreYouResponse {
+public class LoginResponse {
 
-    @XmlElement(name = "Greeting")
-    protected String greeting;
+    @XmlElement(name = "Token")
+    protected String token;
 
     /**
-     * Gets the value of the greeting property.
+     * Gets the value of the token property.
      * 
      * @return
      *     possible object is
      *     {@link String }
      *     
      */
-    public String getGreeting() {
-        return greeting;
+    public String getToken() {
+        return token;
     }
 
     /**
-     * Sets the value of the greeting property.
+     * Sets the value of the token property.
      * 
      * @param value
      *     allowed object is
      *     {@link String }
      *     
      */
-    public void setGreeting(String value) {
-        this.greeting = value;
+    public void setToken(String value) {
+        this.token = value;
     }
 
 }

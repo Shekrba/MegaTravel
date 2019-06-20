@@ -2,10 +2,11 @@
 package com.example.demo.soap;
 
 
+import com.example.demo.soapxml.Login;
+import com.example.demo.soapxml.LoginResponse;
 import com.example.demo.soapxml.ObjectFactory;
-import com.example.demo.soapxml.SayHowAreYou;
-import com.example.demo.soapxml.SayHowAreYouResponse;
-import org.springframework.stereotype.Service;
+import com.example.demo.soapxml.UserCredentials;
+
 import org.springframework.ws.client.core.support.WebServiceGatewaySupport;
 import org.springframework.ws.soap.client.core.SoapActionCallback;
 
@@ -15,19 +16,19 @@ import javax.xml.bind.JAXBElement;
 public class CountryClient extends WebServiceGatewaySupport {
 
 
-	public SayHowAreYouResponse getCountry(String name) {
+	public LoginResponse getCountry(UserCredentials name) {
 
 
-		SayHowAreYou request = new SayHowAreYou();
-		request.setGreetingsRequest(name);
+		Login request = new Login();
+		request.setLoginRequest(name);
 
 
 		ObjectFactory objectFactory = new ObjectFactory();
-		JAXBElement<SayHowAreYou> jerequest=objectFactory.createSayHowAreYou(request);
+		JAXBElement<Login> jerequest=objectFactory.createLogin(request);
 
 
-		JAXBElement<SayHowAreYouResponse> response = (JAXBElement<SayHowAreYouResponse>) getWebServiceTemplate()
-				.marshalSendAndReceive("http://localhost:8081/services/AgentService", jerequest,
+		JAXBElement<LoginResponse> response = (JAXBElement<LoginResponse>) getWebServiceTemplate()
+				.marshalSendAndReceive("http://localhost:8081/api", jerequest,
 						new SoapActionCallback(
 								"sayHowAreYou"));
 

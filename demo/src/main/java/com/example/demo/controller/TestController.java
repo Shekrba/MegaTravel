@@ -1,6 +1,7 @@
 package com.example.demo.controller;
 
 import com.example.demo.soap.CountryClient;
+import com.example.demo.soapxml.UserCredentials;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -19,6 +20,9 @@ public class TestController {
 
     @RequestMapping(value = "/test", method = RequestMethod.GET)
     public ResponseEntity<?> createAuthenticationToken() {
-        return new ResponseEntity<>(cc.getCountry("aaa"), HttpStatus.OK);
+        UserCredentials uc=new UserCredentials();
+        uc.setPassword("user");
+        uc.setUsername("123");
+        return new ResponseEntity<>(cc.getCountry(uc), HttpStatus.OK);
     }
 }
