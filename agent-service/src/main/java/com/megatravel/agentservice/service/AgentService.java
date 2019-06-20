@@ -24,5 +24,7 @@ public interface AgentService {
 
     public List<UslugaDTO> allServices();
 
+    public void setCategoryForAccomodation(Smestaj smestaj);
+
 
 }

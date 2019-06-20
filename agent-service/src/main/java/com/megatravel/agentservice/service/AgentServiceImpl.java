@@ -3,10 +3,8 @@ package com.megatravel.agentservice.service;
 import com.megatravel.agentservice.dto.SJedinicaDTO;
 import com.megatravel.agentservice.dto.SmestajDTO;
 import com.megatravel.agentservice.dto.UslugaDTO;
-import com.megatravel.agentservice.model.Adresa;
-import com.megatravel.agentservice.model.SJedinica;
-import com.megatravel.agentservice.model.Smestaj;
-import com.megatravel.agentservice.model.Usluga;
+import com.megatravel.agentservice.model.*;
+import com.megatravel.agentservice.repository.CategoryRepository;
 import com.megatravel.agentservice.repository.SJedinicaRepository;
 import com.megatravel.agentservice.repository.SmestajRepository;
 import com.megatravel.agentservice.repository.UslugaRepository;
@@ -28,6 +26,9 @@ public class AgentServiceImpl implements AgentService {
 
     @Autowired
     UslugaRepository uslugaRepository;
+
+    @Autowired
+    CategoryRepository categoryRepository;
 
 
 
@@ -146,7 +147,7 @@ public class AgentServiceImpl implements AgentService {
         smestajNew.setPeriodOtkaza(smestaj.getPeriodOtkaza());
         List<Usluga> uslugaList = uslugaRepository.findAllById(smestaj.getAdditionalServices());
         smestajNew.setUslugaList(uslugaList);
-
+        setCategoryForAccomodation(smestajNew);
         smestajRepository.save(smestajNew);
 
         return smestajNew;
@@ -173,8 +174,55 @@ public class AgentServiceImpl implements AgentService {
 
         List<Usluga> uslugaList = uslugaRepository.findAllById(smestaj.getAdditionalServices());
         smestajUpdate.setUslugaList(uslugaList);
+        setCategoryForAccomodation(smestajUpdate);
         smestajRepository.save(smestajUpdate);
 
         return smestajUpdate;
+    }
+
+    @Override
+    public void setCategoryForAccomodation(Smestaj smestaj) {
+        List<Category> categories = categoryRepository.findAll();
+        List<Category> foundCategories = new ArrayList<>();
+        for(Category category: categories)
+        {
+            List<Usluga> categoryServices = category.getUslugaList();
+            List<Usluga> accomodationServices = smestaj.getUslugaList();
+            if(accomodationServices.size() >= categoryServices.size())
+            {
+                boolean isOk = true;
+                if(categoryServices.size() == 0)
+                    isOk = false;
+                for(Usluga categoryService : categoryServices)
+                {
+
+                    boolean foundService = false;
+                    for(Usluga accomodationService : accomodationServices)
+                    {
+                        if(accomodationService.getId() == categoryService.getId()) {
+                            foundService = true;
+                            break;
+                        }
+                    }
+                    if(!foundService) {
+                        isOk = false;
+                        break;
+                    }
+                }
+                if(isOk)
+                    foundCategories.add(category);
+            }
+        }
+        if(foundCategories.size() > 0){
+            smestaj.setCategory(foundCategories.get(0));
+            for(Category category : foundCategories){
+                if(category.getVrednost() > smestaj.getCategory().getVrednost())
+                    smestaj.setCategory(category);
+            }
+        }
+        else
+        {
+            smestaj.setCategory(null);
+        }
     }
 }
