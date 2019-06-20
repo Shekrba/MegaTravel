@@ -11,7 +11,7 @@ import java.util.List;
 @Repository
 public interface SmestajRepository extends JpaRepository<Smestaj, Long> {
 
-    ArrayList<Smestaj> findAll();
+    List<Smestaj> findAll();
     Smestaj findOneById(Long id);
 
 }

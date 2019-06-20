@@ -27,8 +27,8 @@ public class AgentServiceImpl implements AgentService {
 
 
     @Override
-    public ArrayList<Smestaj> getSmestaje() {
-        ArrayList<Smestaj> ret = smestajRepository.findAll();
+    public List<Smestaj> getSmestaje() {
+        List<Smestaj> ret = smestajRepository.findAll();
 
         return ret;
     }
@@ -100,7 +100,7 @@ public class AgentServiceImpl implements AgentService {
     }
 
     @Override
-    public ArrayList<Smestaj> deleteSmestaj(Long id) {
+    public List<Smestaj> deleteSmestaj(Long id) {
 
         smestajRepository.delete(getSmestaj(id));
 

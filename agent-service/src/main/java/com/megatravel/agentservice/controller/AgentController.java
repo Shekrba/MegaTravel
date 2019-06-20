@@ -26,7 +26,7 @@ public class AgentController {
     @Autowired
     AgentClient client;
 
-    @RequestMapping(value = "/hoteli",method = RequestMethod.GET)
+    @RequestMapping(value = "/accomodations",method = RequestMethod.GET)
     public List<SmestajDTO> getSmestaje()
     {
         List<Smestaj> list = agentService.getSmestaje();
@@ -52,7 +52,7 @@ public class AgentController {
         return smestajDTO;
     }
 
-    @RequestMapping(value = "/hoteli/{id}/smestajneJedinice",method = RequestMethod.GET)
+    @RequestMapping(value = "/accomodationUnits/{id}",method = RequestMethod.GET)
     public List<SJedinicaDTO> getSveSJedinice(@PathVariable("id")Long id)
     {
         List<SJedinica> list = agentService.getSveSJedinice(id);
@@ -67,7 +67,7 @@ public class AgentController {
         return listDTO;
     }
 
-    @RequestMapping(value = "/smestajneJedinice/{id}",method = RequestMethod.GET)
+    @RequestMapping(value = "/accomodationUnit/{id}",method = RequestMethod.GET)
     public SJedinicaDTO getSJedinica(@PathVariable("id")Long id){
 
         SJedinica sJedinica = agentService.getSJedinica(id);
@@ -78,7 +78,7 @@ public class AgentController {
         return sJedinicaDTO;
     }
 
-    @RequestMapping(value = "/smestajnaJedinicaAdd/{smestajId}",method = RequestMethod.POST)
+    @RequestMapping(value = "/accomodationUnit/{smestajId}",method = RequestMethod.POST)
     public SJedinica addSJedinica(@PathVariable("smestajId")Long smestajId, @RequestBody SJedinicaDTO sJedinica){
 
         SJedinica addedSJedinica = null;
@@ -92,8 +92,8 @@ public class AgentController {
         return addedSJedinica;
     }
 
-    @RequestMapping(value = "/smestajnaJedinicaUpdate",method = RequestMethod.PUT)
-    public SJedinica updateSJedinica(@RequestBody SJedinicaDTO sJedinica){
+    @RequestMapping(value = "/accomodationUnit/{id}",method = RequestMethod.PUT)
+    public SJedinica updateSJedinica(@PathVariable("id")Long id, @RequestBody SJedinicaDTO sJedinica){
 
         SJedinica updatedSJedinica = null;
 
@@ -143,9 +143,9 @@ public class AgentController {
     }
 
     @RequestMapping(value = "/smestajDelete/{id}",method = RequestMethod.DELETE)
-    public ArrayList<Smestaj> deleteSmestaj(@PathVariable("id")Long id){
+    public List<Smestaj> deleteSmestaj(@PathVariable("id")Long id){
 
-        ArrayList<Smestaj> smestaji = agentService.deleteSmestaj(id);
+        List<Smestaj> smestaji = agentService.deleteSmestaj(id);
 
         return smestaji;
     }
@@ -173,7 +173,7 @@ public class AgentController {
             sDTO.getSlike().add(slika.getSrc());
         }
 
-        for (Usluga usluga: s.getUsluge()) {
+        for (Usluga usluga: s.getUslugaList()) {
             UslugaDTO uslugaDTO = new UslugaDTO();
             uslugaDTO.setId(usluga.getId());
             uslugaDTO.setNaziv(usluga.getNaziv());

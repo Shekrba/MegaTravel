@@ -10,7 +10,7 @@ import java.util.List;
 
 public interface AgentService {
 
-    public ArrayList<Smestaj> getSmestaje();
+    public List<Smestaj> getSmestaje();
     public Smestaj getSmestaj(Long id);
     public ArrayList<SJedinica> getSveSJedinice(Long smestajId);
     public SJedinica getSJedinica(Long id);
@@ -19,7 +19,7 @@ public interface AgentService {
     public SJedinica addSJedinica(SJedinicaDTO sjed, Long smestajId);
     public SJedinica updateSJedinica(SJedinicaDTO sjed);
     public ArrayList<SJedinica> deleteSJedinica(Long id, Long smestajId);
-    public ArrayList<Smestaj> deleteSmestaj(Long id);
+    public List<Smestaj> deleteSmestaj(Long id);
 
 
 }
