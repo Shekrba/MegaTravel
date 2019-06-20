@@ -14,10 +14,16 @@ public class SmestajDTO {
     private int periodOtkaza;
     private String mesto;
     private String ulica;
+    private double longitude;
+    private double latitude;
+    private String posBroj;
+
     private int broj;
     private List<String> slike = new ArrayList<String>();
     private List<UslugaDTO> usluge = new ArrayList<UslugaDTO>();
     private List<SJedinicaDTO> sjedinice = new ArrayList<SJedinicaDTO>();
+
+    private List<Long> additionalServices = new ArrayList<>();
 
     public List<SJedinicaDTO> getSjedinice() {
         return sjedinice;
@@ -108,4 +114,36 @@ public class SmestajDTO {
     }
 
 
+    public double getLongitude() {
+        return longitude;
+    }
+
+    public void setLongitude(double longitude) {
+        this.longitude = longitude;
+    }
+
+    public double getLatitude() {
+        return latitude;
+    }
+
+    public void setLatitude(double latitude) {
+        this.latitude = latitude;
+    }
+
+    public String getPosBroj() {
+        return posBroj;
+    }
+
+    public void setPosBroj(String posBroj) {
+        this.posBroj = posBroj;
+    }
+
+
+    public List<Long> getAdditionalServices() {
+        return additionalServices;
+    }
+
+    public void setAdditionalServices(List<Long> services) {
+        this.additionalServices = services;
+    }
 }

@@ -6,6 +6,8 @@ public class UslugaDTO {
     private double cena;
     private String opis;
 
+    public UslugaDTO() {}
+
     public Long getId() {
         return id;
     }
