@@ -11,7 +11,7 @@ import javax.jws.WebService;
 
 @WebService(serviceName = "AgentService")
 public interface AgentService {
-	@WebMethod()
+	@WebMethod(action = "sayHowAreYou")
 	@WebResult(name = "Greeting")
 	public String sayHowAreYou(@WebParam(name = "GreetingsRequest") String name);
 }
