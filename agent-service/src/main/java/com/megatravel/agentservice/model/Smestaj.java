@@ -75,7 +75,6 @@ import javax.xml.bind.annotation.XmlType;
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = {
         "sJedinica",
-        "tipSmestaja",
         "adresa",
         "opis",
         "periodOtkaza",
@@ -92,13 +91,11 @@ public class Smestaj {
     @OneToMany(mappedBy = "smestaj")
     protected List<SJedinica> sJedinica;
 
-    @XmlElement(name = "TipSmestaja", required = true, defaultValue = "hotel")
-    @XmlSchemaType(name = "string")
-    @Column(name = "tip", unique = false, nullable = false)
-    protected TTipSmestaja tipSmestaja;
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.REFRESH)
+    private AccomodationType accomodationType;
 
     @XmlElement(name = "Adresa", required = true)
-    @OneToOne(fetch=FetchType.LAZY, cascade=CascadeType.ALL, optional=true)
+    @OneToOne(fetch=FetchType.EAGER, cascade=CascadeType.ALL, optional=true)
     protected Adresa adresa;
 
     @XmlElement(name = "Opis", required = true)
@@ -126,7 +123,7 @@ public class Smestaj {
     @XmlAttribute(name = "Id")
     @XmlSchemaType(name = "anySimpleType")
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     protected Long id;
 
     @ManyToOne(fetch = FetchType.EAGER)
@@ -152,6 +149,7 @@ public class Smestaj {
         return sJedinica;
     }
 
+    @JsonIgnore
     public void setsJedinica(List<SJedinica> sJedinica) {
         this.sJedinica = sJedinica;
     }
@@ -160,6 +158,7 @@ public class Smestaj {
         return uslugaList;
     }
 
+    @JsonIgnore
     public void setUslugaList(List<Usluga> uslugaList) {
         this.uslugaList = uslugaList;
     }
@@ -197,29 +196,7 @@ public class Smestaj {
         return this.sJedinica;
     }
 
-    /**
-     * Gets the value of the tipSmestaja property.
-     *
-     * @return
-     *     possible object is
-     *     {@link TTipSmestaja }
-     *
-     */
-    public TTipSmestaja getTipSmestaja() {
-        return tipSmestaja;
-    }
 
-    /**
-     * Sets the value of the tipSmestaja property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link TTipSmestaja }
-     *
-     */
-    public void setTipSmestaja(TTipSmestaja value) {
-        this.tipSmestaja = value;
-    }
 
     /**
      * Gets the value of the adresa property.
@@ -241,6 +218,7 @@ public class Smestaj {
      *     {@link Adresa }
      *
      */
+    @JsonIgnore
     public void setAdresa(Adresa value) {
         this.adresa = value;
     }
@@ -340,6 +318,15 @@ public class Smestaj {
      */
     public void setId(Long value) {
         this.id = value;
+    }
+
+    public AccomodationType getAccomodationType() {
+        return accomodationType;
+    }
+
+    @JsonIgnore
+    public void setAccomodationType(AccomodationType accomodationType) {
+        this.accomodationType = accomodationType;
     }
 
 

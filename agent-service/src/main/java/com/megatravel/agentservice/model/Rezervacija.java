@@ -58,7 +58,7 @@ import java.util.Date;
 public class Rezervacija {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     protected Long id;
 
     @XmlElement(name = "SJedinica", required = true)

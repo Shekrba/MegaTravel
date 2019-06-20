@@ -103,11 +103,11 @@ public class Adresa {
     protected Integer brojStana;
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    protected Long id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
     @OneToOne(mappedBy="adresa",fetch=FetchType.EAGER, cascade=CascadeType.ALL, optional=true)
-    protected Smestaj smestaj;
+    private Smestaj smestaj;
 
     public Adresa(String mesto, String ulica, int broj) {
         this.mesto = mesto;
@@ -262,4 +262,20 @@ public class Adresa {
         this.brojStana = value;
     }
 
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Smestaj getSmestaj() {
+        return smestaj;
+    }
+
+    public void setSmestaj(Smestaj smestaj) {
+        this.smestaj = smestaj;
+    }
 }

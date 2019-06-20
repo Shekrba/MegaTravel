@@ -7,6 +7,8 @@
 
 package com.megatravel.agentservice.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
@@ -55,8 +57,7 @@ import java.util.List;
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = {
         "cena",
-        "brojKreveta",
-        "dostupnost"
+        "brojKreveta"
 })
 @XmlRootElement(name = "SJedinica")
 @Entity
@@ -70,14 +71,11 @@ public class SJedinica {
     @Column(name = "brojKreveta", unique = false, nullable = false)
     protected int brojKreveta;
 
-    @XmlElement(name = "Dostupnost", defaultValue = "true")
-    @Column(name = "dostupnost", unique = false, nullable = false)
-    protected Boolean dostupnost;
 
     @XmlAttribute(name = "Id")
     @XmlSchemaType(name = "anySimpleType")
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     protected Long id;
 
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
@@ -100,9 +98,7 @@ public class SJedinica {
         this.rezervacije = rezervacije;
     }
 
-    public Boolean getDostupnost() {
-        return dostupnost;
-    }
+
 
     public int getBroj() {
         return broj;
@@ -116,6 +112,7 @@ public class SJedinica {
         return smestaj;
     }
 
+    @JsonIgnore
     public void setSmestaj(Smestaj smestaj) {
         this.smestaj = smestaj;
     }
@@ -154,21 +151,7 @@ public class SJedinica {
         this.brojKreveta = value;
     }
 
-    /**
-     * Gets the value of the dostupnost property.
-     *
-     */
-    public Boolean isDostupnost() {
-        return dostupnost;
-    }
 
-    /**
-     * Sets the value of the dostupnost property.
-     *
-     */
-    public void setDostupnost(Boolean value) {
-        this.dostupnost = value;
-    }
 
     /**
      * Gets the value of the id property.

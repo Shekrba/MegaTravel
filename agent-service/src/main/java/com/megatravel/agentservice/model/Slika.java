@@ -9,7 +9,7 @@ import javax.xml.bind.annotation.*;
 public class Slika {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     protected Long id;
 
     @XmlAttribute(name = "src")
