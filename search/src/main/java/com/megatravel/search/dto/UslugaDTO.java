@@ -1,16 +1,16 @@
 package com.megatravel.search.dto;
 
 public class UslugaDTO {
-    private String id;
+    private Long id;
     private String naziv;
     private double cena;
     private String opis;
 
-    public String getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

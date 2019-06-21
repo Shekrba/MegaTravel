@@ -11,22 +11,16 @@ package com.megatravel.search.model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlAttribute;
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlSchemaType;
-import javax.xml.bind.annotation.XmlType;
+import javax.xml.bind.annotation.*;
 import java.util.ArrayList;
 import java.util.List;
 
 
 /**
  * <p>Java class for anonymous complex type.
- * 
+ *
  * <p>The following schema fragment specifies the expected content contained within this class.
- * 
+ *
  * <pre>
  * &lt;complexType>
  *   &lt;complexContent>
@@ -47,14 +41,14 @@ import java.util.List;
  *   &lt;/complexContent>
  * &lt;/complexType>
  * </pre>
- * 
- * 
+ *
+ *
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = {
-    "naziv",
-    "opis",
-    "cena"
+        "naziv",
+        "opis",
+        "cena"
 })
 @XmlRootElement(name = "Usluga")
 @Entity
@@ -75,31 +69,33 @@ public class Usluga {
     @XmlAttribute(name = "Id")
     @XmlSchemaType(name = "anySimpleType")
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    protected String id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    protected Long id;
 
     @ManyToMany(mappedBy = "uslugaList")
     @JsonIgnore
     protected List<Smestaj> smestajList = new ArrayList<>();
 
+    @ManyToMany(mappedBy = "uslugaList")
+    private
+    List<Category> categoryList = new ArrayList<>();
 
 
-    public List<Smestaj> getSmestajList() {
+    public List<Smestaj> getSmestaj() {
         return smestajList;
     }
 
-    public void setSmestajList(List<Smestaj> smestajList) {
-        this.smestajList = smestajList;
+    public void setSmestaj(List<Smestaj> smestaj) {
+        this.smestajList = smestaj;
     }
-
 
     /**
      * Gets the value of the naziv property.
-     * 
+     *
      * @return
      *     possible object is
      *     {@link String }
-     *     
+     *
      */
     public String getNaziv() {
         return naziv;
@@ -107,11 +103,11 @@ public class Usluga {
 
     /**
      * Sets the value of the naziv property.
-     * 
+     *
      * @param value
      *     allowed object is
      *     {@link String }
-     *     
+     *
      */
     public void setNaziv(String value) {
         this.naziv = value;
@@ -119,11 +115,11 @@ public class Usluga {
 
     /**
      * Gets the value of the opis property.
-     * 
+     *
      * @return
      *     possible object is
      *     {@link String }
-     *     
+     *
      */
     public String getOpis() {
         return opis;
@@ -131,11 +127,11 @@ public class Usluga {
 
     /**
      * Sets the value of the opis property.
-     * 
+     *
      * @param value
      *     allowed object is
      *     {@link String }
-     *     
+     *
      */
     public void setOpis(String value) {
         this.opis = value;
@@ -143,7 +139,7 @@ public class Usluga {
 
     /**
      * Gets the value of the cena property.
-     * 
+     *
      */
     public double getCena() {
         return cena;
@@ -151,7 +147,7 @@ public class Usluga {
 
     /**
      * Sets the value of the cena property.
-     * 
+     *
      */
     public void setCena(double value) {
         this.cena = value;
@@ -159,26 +155,34 @@ public class Usluga {
 
     /**
      * Gets the value of the id property.
-     * 
+     *
      * @return
      *     possible object is
      *     {@link String }
-     *     
+     *
      */
-    public String getId() {
+    public Long getId() {
         return id;
     }
 
     /**
      * Sets the value of the id property.
-     * 
+     *
      * @param value
      *     allowed object is
      *     {@link String }
-     *     
+     *
      */
-    public void setId(String value) {
+    public void setId(Long value) {
         this.id = value;
     }
 
+
+    public List<Category> getCategoryList() {
+        return categoryList;
+    }
+
+    public void setCategoryList(List<Category> categoryList) {
+        this.categoryList = categoryList;
+    }
 }

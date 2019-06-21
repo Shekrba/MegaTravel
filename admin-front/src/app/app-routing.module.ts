@@ -8,6 +8,8 @@ import { ServicesComponent } from './services/services.component';
 import { EditServiceComponent } from './edit-service/edit-service.component';
 import { TypesComponent } from './types/types.component';
 import { CategorizationComponent } from './categorization/categorization.component';
+import { AdminComponent } from './admin/admin.component';
+import { LoginComponent } from './login/login.component';
 
 const routes: Routes = [
   { path: 'agent', component: AgentComponent },
@@ -18,6 +20,8 @@ const routes: Routes = [
   { path: 'services/:id', component: EditServiceComponent },
   { path: 'types', component: TypesComponent },
   { path: 'categorization', component: CategorizationComponent },
+  { path: 'admin', component: AdminComponent },
+  { path: 'login', component: LoginComponent },
 ];
 
 @NgModule({

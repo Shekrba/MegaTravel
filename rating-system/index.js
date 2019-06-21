@@ -21,35 +21,29 @@ if (process.env.NODE_ENV === 'production') {
 
 let mysqlPool;
 
-exports.getRatings = function getRatings(req, res) {
+exports.getRatings = function getRezToRate(req, res) {
   
+  res.header('Content-Type','application/json');
+  res.header('Access-Control-Allow-Origin', "*")
+  res.header('Access-Control-Allow-Methods', 'GET, POST')
+  res.header('Access-Control-Allow-Headers', 'Content-Type');
+
+  if (req.method === `OPTIONS`) {
+    res.status(200).send();
+    return;
+  }
+
   if (!mysqlPool) {
     mysqlPool = mysql.createPool(mysqlConfig);
   }
 
-  mysqlPool.query('SELECT * FROM ocena o LEFT OUTER JOIN rezervacija r ON o.rezervacija_id=r.id', (err, results) => {
-    if (err) {
-      console.error(err);
-      res.status(500).send(err);
-    } else {
-      res.send(JSON.stringify(results));
-    }
-  });
-};
-
-exports.getRezToRate = function getRezToRate(req, res) {
-  
-  if (!mysqlPool) {
-    mysqlPool = mysql.createPool(mysqlConfig);
-  }
-
-  var sql = 'SELECT * FROM rezervacija r LEFT OUTER JOIN ocena o on r.id = o.rezervacija_id WHERE r.do <= NOW() AND r.korisnik_id = '+req.body.korisnik_id;
+  var sql = 'SELECT * FROM ocena o WHERE o.korisnik_id = '+req.body.korisnik_id;
 
   mysqlPool.query(sql, (err, results) => {
     if (err) {
       console.error(err);
       res.status(500).send(err);
-    } else {
+    } else {  
       res.send(JSON.stringify(results));
     }
   });
@@ -57,54 +51,56 @@ exports.getRezToRate = function getRezToRate(req, res) {
 
 exports.rateHotel = function rateHotel(req, res) {
   
+  res.header('Content-Type','application/json');
+  res.header('Access-Control-Allow-Origin', "*")
+  res.header('Access-Control-Allow-Methods', 'GET, POST')
+  res.header('Access-Control-Allow-Headers', 'Content-Type');
+
+  if (req.method === `OPTIONS`) {
+    res.status(200).send();
+    return;
+  }
+
   if (!mysqlPool) {
     mysqlPool = mysql.createPool(mysqlConfig);
   }
 
-  var sql = 'INSERT INTO ocena (vrednost, rezervacija_id, komentar) VALUES ('+ req.body.vrednost +', '+ req.body.rezervacija_id +', "'+ req.body.komentar +'")'
+  var sql = 'INSERT INTO ocena (`vrednost`, `komentar`, `rezervacija_id`,`korisnik_id`, `smestaj_id`,`from`,`to`) VALUES ('+ req.body.vrednost +', "'+ req.body.komentar +'", '+ req.body.rezervacija_id +', '+ req.body.korisnik_id +', '+ req.body.smestaj_id +', "'+ req.body.from +'", "'+ req.body.to +'")'
 
   mysqlPool.query(sql, (err, results) => {
     if (err) {
       console.error(err);
       res.status(500).send(err);
     } else {
-      res.send(JSON.stringify("INSERTED INTO OCENA... " + req.body));
-    }
-  });
-};
-
-exports.getUserRatings = function getUserRatings(req, res) {
-  
-  if (!mysqlPool) {
-    mysqlPool = mysql.createPool(mysqlConfig);
-  }
-
-  var sql = 'SELECT * FROM ocena o LEFT OUTER JOIN rezervacija r ON o.rezervacija_id=r.id where r.korisnik_id='+req.body.korisnik_id
-
-  mysqlPool.query(sql, (err, results) => {
-    if (err) {
-      console.error(err);
-      res.status(500).send(err);
-    } else {
-      res.send(JSON.stringify(results));
+      res.status(200).send("INSERT SUCCESSFUL...");
     }
   });
 };
 
 exports.updateRating = function updateRating(req, res) {
   
+  res.header('Content-Type','application/json');
+  res.header('Access-Control-Allow-Origin', "*")
+  res.header('Access-Control-Allow-Methods', 'GET, POST')
+  res.header('Access-Control-Allow-Headers', 'Content-Type'); 
+
+  if (req.method === `OPTIONS`) {
+    res.status(200).send();
+    return;
+  }
+
   if (!mysqlPool) {
     mysqlPool = mysql.createPool(mysqlConfig);
   }
 
-  var sql = 'UPDATE ocena SET vrednost = '+ req.body.vrednost +', komentar = "'+ req.body.komentar +'" WHERE id ='+ req.body.id
+  var sql = 'UPDATE ocena SET vrednost = '+ req.body.vrednost +', komentar = "'+ req.body.komentar +'" WHERE ocena_id ='+ req.body.ocena_id
 
   mysqlPool.query(sql, (err, results) => {
     if (err) {
       console.error(err);
       res.status(500).send(err);
     } else {
-      res.send(JSON.stringify("UPDATED OCENA TO VALUE: "+req.body.vrednost+" WITH ID: "+req.body.id+"..."));
+      res.status(200).send("UPDATE SUCCESSFUL...");
     }
   });
 };

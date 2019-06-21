@@ -1,10 +1,8 @@
 package com.megatravel.search.service;
 
 import com.megatravel.search.dto.FilterDTO;
-import com.megatravel.search.model.SJedinica;
-import com.megatravel.search.model.Smestaj;
-import com.megatravel.search.model.TTipSmestaja;
-import com.megatravel.search.model.Usluga;
+import com.megatravel.search.model.*;
+import com.megatravel.search.repository.AccomodationTypeRepository;
 import com.megatravel.search.repository.SmestajRepository;
 import com.megatravel.search.repository.UslugaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +19,9 @@ public class SearchServiceImpl implements SearchService{
 
     @Autowired
     UslugaRepository uslugaRepository;
+
+    @Autowired
+    AccomodationTypeRepository actRepository;
 
     @Override
     public List<Smestaj> getSmesaje(){
@@ -45,15 +46,7 @@ public class SearchServiceImpl implements SearchService{
 
             boolean flag = true;
 
-            if(filter.getTip().equals("HOTEL") && s.getTipSmestaja() != TTipSmestaja.HOTEL){
-                continue;
-            }
-
-            else if(filter.getTip().equals("BED & BREAKFAST") && s.getTipSmestaja() != TTipSmestaja.BED_BREAKFAST){
-                continue;
-            }
-
-            else if(filter.getTip().equals("APARTMENT") && s.getTipSmestaja() != TTipSmestaja.APARTMAN){
+            if(!filter.getTip().equals(s.getAccomodationType().getNaziv()) && !filter.getTip().equals("ALL")){
                 continue;
             }
 
@@ -84,5 +77,17 @@ public class SearchServiceImpl implements SearchService{
     @Override
     public List<String> getUslugeByNaziv(){
         return uslugaRepository.findNazivUsluga();
+    }
+
+    @Override
+    public List<String> getTypes(){
+        List<AccomodationType> list = actRepository.findAll();
+
+        List<String> acts = new ArrayList<>();
+        for (AccomodationType a: list) {
+            acts.add(a.getNaziv());
+        }
+
+        return acts;
     }
 }

@@ -1,8 +1,11 @@
 package com.megatravel.rezervacija.controller;
 
+import com.megatravel.rezervacija.dto.ReservationDTO;
 import com.megatravel.rezervacija.model.Rezervacija;
 import com.megatravel.rezervacija.service.RezervacijaService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -32,5 +35,21 @@ public class RezervacijaController {
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public Rezervacija getRezervacija(@PathVariable("id")Long id){
         return rezervacijaService.getRezervacija(id);
+    }
+
+    @RequestMapping(value = "/rate/{id}", method = RequestMethod.GET)
+    public List<ReservationDTO> getReservationsToRate(@PathVariable("id")Long user_id) {
+        return rezervacijaService.getReservationsToRate(user_id);
+    }
+
+    @RequestMapping(value = "/rate/{id}", method = RequestMethod.PUT)
+    public ResponseEntity<String> setRatedTrue(@PathVariable("id")Long id) {
+        try {
+            String message = rezervacijaService.setRatedTrue(id);
+            return new ResponseEntity<String>(message, HttpStatus.OK);
+        }catch (Exception e)
+        {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
     }
 }

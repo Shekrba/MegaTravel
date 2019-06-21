@@ -21,6 +21,9 @@ export class HotelsComponent implements OnInit {
     kategorija: "ALL",
     usluge: []
   };
+
+  types:[]
+
   services: string[] = [];
 
   constructor(private hotelService: HotelServiceService) { }
@@ -28,6 +31,18 @@ export class HotelsComponent implements OnInit {
   ngOnInit() {
     this.getAllHotels();
     this.getAllServices();
+    this.getAllTypes();
+  }
+
+  public getAllTypes(){
+    this.hotelService.getTypes().subscribe(
+      res => {
+        this.types = res;
+      },
+      err => {
+        alert("An error has occured while getting all types")
+      }
+    )
   }
 
   public getAllHotels(){
@@ -78,4 +93,5 @@ export class HotelsComponent implements OnInit {
     console.log(this.filter.usluge);
   }
 
+  
 }

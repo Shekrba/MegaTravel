@@ -1,15 +1,12 @@
 package com.megatravel.search.dto;
 
-import com.megatravel.search.model.TTipSmestaja;
-import com.megatravel.search.model.Usluga;
-
 import java.util.ArrayList;
 import java.util.List;
 
 public class SmestajDTO {
     private Long id;
     private String naziv;
-    private TTipSmestaja tip;
+    private String tip;
     private String opis;
     private int periodOtkaza;
     private String mesto;
@@ -59,11 +56,11 @@ public class SmestajDTO {
         this.naziv = naziv;
     }
 
-    public TTipSmestaja getTip() {
+    public String getTip() {
         return tip;
     }
 
-    public void setTip(TTipSmestaja tip) {
+    public void setTip(String tip) {
         this.tip = tip;
     }
 

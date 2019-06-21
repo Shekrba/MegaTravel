@@ -14,6 +14,7 @@ export class AdminServiceService {
   private ALL_COMMENTS_URL = `${BASE_URL}/api/admin/comments`;
   private ALL_USERS_URL = `${BASE_URL}/api/admin/user`;
   private ALL_AGENTS_URL = `${BASE_URL}/api/admin/agent`;
+  private ALL_ADMINS_URL = `${BASE_URL}/api/admin/add`;
   private ALL_TYPES_URL = `${BASE_URL}/api/admin/types`;
 
   constructor( private http: HttpClient) { }
@@ -90,6 +91,14 @@ export class AdminServiceService {
 
   registerAgent(a): Observable<any>{
     return this.http.post(this.ALL_AGENTS_URL,a,{
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json'
+      })
+    });
+  }
+
+  registerAdmin(a): Observable<any>{
+    return this.http.post(this.ALL_ADMINS_URL,a,{
       headers: new HttpHeaders({
         'Content-Type': 'application/json'
       })

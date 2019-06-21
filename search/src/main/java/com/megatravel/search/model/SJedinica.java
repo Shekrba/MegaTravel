@@ -9,13 +9,7 @@
 package com.megatravel.search.model;
 
 import javax.persistence.*;
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlAttribute;
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlSchemaType;
-import javax.xml.bind.annotation.XmlType;
+import javax.xml.bind.annotation.*;
 import java.util.List;
 
 
@@ -75,11 +69,14 @@ public class SJedinica {
     @Column(name = "dostupnost", unique = false, nullable = false)
     protected Boolean dostupnost;
 
+    @OneToMany()
+    protected List<Rezervacija> rezervacije;
+
     @XmlAttribute(name = "Id")
     @XmlSchemaType(name = "anySimpleType")
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    protected String id;
+    protected Long id;
 
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     protected Smestaj smestaj;
@@ -87,30 +84,13 @@ public class SJedinica {
     @Column(name = "broj", unique = false, nullable = false)
     protected int broj;
 
-    @OneToMany
-    protected List<Rezervacija> rezervacije;
-
-
-
-
-    public List<Rezervacija> getRezervacije() {
-        return rezervacije;
-    }
-
-    public void setRezervacije(List<Rezervacija> rezervacije) {
-        this.rezervacije = rezervacije;
-    }
 
     public Boolean getDostupnost() {
         return dostupnost;
     }
 
-    public int getBroj() {
-        return broj;
-    }
-
-    public void setBroj(int broj) {
-        this.broj = broj;
+    public void setDostupnost(Boolean dostupnost) {
+        this.dostupnost = dostupnost;
     }
 
     public Smestaj getSmestaj() {
@@ -121,12 +101,26 @@ public class SJedinica {
         this.smestaj = smestaj;
     }
 
+    public int getBroj() {
+        return broj;
+    }
+
+    public void setBroj(int broj) {
+        this.broj = broj;
+    }
+
+    public List<Rezervacija> getRezervacije() {
+        return rezervacije;
+    }
+
+    public void setRezervacije(List<Rezervacija> rezervacije) {
+        this.rezervacije = rezervacije;
+    }
+
     /**
      * Gets the value of the cena property.
      * 
      */
-
-
     public double getCena() {
         return cena;
     }
@@ -159,7 +153,7 @@ public class SJedinica {
      * Gets the value of the dostupnost property.
      * 
      */
-    public Boolean isDostupnost() {
+    public boolean isDostupnost() {
         return dostupnost;
     }
 
@@ -167,7 +161,7 @@ public class SJedinica {
      * Sets the value of the dostupnost property.
      * 
      */
-    public void setDostupnost(Boolean value) {
+    public void setDostupnost(boolean value) {
         this.dostupnost = value;
     }
 
@@ -179,7 +173,7 @@ public class SJedinica {
      *     {@link String }
      *     
      */
-    public String getId() {
+    public Long getId() {
         return id;
     }
 
@@ -191,7 +185,7 @@ public class SJedinica {
      *     {@link String }
      *     
      */
-    public void setId(String value) {
+    public void setId(Long value) {
         this.id = value;
     }
 

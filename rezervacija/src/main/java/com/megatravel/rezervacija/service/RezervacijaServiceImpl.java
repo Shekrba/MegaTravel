@@ -1,8 +1,11 @@
 package com.megatravel.rezervacija.service;
 
+import com.megatravel.rezervacija.dto.ReservationDTO;
 import com.megatravel.rezervacija.model.Rezervacija;
 import com.megatravel.rezervacija.model.SJedinica;
-import com.megatravel.rezervacija.model.TRegKorisnik;
+import com.megatravel.rezervacija.model.User;
+import com.megatravel.rezervacija.repository.RezervacijaRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -10,6 +13,9 @@ import java.util.List;
 
 @Service
 public class RezervacijaServiceImpl implements  RezervacijaService {
+
+    @Autowired
+    RezervacijaRepository rezervazijaRepository;
 
     @Override
     public Rezervacija addRezervacija(Rezervacija rezervacija){
@@ -29,17 +35,8 @@ public class RezervacijaServiceImpl implements  RezervacijaService {
     @Override
     public List<Rezervacija> getRezervacije(){
 
-        ArrayList<Rezervacija> rezervacije = new ArrayList<Rezervacija>();
 
-        Rezervacija rez = new Rezervacija();
-        rez.setId(new Long(1));
-        rez.setKorisnik(new TRegKorisnik());
-        rez.setSJedinica(new SJedinica());
-        rez.setUCena(2000);
-
-        rezervacije.add(rez);
-
-        return rezervacije;
+        return null;
     }
 
     @Override
@@ -49,5 +46,37 @@ public class RezervacijaServiceImpl implements  RezervacijaService {
         rezervacija.setId(id);
 
         return rezervacija;
+    }
+
+    @Override
+    public List<ReservationDTO>getReservationsToRate(Long user_id){
+        List<Rezervacija> rez = rezervazijaRepository.findAllToRate(user_id);
+        List<ReservationDTO> rezDTO = new ArrayList<>();
+
+        for (Rezervacija r: rez) {
+            ReservationDTO rDTO = new ReservationDTO();
+
+            rDTO.setId(r.getId());
+            rDTO.setKorisnik_id(r.getKorisnik().getId());
+            rDTO.setSmestaj_id(r.getSJedinica().getSmestaj().getId());
+            rDTO.setSmestaj_naziv(r.getSJedinica().getSmestaj().getNaziv());
+            rDTO.setFrom(r.getOd());
+            rDTO.setTo(r.getDo());
+
+            rezDTO.add(rDTO);
+        }
+
+        return rezDTO;
+    }
+
+    @Override
+    public String setRatedTrue(Long id){
+        Rezervacija rez = rezervazijaRepository.findOneById(id);
+
+        rez.setRated(true);
+
+        rezervazijaRepository.save(rez);
+
+        return "Update successful";
     }
 }
