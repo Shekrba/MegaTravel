@@ -5,6 +5,7 @@ import com.megatravel.agentservice.dto.SmestajDTO;
 import com.megatravel.agentservice.dto.UslugaDTO;
 import com.megatravel.agentservice.model.*;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -25,6 +26,11 @@ public interface AgentService {
     public List<UslugaDTO> allServices();
 
     public void setCategoryForAccomodation(Smestaj smestaj);
+
+    public Zauzetost zauzmiSJedinicu(Long sjedId, LocalDate odDatum, LocalDate doDatum);
+    public List<Rezervacija> getRezervacijeSJedinice(Long sjedId);
+    public Rezervacija realizovanaRezervacija(Long id);
+    public Rezervacija nerealizovanaRezervacija(Long id);
 
 
 }

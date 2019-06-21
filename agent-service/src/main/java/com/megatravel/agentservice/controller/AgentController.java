@@ -3,6 +3,7 @@ package com.megatravel.agentservice.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.megatravel.agentservice.client.AgentClient;
+import com.megatravel.agentservice.dto.RezervacijaDTO;
 import com.megatravel.agentservice.dto.SJedinicaDTO;
 import com.megatravel.agentservice.dto.SmestajDTO;
 import com.megatravel.agentservice.dto.UslugaDTO;
@@ -10,12 +11,14 @@ import com.megatravel.agentservice.model.*;
 import com.megatravel.agentservice.service.AgentService;
 import generated.GetTestResponse;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.xml.ws.Response;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -163,6 +166,65 @@ public class AgentController {
             return new ResponseEntity<>(HttpStatus.METHOD_NOT_ALLOWED);
         else
             return  new ResponseEntity<List<Smestaj>>(smestaji, HttpStatus.OK);
+    }
+
+
+    @RequestMapping(value = "/occupancy/{id}",method = RequestMethod.POST)
+    public Zauzetost zauzmiSJedinica(@PathVariable("id")Long id, @RequestParam("odDatum") @DateTimeFormat(pattern="yyyy-MM-dd") LocalDate odDatum, @RequestParam("doDatum") @DateTimeFormat(pattern="yyyy-MM-dd") LocalDate doDatum){
+
+        Zauzetost z = null;
+
+        try {
+            z = agentService.zauzmiSJedinicu(id, odDatum, doDatum);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return z;
+    }
+
+    @RequestMapping(value = "/reservations/{id}",method = RequestMethod.GET)
+    public List<RezervacijaDTO> getRezervacijeSJedinice(@PathVariable("id")Long id)
+    {
+        List<Rezervacija> list = agentService.getRezervacijeSJedinice(id);
+        List<RezervacijaDTO> listDTO = new ArrayList<>();
+
+        for (Rezervacija r: list) {
+            RezervacijaDTO rDTO = new RezervacijaDTO();
+            rezervacijaToDto(r,rDTO);
+            listDTO.add(rDTO);
+        }
+
+        return listDTO;
+    }
+
+    @RequestMapping(value = "/confirmReservation/{id}",method = RequestMethod.PUT)
+    public Rezervacija realizovanaRezervacija(@PathVariable("id")Long id)
+    {
+        Rezervacija r = agentService.realizovanaRezervacija(id);
+
+        return r;
+    }
+
+    @RequestMapping(value = "/declineReservation/{id}",method = RequestMethod.PUT)
+    public Rezervacija nerealizovanaRezervacija(@PathVariable("id")Long id)
+    {
+        Rezervacija r = agentService.nerealizovanaRezervacija(id);
+
+        return r;
+    }
+
+
+    public void rezervacijaToDto(Rezervacija r, RezervacijaDTO rDTO) {
+
+        rDTO.setId(r.getId());
+        rDTO.setKorisnik(r.getKorisnik());
+        rDTO.setuCena(r.getuCena());
+        rDTO.setStatusRezervacije(r.getStatusRezervacije());
+        rDTO.setDatumRez(r.getDatumRez());
+        rDTO.setOd(r.getOd());
+        rDTO.set_do(r.get_do());
+
     }
 
 

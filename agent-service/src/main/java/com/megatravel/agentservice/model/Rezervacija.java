@@ -17,6 +17,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlSchemaType;
 import javax.xml.bind.annotation.XmlType;
 import javax.xml.datatype.XMLGregorianCalendar;
+import java.time.LocalDate;
 import java.util.Date;
 
 
@@ -33,8 +34,6 @@ import java.util.Date;
  *         &lt;element ref="{https://github.com/Shekrba/MegaTravel/Smestaj}SJedinica"/>
  *         &lt;element name="DatumRez" type="{http://www.w3.org/2001/XMLSchema}date"/>
  *         &lt;element name="Od" type="{http://www.w3.org/2001/XMLSchema}date"/>
- *         &lt;element name="Do" type="{http://www.w3.org/2001/XMLSchema}date"/>
- *         &lt;element name="UCena" type="{http://www.w3.org/2001/XMLSchema}int"/>
  *         &lt;element ref="{https://github.com/Shekrba/MegaTravel/Korisnik}Korisnik"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
@@ -49,8 +48,6 @@ import java.util.Date;
         "sJedinica",
         "datumRez",
         "od",
-        "_do",
-        "uCena",
         "korisnik"
 })
 @XmlRootElement(name = "Rezervacija", namespace = "https://github.com/Shekrba/MegaTravel")
@@ -68,17 +65,17 @@ public class Rezervacija {
     @XmlElement(name = "DatumRez", namespace = "https://github.com/Shekrba/MegaTravel", required = true)
     @XmlSchemaType(name = "date")
     @Column(name = "datumRez", unique = false, nullable = false)
-    protected Date datumRez;
+    protected LocalDate datumRez;
 
     @XmlElement(name = "Od", namespace = "https://github.com/Shekrba/MegaTravel", required = true)
     @XmlSchemaType(name = "date")
     @Column(name = "od", unique = false, nullable = false)
-    protected Date od;
+    protected LocalDate od;
 
     @XmlElement(name = "Do", namespace = "https://github.com/Shekrba/MegaTravel", required = true)
     @XmlSchemaType(name = "date")
     @Column(name = "do", unique = false, nullable = false)
-    protected Date _do;
+    protected LocalDate _do;
 
     @XmlElement(name = "UCena", namespace = "https://github.com/Shekrba/MegaTravel")
     @Column(name = "ukupnaCena", unique = false, nullable = false)
@@ -87,6 +84,43 @@ public class Rezervacija {
     @XmlElement(name = "Korisnik", namespace = "https://github.com/Shekrba/MegaTravel/Korisnik", required = true)
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     protected TKorisnik korisnik;
+
+    @XmlElement(name = "StatusRezervacije", required = true, defaultValue = "rezervisano")
+    @XmlSchemaType(name = "string")
+    @Column(name = "status", unique = false, nullable = false)
+    protected StatusRezervacije statusRezervacije;
+
+    public void setStatusRezervacije(StatusRezervacije statusRezervacije) {
+        this.statusRezervacije = statusRezervacije;
+    }
+
+    public StatusRezervacije getStatusRezervacije() {
+        return statusRezervacije;
+    }
+
+    public void setDatumRez(LocalDate datumRez) {
+        this.datumRez = datumRez;
+    }
+
+    public void setOd(LocalDate od) {
+        this.od = od;
+    }
+
+    public void setKorisnik(TKorisnik korisnik) {
+        this.korisnik = korisnik;
+    }
+
+    public LocalDate getDatumRez() {
+        return datumRez;
+    }
+
+    public LocalDate getOd() {
+        return od;
+    }
+
+    public TKorisnik getKorisnik() {
+        return korisnik;
+    }
 
     public Long getId() {
         return id;
@@ -104,11 +138,11 @@ public class Rezervacija {
         this.sJedinica = sJedinica;
     }
 
-    public Date get_do() {
+    public LocalDate get_do() {
         return _do;
     }
 
-    public void set_do(Date _do) {
+    public void set_do(LocalDate _do) {
         this._do = _do;
     }
 
@@ -120,140 +154,6 @@ public class Rezervacija {
         this.uCena = uCena;
     }
 
-    /**
-     * Gets the value of the sJedinica property.
-     *
-     * @return
-     *     possible object is
-     *     {@link SJedinica }
-     *
-     */
-    public SJedinica getSJedinica() {
-        return sJedinica;
-    }
 
-    /**
-     * Sets the value of the sJedinica property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link SJedinica }
-     *
-     */
-    public void setSJedinica(SJedinica value) {
-        this.sJedinica = value;
-    }
-
-    /**
-     * Gets the value of the datumRez property.
-     *
-     * @return
-     *     possible object is
-     *     {@link XMLGregorianCalendar }
-     *
-     */
-    public Date getDatumRez() {
-        return datumRez;
-    }
-
-    /**
-     * Sets the value of the datumRez property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link XMLGregorianCalendar }
-     *
-     */
-    public void setDatumRez(Date value) {
-        this.datumRez = value;
-    }
-
-    /**
-     * Gets the value of the od property.
-     *
-     * @return
-     *     possible object is
-     *     {@link XMLGregorianCalendar }
-     *
-     */
-    public Date getOd() {
-        return od;
-    }
-
-    /**
-     * Sets the value of the od property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link XMLGregorianCalendar }
-     *
-     */
-    public void setOd(Date value) {
-        this.od = value;
-    }
-
-    /**
-     * Gets the value of the do property.
-     *
-     * @return
-     *     possible object is
-     *     {@link XMLGregorianCalendar }
-     *
-     */
-    public Date getDo() {
-        return _do;
-    }
-
-    /**
-     * Sets the value of the do property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link XMLGregorianCalendar }
-     *
-     */
-    public void setDo(Date value) {
-        this._do = value;
-    }
-
-    /**
-     * Gets the value of the uCena property.
-     *
-     */
-    public int getUCena() {
-        return uCena;
-    }
-
-    /**
-     * Sets the value of the uCena property.
-     *
-     */
-    public void setUCena(int value) {
-        this.uCena = value;
-    }
-
-    /**
-     * Gets the value of the korisnik property.
-     *
-     * @return
-     *     possible object is
-     *     {@link TKorisnik }
-     *
-     */
-    public TKorisnik getKorisnik() {
-        return korisnik;
-    }
-
-    /**
-     * Sets the value of the korisnik property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link TKorisnik }
-     *
-     */
-    public void setKorisnik(TKorisnik value) {
-        this.korisnik = value;
-    }
 
 }
