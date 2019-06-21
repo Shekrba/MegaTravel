@@ -4,13 +4,11 @@ import com.megatravel.agentservice.dto.SJedinicaDTO;
 import com.megatravel.agentservice.dto.SmestajDTO;
 import com.megatravel.agentservice.dto.UslugaDTO;
 import com.megatravel.agentservice.model.*;
-import com.megatravel.agentservice.repository.CategoryRepository;
-import com.megatravel.agentservice.repository.SJedinicaRepository;
-import com.megatravel.agentservice.repository.SmestajRepository;
-import com.megatravel.agentservice.repository.UslugaRepository;
+import com.megatravel.agentservice.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -30,6 +28,11 @@ public class AgentServiceImpl implements AgentService {
     @Autowired
     CategoryRepository categoryRepository;
 
+    @Autowired
+    RezervacijaRepository rezervacijaRepository;
+
+    @Autowired
+    ZauzetostRepository zauzetostRepository;
 
 
     @Override
@@ -224,5 +227,48 @@ public class AgentServiceImpl implements AgentService {
         {
             smestaj.setCategory(null);
         }
+    }
+
+    @Override
+    public Zauzetost zauzmiSJedinicu(Long sjedId, LocalDate odDatum, LocalDate doDatum) {
+
+        Zauzetost z = new Zauzetost();
+        z.setsJedinica(sjedinicaRepository.findOneById(sjedId));
+        z.setDatumOd(odDatum);
+        z.setDatumDo(doDatum);
+
+        zauzetostRepository.save(z);
+
+        return z;
+    }
+
+    @Override
+    public List<Rezervacija> getRezervacijeSJedinice(Long sjedId) {
+
+        List<Rezervacija> rezervacijaList = rezervacijaRepository.findSveRezervacijeSJedinice(sjedId);
+
+        return rezervacijaList;
+    }
+
+    @Override
+    public Rezervacija realizovanaRezervacija(Long id) {
+
+        Rezervacija r = rezervacijaRepository.findOneById(id);
+        r.setStatusRezervacije(StatusRezervacije.REALIZOVANA);
+
+        rezervacijaRepository.save(r);
+
+        return r;
+    }
+
+    @Override
+    public Rezervacija nerealizovanaRezervacija(Long id) {
+
+        Rezervacija r = rezervacijaRepository.findOneById(id);
+        r.setStatusRezervacije(StatusRezervacije.NEREALIZOVANA);
+
+        rezervacijaRepository.save(r);
+
+        return r;
     }
 }

@@ -87,7 +87,8 @@ public class SJedinica {
     @OneToMany
     protected List<Rezervacija> rezervacije;
 
-
+    @OneToMany
+    protected List<Zauzetost> listaZauzetosti;
 
 
     public List<Rezervacija> getRezervacije() {
@@ -98,7 +99,13 @@ public class SJedinica {
         this.rezervacije = rezervacije;
     }
 
+    public void setListaZauzetosti(List<Zauzetost> listaZauzetosti) {
+        this.listaZauzetosti = listaZauzetosti;
+    }
 
+    public List<Zauzetost> getListaZauzetosti() {
+        return listaZauzetosti;
+    }
 
     public int getBroj() {
         return broj;

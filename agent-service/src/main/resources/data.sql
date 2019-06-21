@@ -1,4 +1,4 @@
-insert into usluga (id, naziv, cena, opis) values (1,'Spa', 20, 'For bath.');
+/*insert into usluga (id, naziv, cena, opis) values (1,'Spa', 20, 'For bath.');
 insert into usluga (id, naziv, cena, opis) values (2,'WIFI', 5, 'Internet.');
 insert into usluga (id, naziv, cena, opis) values (3,'Breakfast', 10, 'For eat.');
 insert into usluga (id, naziv, cena, opis) values (4,'Parking', 15, 'Parking');
@@ -75,7 +75,7 @@ insert services_smestaj(smestaj_id,service_id) values (2,10);
 
 
 
-
+*/
 
 
 
