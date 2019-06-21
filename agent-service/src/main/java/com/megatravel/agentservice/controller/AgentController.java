@@ -20,6 +20,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @RestController
+@CrossOrigin("http://localhost:4200")
 @RequestMapping(value = "api", produces = "application/json;charset=UTF-8")
 
 public class AgentController {
