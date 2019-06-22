@@ -253,6 +253,7 @@ public class AgentController {
         sDTO.setUlica(s.getAdresa().getUlica());
         sDTO.setLatitude(s.getAdresa().getLatitude());
         sDTO.setLongitude(s.getAdresa().getLongitude());
+        sDTO.setPosBroj(s.getAdresa().getPosBroj());
 
         for (Slika slika: s.getSlika()) {
             sDTO.getSlike().add(slika.getSrc());

@@ -13,7 +13,7 @@ public class RezervacijaDTO {
     private LocalDate _do;
     private int uCena;
     private StatusRezervacije statusRezervacije;
-    private TKorisnik korisnik;
+    private String korisnik;
 
     public void setId(Long id) {
         this.id = id;
@@ -39,7 +39,7 @@ public class RezervacijaDTO {
         this.statusRezervacije = statusRezervacije;
     }
 
-    public void setKorisnik(TKorisnik korisnik) {
+    public void setKorisnik(String korisnik) {
         this.korisnik = korisnik;
     }
 
@@ -67,7 +67,7 @@ public class RezervacijaDTO {
         return statusRezervacije;
     }
 
-    public TKorisnik getKorisnik() {
+    public String getKorisnik() {
         return korisnik;
     }
 }

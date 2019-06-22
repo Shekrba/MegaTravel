@@ -1,5 +1,7 @@
 package com.megatravel.agentservice.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import javax.xml.bind.annotation.XmlElement;
 import java.time.LocalDate;
@@ -33,6 +35,7 @@ public class Zauzetost {
         this.datumDo = datumDo;
     }
 
+    @JsonIgnore
     public void setsJedinica(SJedinica sJedinica) {
         this.sJedinica = sJedinica;
     }

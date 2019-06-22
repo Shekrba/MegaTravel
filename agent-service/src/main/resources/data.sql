@@ -73,6 +73,20 @@ insert services_smestaj(smestaj_id,service_id) values (2,9);
 insert services_smestaj(smestaj_id,service_id) values (2,10);
 
 
+insert into sjedinica(id,broj,broj_kreveta,cena,smestaj_id) values (1,5,3,100,1);
+insert into sjedinica(id,broj,broj_kreveta,cena,smestaj_id) values (2,2,1,115,1);
+insert into sjedinica(id,broj,broj_kreveta,cena,smestaj_id) values (3,8,4,113,1);
+insert into sjedinica(id,broj,broj_kreveta,cena,smestaj_id) values (4,5,3,40,1);
+
+insert into sjedinica(id,broj,broj_kreveta,cena,smestaj_id) values (5,1,1,100,2);
+insert into sjedinica(id,broj,broj_kreveta,cena,smestaj_id) values (6,2,2,30,2);
+insert into sjedinica(id,broj,broj_kreveta,cena,smestaj_id) values (7,3,3,12,2);
+insert into sjedinica(id,broj,broj_kreveta,cena,smestaj_id) values (8,4,4,15,2);
+
+
+insert into rezervacija(id,od,do,datum_rez, status, ukupna_cena, korisnik, s_jedinica_id) values (1,'2019-06-15','2019-06-17','2019-04-17', 'REZERVISANO',100, 'marin22', 1);
+insert into rezervacija(id,od,do,datum_rez, status, ukupna_cena, korisnik, s_jedinica_id) values (2,'2019-08-13','2019-08-17','2019-02-17', 'REZERVISANO',120, 'mika', 3);
+insert into rezervacija(id,od,do,datum_rez, status, ukupna_cena, korisnik, s_jedinica_id) values (3,'2019-09-15','2019-09-17','2019-03-17', 'REZERVISANO',130, 'marin22', 1);
 
 
 

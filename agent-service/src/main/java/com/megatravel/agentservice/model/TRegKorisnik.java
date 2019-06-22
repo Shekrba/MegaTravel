@@ -37,14 +37,5 @@ import java.util.List;
 public class TRegKorisnik
         extends TKorisnik
 {
-    @OneToMany(mappedBy = "korisnik")
-    protected List<Rezervacija> rezervacije;
 
-    public List<Rezervacija> getRezervacije() {
-        return rezervacije;
-    }
-
-    public void setRezervacije(List<Rezervacija> rezervacije) {
-        this.rezervacije = rezervacije;
-    }
 }

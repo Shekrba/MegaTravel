@@ -95,10 +95,12 @@ public class SJedinica {
         return rezervacije;
     }
 
+    @JsonIgnore
     public void setRezervacije(List<Rezervacija> rezervacije) {
         this.rezervacije = rezervacije;
     }
 
+    @JsonIgnore
     public void setListaZauzetosti(List<Zauzetost> listaZauzetosti) {
         this.listaZauzetosti = listaZauzetosti;
     }

@@ -9,6 +9,8 @@ package com.megatravel.agentservice.model;
 
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
@@ -48,7 +50,7 @@ import java.util.Date;
         "sJedinica",
         "datumRez",
         "od",
-        "korisnik"
+
 })
 @XmlRootElement(name = "Rezervacija", namespace = "https://github.com/Shekrba/MegaTravel")
 @Entity
@@ -81,13 +83,14 @@ public class Rezervacija {
     @Column(name = "ukupnaCena", unique = false, nullable = false)
     protected int uCena;
 
-    @XmlElement(name = "Korisnik", namespace = "https://github.com/Shekrba/MegaTravel/Korisnik", required = true)
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    protected TKorisnik korisnik;
+    //KORISTICEMO SAMO USER OD KORISNIKA TO NAM JE DOVOLJNO NA AGENTU
+    @Column(name="korisnik", nullable = false)
+    private String korisnik;
 
     @XmlElement(name = "StatusRezervacije", required = true, defaultValue = "rezervisano")
     @XmlSchemaType(name = "string")
     @Column(name = "status", unique = false, nullable = false)
+    @Enumerated(EnumType.STRING)
     protected StatusRezervacije statusRezervacije;
 
     public void setStatusRezervacije(StatusRezervacije statusRezervacije) {
@@ -106,9 +109,7 @@ public class Rezervacija {
         this.od = od;
     }
 
-    public void setKorisnik(TKorisnik korisnik) {
-        this.korisnik = korisnik;
-    }
+
 
     public LocalDate getDatumRez() {
         return datumRez;
@@ -118,9 +119,7 @@ public class Rezervacija {
         return od;
     }
 
-    public TKorisnik getKorisnik() {
-        return korisnik;
-    }
+
 
     public Long getId() {
         return id;
@@ -134,6 +133,7 @@ public class Rezervacija {
         return sJedinica;
     }
 
+    @JsonIgnore
     public void setsJedinica(SJedinica sJedinica) {
         this.sJedinica = sJedinica;
     }
@@ -155,5 +155,11 @@ public class Rezervacija {
     }
 
 
+    public String getKorisnik() {
+        return korisnik;
+    }
 
+    public void setKorisnik(String korisnik) {
+        this.korisnik = korisnik;
+    }
 }
