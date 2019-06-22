@@ -12,7 +12,9 @@ import { HotelProfileComponent } from './hotel-profile/hotel-profile.component';
 import {HttpClientModule, HTTP_INTERCEPTORS} from "@angular/common/http";
 import { FormsModule, ReactiveFormsModule } from '@angular/forms'
 import { JwtInterceptor, ErrorInterceptor } from './_helpers';
-
+import { RatingsComponent } from './ratings/ratings.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ToastrModule } from 'ngx-toastr';
 
 @NgModule({
   declarations: [
@@ -23,13 +25,20 @@ import { JwtInterceptor, ErrorInterceptor } from './_helpers';
     RegisterComponent,
     LoginComponent,
     HotelProfileComponent,
+    RatingsComponent,
   ],
   imports: [
     BrowserModule,
     HttpClientModule,
     AppRoutingModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    BrowserAnimationsModule,
+    ToastrModule.forRoot({
+      timeOut: 3000,
+      positionClass: "toast-top-right",
+      preventDuplicates: false,
+    }),
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },

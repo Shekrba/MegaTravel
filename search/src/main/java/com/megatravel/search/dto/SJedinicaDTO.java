@@ -1,17 +1,17 @@
 package com.megatravel.search.dto;
 
 public class SJedinicaDTO {
-    private String id;
+    private Long id;
     private int broj;
     private int brojKreveta;
     private double cena;
     private Boolean dostupnost;
 
-    public String getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

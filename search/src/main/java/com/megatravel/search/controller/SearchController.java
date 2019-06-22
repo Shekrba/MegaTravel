@@ -1,13 +1,7 @@
 package com.megatravel.search.controller;
 
-import com.megatravel.search.dto.FilterDTO;
-import com.megatravel.search.dto.SJedinicaDTO;
-import com.megatravel.search.dto.SmestajDTO;
-import com.megatravel.search.dto.UslugaDTO;
-import com.megatravel.search.model.SJedinica;
-import com.megatravel.search.model.Slika;
-import com.megatravel.search.model.Smestaj;
-import com.megatravel.search.model.Usluga;
+import com.megatravel.search.dto.*;
+import com.megatravel.search.model.*;
 import com.megatravel.search.service.SearchService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -67,17 +61,22 @@ public class SearchController {
         return searchService.getUslugeByNaziv();
     }
 
+    @RequestMapping(value = "/types", method = RequestMethod.GET)
+    public List<String> getTypes(){
+        return searchService.getTypes();
+    }
+
     public void smestajToDto(Smestaj s, SmestajDTO sDTO){
         sDTO.setId(s.getId());
         sDTO.setNaziv(s.getNaziv());
         sDTO.setOpis(s.getOpis());
         sDTO.setPeriodOtkaza(s.getPeriodOtkaza());
-        sDTO.setTip(s.getTipSmestaja());
+        sDTO.setTip(s.getAccomodationType().getNaziv());
         sDTO.setMesto(s.getAdresa().getMesto());
         sDTO.setBroj(s.getAdresa().getBroj());
         sDTO.setUlica(s.getAdresa().getUlica());
 
-        for (Slika slika: s.getSlika()) {
+        for (Slika slika: s.getSlike()) {
             sDTO.getSlike().add(slika.getSrc());
         }
 

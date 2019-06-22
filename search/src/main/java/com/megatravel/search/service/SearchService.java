@@ -12,4 +12,5 @@ public interface SearchService {
     public Smestaj getSmestaj(Long id);
     public List<Smestaj> getFilteredSmetaje(FilterDTO filter);
     public List<String> getUslugeByNaziv();
+    public List<String> getTypes();
 }

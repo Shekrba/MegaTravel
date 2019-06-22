@@ -15,6 +15,8 @@ import { EditServiceComponent } from './edit-service/edit-service.component';
 import { TypesComponent } from './types/types.component';
 import { CategorizationComponent } from './categorization/categorization.component';
 import {HttpClientModule, HTTP_INTERCEPTORS} from "@angular/common/http";
+import { AdminComponent } from './admin/admin.component';
+import { LoginComponent } from './login/login.component';
 
 @NgModule({
   declarations: [
@@ -27,6 +29,8 @@ import {HttpClientModule, HTTP_INTERCEPTORS} from "@angular/common/http";
     EditServiceComponent,
     TypesComponent,
     CategorizationComponent,
+    AdminComponent,
+    LoginComponent,
   ],
   imports: [
     BrowserModule,

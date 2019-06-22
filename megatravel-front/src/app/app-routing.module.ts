@@ -5,7 +5,7 @@ import { HotelsComponent } from './hotels/hotels.component';
 import { RegisterComponent } from './register/register.component';
 import { LoginComponent } from './login/login.component';
 import { HotelProfileComponent } from './hotel-profile/hotel-profile.component';
-import { AuthGuard } from './_guards';
+import { RatingsComponent } from './ratings/ratings.component'
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -13,6 +13,7 @@ const routes: Routes = [
   { path: 'register', component: RegisterComponent },
   { path: 'login', component: LoginComponent },
   { path: 'hotels/:id', component: HotelProfileComponent },
+  { path: 'ratings', component: RatingsComponent },
   //redirect to home if url is not valid
   { path: '**', redirectTo: '' }
 ];

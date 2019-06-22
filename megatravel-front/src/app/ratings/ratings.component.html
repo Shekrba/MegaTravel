@@ -1,0 +1,44 @@
+<div class="container">
+  <ul class="nav nav-tabs mt-5">
+    <li (click)="toRateButton()" class="nav-item">
+      <button *ngIf="tab=='toRate'" class="nav-link active"><b>To Rate</b></button>
+      <button *ngIf="tab=='rated'" class="btn btn-link nav-link">To Rate</button>
+    </li>
+    <li (click)="ratedButton()" class="nav-item">
+      <button *ngIf="tab=='rated'" class="nav-link active"><b>Rated</b></button>
+      <button *ngIf="tab=='toRate'" class="btn btn-link nav-link">Rated</button>
+    </li>
+  </ul>
+
+  <table class="table mt-5 ml-auto mr-auto">
+    <tr>
+      <th class="white bg-primary">Accommodation</th>
+      <th class="white bg-primary">Date From</th>
+      <th class="white bg-primary">Date To</th>
+      <th class="white bg-primary">Rating</th>
+      <th class="white bg-primary">Comment</th>
+      <th class="white bg-primary"></th>
+    </tr>
+    <tr *ngFor="let r of ratings">
+      <td>{{r.smestaj_naziv}}</td>
+      <td>{{r.from.split("T")[0]}}</td>
+      <td>{{r.to.split("T")[0]}}</td>
+      <td>
+        <select [(ngModel)]="r.vrednost" class="form-control">
+          <option>1</option>
+          <option>2</option>
+          <option>3</option>
+          <option>4</option>
+          <option>5</option>
+        </select>
+      </td>
+      <td>
+        <input [(ngModel)]="r.komentar" class="form-control" type="text">
+      </td>
+      <td>
+        <button *ngIf="tab == 'toRate'" (click)="rate(r)" class="btn btn-success">Rate</button>
+        <button *ngIf="tab == 'rated'" (click)="updateRating(r)" class="btn btn-primary">Update</button>
+      </td>
+    </tr>
+  </table>
+</div>

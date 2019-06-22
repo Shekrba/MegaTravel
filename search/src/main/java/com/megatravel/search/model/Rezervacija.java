@@ -83,9 +83,31 @@ public class Rezervacija {
     @Column(name = "ukupnaCena", unique = false, nullable = false)
     protected int uCena;
 
-    @XmlElement(name = "Korisnik", namespace = "https://github.com/Shekrba/MegaTravel/Korisnik", required = true)
+    @XmlElement(name = "User", namespace = "https://github.com/Shekrba/MegaTravel/Korisnik", required = true)
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    protected TKorisnik korisnik;
+    protected User korisnik;
+
+    @Column(name = "canBeRated", unique = false, nullable = false)
+    protected boolean canBeRated;
+
+    @Column(name = "rated", unique = false, nullable = false)
+    protected boolean rated;
+
+    public boolean isRated() {
+        return rated;
+    }
+
+    public void setRated(boolean rated) {
+        this.rated = rated;
+    }
+
+    public boolean isCanBeRated() {
+        return canBeRated;
+    }
+
+    public void setCanBeRated(boolean canBeRated) {
+        this.canBeRated = canBeRated;
+    }
 
     public Long getId() {
         return id;
@@ -231,28 +253,11 @@ public class Rezervacija {
         this.uCena = value;
     }
 
-    /**
-     * Gets the value of the korisnik property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link TKorisnik }
-     *     
-     */
-    public TKorisnik getKorisnik() {
+    public User getKorisnik() {
         return korisnik;
     }
 
-    /**
-     * Sets the value of the korisnik property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link TKorisnik }
-     *     
-     */
-    public void setKorisnik(TKorisnik value) {
-        this.korisnik = value;
+    public void setKorisnik(User korisnik) {
+        this.korisnik = korisnik;
     }
-
 }

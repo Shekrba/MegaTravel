@@ -16,7 +16,9 @@ export class AgentComponent implements OnInit {
     ime : null,
     prezime : null,
     adresa : null,
-    email :null
+    email :null,
+    username: null,
+    password: null,
   }
 
   constructor(private toastr: ToastrService, private adminService: AdminServiceService, private router: Router) {}
