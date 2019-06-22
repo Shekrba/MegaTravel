@@ -9,7 +9,7 @@ import java.util.List;
 public class SmestajDTO {
     private Long id;
     private String naziv;
-    private TTipSmestaja tip;
+    private Long tip;
     private String opis;
     private int periodOtkaza;
     private String mesto;
@@ -65,11 +65,11 @@ public class SmestajDTO {
         this.naziv = naziv;
     }
 
-    public TTipSmestaja getTip() {
+    public Long getTip() {
         return tip;
     }
 
-    public void setTip(TTipSmestaja tip) {
+    public void setTip(Long tip) {
         this.tip = tip;
     }
 

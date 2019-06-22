@@ -34,6 +34,9 @@ public class AgentServiceImpl implements AgentService {
     @Autowired
     ZauzetostRepository zauzetostRepository;
 
+    @Autowired
+    AccomodationTypeRepository accomodationTypeRepository;
+
 
     @Override
     public List<Smestaj> getSmestaje() {
@@ -148,6 +151,9 @@ public class AgentServiceImpl implements AgentService {
 
         smestajNew.setOpis(smestaj.getOpis());
         smestajNew.setPeriodOtkaza(smestaj.getPeriodOtkaza());
+
+        smestajNew.setAccomodationType(accomodationTypeRepository.findOneById(smestaj.getTip()));
+
         List<Usluga> uslugaList = uslugaRepository.findAllById(smestaj.getAdditionalServices());
         smestajNew.setUslugaList(uslugaList);
         setCategoryForAccomodation(smestajNew);
@@ -174,6 +180,8 @@ public class AgentServiceImpl implements AgentService {
         smestajUpdate.setAdresa(adresa);
         smestajUpdate.setOpis(smestaj.getOpis());
         smestajUpdate.setPeriodOtkaza(smestaj.getPeriodOtkaza());
+
+        smestajUpdate.setAccomodationType(accomodationTypeRepository.findOneById(smestaj.getTip()));
 
         List<Usluga> uslugaList = uslugaRepository.findAllById(smestaj.getAdditionalServices());
         smestajUpdate.setUslugaList(uslugaList);
@@ -270,5 +278,10 @@ public class AgentServiceImpl implements AgentService {
         rezervacijaRepository.save(r);
 
         return r;
+    }
+
+    @Override
+    public List<AccomodationType> getAccTypes() {
+        return accomodationTypeRepository.findAll();
     }
 }

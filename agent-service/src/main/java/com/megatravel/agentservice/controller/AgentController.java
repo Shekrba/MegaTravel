@@ -49,6 +49,12 @@ public class AgentController {
         return listDTO;
     }
 
+    @RequestMapping(value = "/types", method = RequestMethod.GET)
+    public List<AccomodationType>  getTypes()
+    {
+        return agentService.getAccTypes();
+    }
+
 
     @RequestMapping(value = "/services", method = RequestMethod.GET)
     public List<UslugaDTO> getServices()
@@ -131,7 +137,7 @@ public class AgentController {
     }
 
     @RequestMapping(value = "/smestajAdd",method = RequestMethod.POST)
-    public Smestaj addSJedinica(@RequestBody SmestajDTO smestaj){
+    public ResponseEntity<Smestaj> addSJedinica(@RequestBody SmestajDTO smestaj){
 
         Smestaj addedSmestaj = null;
 
@@ -139,9 +145,10 @@ public class AgentController {
             addedSmestaj = agentService.addSmestaj(smestaj);
         } catch (Exception e) {
             e.printStackTrace();
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
 
-        return addedSmestaj;
+        return new ResponseEntity<Smestaj>(addedSmestaj,HttpStatus.OK);
     }
 
     @RequestMapping(value = "/smestajUpdate",method = RequestMethod.PUT)
@@ -244,6 +251,8 @@ public class AgentController {
         sDTO.setMesto(s.getAdresa().getMesto());
         sDTO.setBroj(s.getAdresa().getBroj());
         sDTO.setUlica(s.getAdresa().getUlica());
+        sDTO.setLatitude(s.getAdresa().getLatitude());
+        sDTO.setLongitude(s.getAdresa().getLongitude());
 
         for (Slika slika: s.getSlika()) {
             sDTO.getSlike().add(slika.getSrc());
@@ -257,6 +266,7 @@ public class AgentController {
             uslugaDTO.setOpis(usluga.getOpis());
 
             sDTO.getUsluge().add(uslugaDTO);
+            sDTO.getAdditionalServices().add(usluga.getId());
         }
 
         for (SJedinica sj: s.getSJedinica()) {
@@ -268,6 +278,9 @@ public class AgentController {
 
             sDTO.getSjedinice().add(sjDTO);
         }
+
+        sDTO.setTip(s.getAccomodationType().getId());
+
     }
 
     public void sJedinicaToDto(SJedinica s, SJedinicaDTO sDTO){

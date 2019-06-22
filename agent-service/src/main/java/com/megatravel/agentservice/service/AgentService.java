@@ -32,5 +32,7 @@ public interface AgentService {
     public Rezervacija realizovanaRezervacija(Long id);
     public Rezervacija nerealizovanaRezervacija(Long id);
 
+    public List<AccomodationType> getAccTypes();
+
 
 }
