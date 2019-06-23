@@ -2,10 +2,7 @@ package com.megatravel.agentback.controller;
 
 
 import com.megatravel.agentback.client.AgentClient;
-import com.megatravel.agentback.dto.RezervacijaDTO;
-import com.megatravel.agentback.dto.SJedinicaDTO;
-import com.megatravel.agentback.dto.SmestajDTO;
-import com.megatravel.agentback.dto.UslugaDTO;
+import com.megatravel.agentback.dto.*;
 import com.megatravel.agentback.model.*;
 import com.megatravel.agentback.service.AgentService;
 import generated.GetTestResponse;
@@ -175,10 +172,11 @@ public class AgentController {
 
 
     @RequestMapping(value = "/occupancy/{id}",method = RequestMethod.POST)
-    public Zauzetost zauzmiSJedinica(@PathVariable("id")Long id, @RequestParam("odDatum") @DateTimeFormat(pattern="yyyy-MM-dd") LocalDate odDatum, @RequestParam("doDatum") @DateTimeFormat(pattern="yyyy-MM-dd") LocalDate doDatum){
+    public Zauzetost zauzmiSJedinica(@PathVariable("id")Long id, @RequestBody ZauzetostDTO zauzetostDTO){
 
         Zauzetost z = null;
-
+        LocalDate odDatum = zauzetostDTO.getOdDatum();
+        LocalDate doDatum = zauzetostDTO.getDoDatum();
         try {
             z = agentService.zauzmiSJedinicu(id, odDatum, doDatum);
         } catch (Exception e) {
