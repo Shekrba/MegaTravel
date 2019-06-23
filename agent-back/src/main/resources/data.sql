@@ -89,15 +89,11 @@ insert into rezervacija(id,od,do,datum_rez, status, ukupna_cena, korisnik, s_jed
 insert into rezervacija(id,od,do,datum_rez, status, ukupna_cena, korisnik, s_jedinica_id) values (3,'2019-09-15','2019-09-17','2019-03-17', 'REZERVISANO',130, 'marin22', 1);
 
 
-INSERT INTO poruka(id, datum_slanja, posaljilac, primalac, sadrzaj, status) VALUES (1, '2019-06-22', 'k1', 'Agent', 'poruka1', 'NEODGOVORENO');
-INSERT INTO poruka(id, datum_slanja, posaljilac, primalac, sadrzaj, status) VALUES (2, '2019-06-22', 'k2', 'Agent', 'poruka2', 'NEODGOVORENO');
-INSERT INTO poruka(id, datum_slanja, posaljilac, primalac, sadrzaj, status) VALUES (3, '2019-06-22', 'k3', 'Agent', 'poruka3', 'NEODGOVORENO');
-INSERT INTO poruka(id, datum_slanja, posaljilac, primalac, sadrzaj, status) VALUES (4, '2019-06-22', 'k4', 'Agent', 'poruka4', 'NEODGOVORENO');
-INSERT INTO poruka(id, datum_slanja, posaljilac, primalac, sadrzaj, status) VALUES (5, '2019-06-22', 'k5', 'Agent', 'poruka5', 'NEODGOVORENO');
-
-
-
-
+INSERT INTO poruka(id, datum_slanja, naslov, posaljilac, primalac, sadrzaj, status) VALUES (1, '2019-06-22', 'Naslov1', 'k1', 'Agent', 'poruka1', 'NEODGOVORENO');
+INSERT INTO poruka(id, datum_slanja, naslov, posaljilac, primalac, sadrzaj, status) VALUES (2, '2019-06-22', 'Naslov2', 'k2', 'Agent', 'poruka2', 'NEODGOVORENO');
+INSERT INTO poruka(id, datum_slanja, naslov, posaljilac, primalac, sadrzaj, status) VALUES (3, '2019-06-22', 'Naslov3', 'k3', 'Agent', 'poruka3', 'NEODGOVORENO');
+INSERT INTO poruka(id, datum_slanja, naslov, posaljilac, primalac, sadrzaj, status) VALUES (4, '2019-06-22', 'Naslov4', 'k4', 'Agent', 'poruka4', 'NEODGOVORENO');
+INSERT INTO poruka(id, datum_slanja, naslov, posaljilac, primalac, sadrzaj, status) VALUES (5, '2019-06-22', 'Naslov5', 'k5', 'Agent', 'poruka5', 'NEODGOVORENO');
 
 
 
