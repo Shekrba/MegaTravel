@@ -1,0 +1,116 @@
+
+<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+<div class="container">
+    <form>
+    <div class="row">
+        <div class="col-6">
+            <div class="row">
+                <div class="col-6">
+                    <div class="form-group">
+                        <label for="name">Name of accomodation: </label>
+                        <input name="naziv" [(ngModel)]="accomodation.naziv" type="text" class="form-control" id="name">
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div class="form-group">
+                        <label for="place">Place: </label>
+                        <input name="place" [(ngModel)]="accomodation.mesto" type="text" class="form-control" id="place">
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-6">
+                    <div class="form-group">
+                    <label for="InputAddress">Address: </label>
+                    <input name="ulica" type="text" [(ngModel)]="accomodation.ulica" class="form-control" id="InputAddress" placeholder="Enter address">
+                    </div>
+                </div>
+                <div class="col-2">
+                    <div class="form-group">
+                    <label for="inputNumber">Number: </label>
+                    <input name="broj" type="number" [(ngModel)]="accomodation.broj" class="form-control" id="inputNumber">
+                    </div>
+                </div>
+                <div class="col-2">
+                    <div class="form-group">
+                    <label for="InputLatitude">Latitude: </label>
+                    <input name="latitude" type="text" [(ngModel)]="accomodation.latitude" class="form-control" id="InputLatitude">
+                    </div>
+                </div>
+                <div class="col-2">
+                    <div class="form-group">
+                    <label for="InputLongitude">Longitude: </label>
+                    <input name="longitude" type="text" [(ngModel)]="accomodation.longitude" class="form-control" id="InputLongitude">
+                    </div>
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <label for="inputPosBroj">Zip code: </label>
+                <input name="posBroj" type="text" [(ngModel)]="accomodation.posBroj" class="form-control" id="inputPosBroj" placeholder="Enter zip code">
+            </div>
+            
+            <div class="form-group">
+                <label for="selectType">Type: </label>
+                <select name="tip" [(ngModel)]="accomodation.tip" class="form-control" id="selectType">
+                        <option *ngFor="let type of typesOfAccomodation" value="{{type.id}}">{{type.naziv}}</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="additionalServices">Additional services: </label>
+                <select class="form-control" rows="5" id="additionalServices" [(ngModel)]="accomodation.additionalServices" [ngModelOptions]="{standalone: true}"  multiple>
+                    <option *ngFor="let service of servicesOfAccomodation" value="{{service.id}}">{{service.naziv}}</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="daysToCancel">Days before cancel get paid: </label>
+                <input name="periodOtkaza" [(ngModel)]="accomodation.periodOtkaza" type="number" class="form-control" id="daysToCancel" min="0">
+            </div>
+
+            <button type="submit" (click)="add()" class="btn btn-primary">Add accomodation</button>
+            
+        </div>
+        <div class="col-1">
+        </div>
+        <div class="col-5"> 
+            <div class="form-group">
+                <label for="description">Description: </label>
+                <textarea name="opis" [(ngModel)]="accomodation.opis" class="form-control" rows="4" id="description"></textarea>
+            </div>
+
+            <div class="row" *ngIf="images">
+                <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel" data-interval="0">
+                    <ol class="carousel-indicators">
+                        <li *ngFor="let image of images; let i = index" data-target="#carouselExampleIndicators" data-slide-to="i" [class]="i === 0 ? 'active' : ''"></li>
+                        
+                    </ol>
+                    <div class="carousel-inner">
+                        <div *ngFor="let image of images; let i = index" [class]="i === 0 ? 'carousel-item active' : 'carousel-item'">
+                            <img class="d-block w-100" [src]="image" >
+                            <input type ="button" class="classic_button_next btn btn-danger btn-lg" (click)="removeImage(i)" id="next_button" value="Remove"/>
+                        </div>
+                    </div>
+                    <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="sr-only">Previous</span>
+                    </a>
+                    <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="sr-only">Next</span>
+                    </a>
+                </div>
+            </div>
+            
+            <div class="form-group">       
+                <label for="browseImages" style="margin-right: 20px;">Add Images: </label>                   
+                <input id="browseImages"  type="file" accept="image/*" (change)="updateSource($event)">
+            </div>       
+        </div>
+    </div>
+    </form>
+</div>

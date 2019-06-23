@@ -1,0 +1,60 @@
+#accContainer {
+    margin: 20px;
+}
+table{
+    width:100%;
+}
+#example_filter{
+    float:right;
+}
+#example_paginate{
+    float:right;
+}
+label {
+    display: inline-flex;
+    margin-bottom: .5rem;
+    margin-top: .5rem;
+   
+}
+h2 {
+    margin-left: 20px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+} 
+
+#inputFilter {
+    border-radius: 3px;
+    width: 80%;
+    height: 30px;
+    padding: 15px;
+}
+
+.btn {
+    background-color: DodgerBlue; /* Blue background */
+    border: none; /* Remove borders */
+    color: white; /* White text */
+    padding: 10px 10px 10px 10px; /* Some padding */
+    font-size: 16px; /* Set a font size */
+    cursor: pointer; /* Mouse pointer on hover */
+}
+
+.btn:hover {
+    opacity: 0.7;
+}
+
+i {
+    margin: 4px;
+}
+
+
+td {
+    vertical-align: middle;
+}
+
+.remove {
+    background-color:#aa1706 !important;
+    
+}
+
+tbody {
+}

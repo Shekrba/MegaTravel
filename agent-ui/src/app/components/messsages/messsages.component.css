@@ -1,0 +1,72 @@
+
+.mainContainer {
+    margin-top : 5px;
+    margin-left: 20px;
+    margin-right: 20px;
+    overflow-y: auto;
+    border-top: 1px solid;
+}
+
+h3 {
+    margin-left: 20px;
+    margin-top: 10px;
+   
+}
+
+.messageContainer {
+    border-bottom: 1px solid;
+    border-left: 1px solid;
+    border-right: 1px solid;
+    display: flex;
+    flex-direction: row;
+    height: 50px;
+}
+
+.main :hover { 
+    background-color: rgb(234, 241, 252);
+}
+
+#user {
+    flex: 1;
+    text-align: center;
+}
+
+p {
+    margin: 10px;
+    margin-right: 50px !important;
+}
+
+#header {
+    flex: 3;
+    text-align: center;
+}
+
+#operations {
+    flex: 2;
+    text-align: center;
+}
+
+h5 {
+    text-align: left;
+    margin-top : 10px;
+    margin-bottom: 10px;
+}
+
+#headerPar {
+    text-align: left !important;
+    font-weight: bold;
+}
+
+#datumPoruke {
+    flex : 1;
+    text-align: right;
+}
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,20 @@
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+<h3>Inbox:</h3>
+
+<div class="mainContainer">
+  <div *ngFor="let message of messages" class="main">
+  <div  class="messageContainer">
+    <div id="user"><p id="userName">{{message.posaljilac}}</p></div>
+    <div id="header">
+      <p id="headerPar">{{message.naslov}}<p>
+    </div>
+    <div id="operations">
+      <button style="float: right; text-align: center;" (click)="reply(message.id)" type="button" class="btn btn-link">Reply</button> 
+    </div>
+    <div id="datumPoruke"><p>{{message.datumSlanja | date: 'dd/MM/yyyy'}}</p></div>
+  </div>
+  </div>
+
+
+</div>
