@@ -263,6 +263,17 @@ public class AgentController {
 
     }
 
+    @RequestMapping(value = "/message/{id}",method = RequestMethod.GET)
+    public PorukaDTO getPoruka(@PathVariable("id")Long id)
+    {
+        Poruka p = agentService.getPoruka(id);
+
+        PorukaDTO porukaDTO = new PorukaDTO();
+        porukaToDto(p, porukaDTO);
+
+        return porukaDTO;
+    }
+
 
     public void rezervacijaToDto(Rezervacija r, RezervacijaDTO rDTO) {
 
@@ -344,6 +355,7 @@ public class AgentController {
         pDTO.setIdOdgovora(p.getIdOdgovor());
         pDTO.setPosaljilac(p.getPosaljilac());
         pDTO.setPrimalac("Agent");
+        pDTO.setNaslov(p.getNaslov());
 
     }
 }

@@ -37,6 +37,7 @@ public interface AgentService {
     public List<Poruka> getSvePoruke();
     public List<Poruka> getNeodgovorenePoruke();
     public Poruka addOdgovor(PorukaDTO porukaDTO, Long idPitanja);
+    public Poruka getPoruka(Long id);
 
 
 }

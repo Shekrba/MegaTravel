@@ -10,6 +10,9 @@ public class Poruka {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     protected Long id;
 
+    @Column(name = "naslov", unique = false, nullable = false)
+    protected String naslov;
+
     @Column(name = "primalac", unique = false, nullable = false)
     protected String primalac;
 
@@ -46,6 +49,14 @@ public class Poruka {
         this.sadrzaj = sadrzaj;
         this.statusPoruke = statusPoruke;
         this.idOdgovor = idOdgovor;
+    }
+
+    public void setNaslov(String naslov) {
+        this.naslov = naslov;
+    }
+
+    public String getNaslov() {
+        return naslov;
     }
 
     public void setId(Long id) {

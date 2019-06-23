@@ -9,15 +9,7 @@ public class PorukaDTO {
     private Long id;
     private String posaljilac;
     private String primalac;
-
-    public void setPrimalac(String primalac) {
-        this.primalac = primalac;
-    }
-
-    public String getPrimalac() {
-        return primalac;
-    }
-
+    private String naslov;
     private String sadrzaj;
     private LocalDate datumSlanja;
     private StatusPoruke statusPoruke;
@@ -25,6 +17,22 @@ public class PorukaDTO {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public void setNaslov(String naslov) {
+        this.naslov = naslov;
+    }
+
+    public String getNaslov() {
+        return naslov;
+    }
+
+    public void setPrimalac(String primalac) {
+        this.primalac = primalac;
+    }
+
+    public String getPrimalac() {
+        return primalac;
     }
 
     public void setPosaljilac(String posaljilac) {

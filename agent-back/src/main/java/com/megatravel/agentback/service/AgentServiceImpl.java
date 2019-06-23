@@ -315,6 +315,7 @@ public class AgentServiceImpl implements AgentService {
         p1.setIdOdgovor(porukaDTO.getId());
 
         p.setPrimalac(p1.getPosaljilac());
+        p.setNaslov("RE:" + p1.getNaslov());
 
         porukaRepository.save(p1);
 
@@ -323,5 +324,10 @@ public class AgentServiceImpl implements AgentService {
 
 
         return p;
+    }
+
+    @Override
+    public Poruka getPoruka(Long id) {
+        return porukaRepository.findOneById(id);
     }
 }
