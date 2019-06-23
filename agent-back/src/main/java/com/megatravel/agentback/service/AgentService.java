@@ -1,5 +1,6 @@
 package com.megatravel.agentback.service;
 
+import com.megatravel.agentback.dto.PorukaDTO;
 import com.megatravel.agentback.dto.SJedinicaDTO;
 import com.megatravel.agentback.dto.SmestajDTO;
 import com.megatravel.agentback.dto.UslugaDTO;
@@ -32,6 +33,10 @@ public interface AgentService {
     public Rezervacija nerealizovanaRezervacija(Long id);
 
     public List<AccomodationType> getAccTypes();
+
+    public List<Poruka> getSvePoruke();
+    public List<Poruka> getNeodgovorenePoruke();
+    public Poruka addOdgovor(PorukaDTO porukaDTO, Long idPitanja);
 
 
 }

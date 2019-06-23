@@ -9,10 +9,12 @@ package com.megatravel.agentback.model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.OneToMany;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
+import java.util.List;
 
 
 /**
@@ -52,6 +54,7 @@ public class TAgent
     @XmlElement(name = "PosMatBroj", required = true, defaultValue = "0000000000000")
     @Column(name = "posMatBroj", unique = false, nullable = false)
     protected String posMatBroj;
+
 
     /**
      * Gets the value of the posMatBroj property.

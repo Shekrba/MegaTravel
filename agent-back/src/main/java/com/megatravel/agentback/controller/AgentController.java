@@ -2,10 +2,7 @@ package com.megatravel.agentback.controller;
 
 
 import com.megatravel.agentback.client.AgentClient;
-import com.megatravel.agentback.dto.RezervacijaDTO;
-import com.megatravel.agentback.dto.SJedinicaDTO;
-import com.megatravel.agentback.dto.SmestajDTO;
-import com.megatravel.agentback.dto.UslugaDTO;
+import com.megatravel.agentback.dto.*;
 import com.megatravel.agentback.model.*;
 import com.megatravel.agentback.service.AgentService;
 import generated.GetTestResponse;
@@ -219,6 +216,52 @@ public class AgentController {
         return r;
     }
 
+    @RequestMapping(value = "/messages",method = RequestMethod.GET)
+    public List<PorukaDTO> getSvePoruke()
+    {
+        List<Poruka> list = agentService.getSvePoruke();
+        List<PorukaDTO> listDTO = new ArrayList<>();
+
+        for (Poruka p: list) {
+            PorukaDTO pDTO = new PorukaDTO();
+            porukaToDto(p,pDTO);
+            listDTO.add(pDTO);
+        }
+
+        return listDTO;
+    }
+
+    @RequestMapping(value = "/unansweredMessages",method = RequestMethod.GET)
+    public List<PorukaDTO> getNeodgovorenePoruke()
+    {
+        List<Poruka> list = agentService.getNeodgovorenePoruke();
+        List<PorukaDTO> listDTO = new ArrayList<>();
+
+        for (Poruka p: list) {
+            PorukaDTO pDTO = new PorukaDTO();
+            porukaToDto(p,pDTO);
+            listDTO.add(pDTO);
+        }
+
+        return listDTO;
+    }
+
+
+    @RequestMapping(value = "/answerMessage/{messageId}",method = RequestMethod.POST)
+    public ResponseEntity<Poruka> addSJedinica(@PathVariable("messageId")Long messageId, @RequestBody PorukaDTO poruka){
+
+        Poruka addedPoruka = null;
+
+        try {
+            addedPoruka = agentService.addOdgovor(poruka, messageId);
+            return new ResponseEntity<Poruka>(addedPoruka, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+
+
+    }
+
 
     public void rezervacijaToDto(Rezervacija r, RezervacijaDTO rDTO) {
 
@@ -288,6 +331,18 @@ public class AgentController {
         sDTO.setBroj(s.getBroj());
         sDTO.setBrojKreveta(s.getBrojKreveta());
         sDTO.setCena(s.getCena());
+
+    }
+
+    public void porukaToDto(Poruka p, PorukaDTO pDTO) {
+
+        pDTO.setId(p.getId());
+        pDTO.setDatumSlanja(p.getDatumSlanja());
+        pDTO.setSadrzaj(p.getSadrzaj());
+        pDTO.setStatusPoruke(p.getStatusPoruke());
+        pDTO.setIdOdgovora(p.getIdOdgovor());
+        pDTO.setPosaljilac(p.getPosaljilac());
+        pDTO.setPrimalac("Agent");
 
     }
 }

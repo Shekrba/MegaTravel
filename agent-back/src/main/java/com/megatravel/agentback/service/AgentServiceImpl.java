@@ -1,5 +1,6 @@
 package com.megatravel.agentback.service;
 
+import com.megatravel.agentback.dto.PorukaDTO;
 import com.megatravel.agentback.dto.SJedinicaDTO;
 import com.megatravel.agentback.dto.SmestajDTO;
 import com.megatravel.agentback.dto.UslugaDTO;
@@ -35,6 +36,9 @@ public class AgentServiceImpl implements AgentService {
 
     @Autowired
     AccomodationTypeRepository accomodationTypeRepository;
+
+    @Autowired
+    PorukaRepository porukaRepository;
 
 
     @Override
@@ -282,5 +286,42 @@ public class AgentServiceImpl implements AgentService {
     @Override
     public List<AccomodationType> getAccTypes() {
         return accomodationTypeRepository.findAll();
+    }
+
+    @Override
+    public List<Poruka> getSvePoruke() {
+        return porukaRepository.findAll();
+    }
+
+    @Override
+    public List<Poruka> getNeodgovorenePoruke() {
+        return porukaRepository.findNeodgovorene();
+    }
+
+    @Override
+    public Poruka addOdgovor(PorukaDTO porukaDTO, Long idPitanja) {
+
+        Poruka p = new Poruka();
+
+        p.setId(porukaDTO.getId());
+        p.setDatumSlanja(LocalDate.now());
+        p.setSadrzaj(porukaDTO.getSadrzaj());
+        p.setPosaljilac("Agent");
+        p.setStatusPoruke(StatusPoruke.ODGOVOR);
+        p.setIdOdgovor(null);
+
+        Poruka p1 = porukaRepository.findOneById(idPitanja);
+        p1.setStatusPoruke(StatusPoruke.ODGOVORENO);
+        p1.setIdOdgovor(porukaDTO.getId());
+
+        p.setPrimalac(p1.getPosaljilac());
+
+        porukaRepository.save(p1);
+
+        porukaRepository.save(p);
+
+
+
+        return p;
     }
 }
