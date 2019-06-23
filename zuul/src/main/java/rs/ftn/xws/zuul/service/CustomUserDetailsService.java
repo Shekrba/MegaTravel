@@ -13,7 +13,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import rs.ftn.xws.zuul.model.TRegKorisnik;
+import rs.ftn.xws.zuul.model.User;
 import rs.ftn.xws.zuul.repository.TRegKorisnikRepository;
 
 @Service
@@ -33,7 +33,7 @@ public class CustomUserDetailsService implements UserDetailsService {
 	// Funkcija koja na osnovu usernamea iz baze vraca objekat User-a
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-		TRegKorisnik user = userRepository.findByUsername(username);
+		User user = userRepository.findByUsername(username);
 		if (user == null) {
 			throw new UsernameNotFoundException(String.format("No user found with username '%s'.", username));
 		} else {
@@ -59,7 +59,7 @@ public class CustomUserDetailsService implements UserDetailsService {
 
 		LOGGER.debug("Changing password for user '" + username + "'");
 
-		TRegKorisnik user = (TRegKorisnik) loadUserByUsername(username);
+		User user = (User) loadUserByUsername(username);
 
 		// pre nego sto u bazu upisemo novu lozinku, potrebno ju je hesirati
 		// ne zelimo da u bazi cuvamo lozinke u plain text formatu

@@ -17,7 +17,7 @@ import javax.xml.bind.annotation.XmlType;
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
- *         &lt;element name="LoginRequest" type="{http://service.megatravel.com/}userCredentials" minOccurs="0"/>
+ *         &lt;element name="LoginRequest" type="{http://service.agent.megatravel.com/}userCredentials" minOccurs="0"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>

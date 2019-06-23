@@ -24,9 +24,10 @@ import javax.xml.namespace.QName;
 @XmlRegistry
 public class ObjectFactory {
 
-    private final static QName _UserCredentials_QNAME = new QName("http://service.megatravel.com/", "UserCredentials");
-    private final static QName _Login_QNAME = new QName("http://service.megatravel.com/", "login");
-    private final static QName _LoginResponse_QNAME = new QName("http://service.megatravel.com/", "loginResponse");
+    private final static QName _Login_QNAME = new QName("http://service.agent.megatravel.com/", "login");
+    private final static QName _UserCredentials_QNAME = new QName("http://service.agent.megatravel.com/", "UserCredentials");
+    private final static QName _ServiceException_QNAME = new QName("http://service.agent.megatravel.com/", "ServiceException");
+    private final static QName _LoginResponse_QNAME = new QName("http://service.agent.megatravel.com/", "loginResponse");
 
     /**
      * Create a new ObjectFactory that can be used to create new instances of schema derived classes for package: client2
@@ -41,6 +42,14 @@ public class ObjectFactory {
      */
     public LoginResponse createLoginResponse() {
         return new LoginResponse();
+    }
+
+    /**
+     * Create an instance of {@link ServiceException }
+     * 
+     */
+    public ServiceException createServiceException() {
+        return new ServiceException();
     }
 
     /**
@@ -60,28 +69,45 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link UserCredentials }{@code >}}
+     * Create an instance of {@link ServiceExceptionDetails }
      * 
      */
-    @XmlElementDecl(namespace = "http://service.megatravel.com/", name = "UserCredentials")
-    public JAXBElement<UserCredentials> createUserCredentials(UserCredentials value) {
-        return new JAXBElement<UserCredentials>(_UserCredentials_QNAME, UserCredentials.class, null, value);
+    public ServiceExceptionDetails createServiceExceptionDetails() {
+        return new ServiceExceptionDetails();
     }
 
     /**
      * Create an instance of {@link JAXBElement }{@code <}{@link Login }{@code >}}
      * 
      */
-    @XmlElementDecl(namespace = "http://service.megatravel.com/", name = "login")
+    @XmlElementDecl(namespace = "http://service.agent.megatravel.com/", name = "login")
     public JAXBElement<Login> createLogin(Login value) {
         return new JAXBElement<Login>(_Login_QNAME, Login.class, null, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link UserCredentials }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://service.agent.megatravel.com/", name = "UserCredentials")
+    public JAXBElement<UserCredentials> createUserCredentials(UserCredentials value) {
+        return new JAXBElement<UserCredentials>(_UserCredentials_QNAME, UserCredentials.class, null, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link ServiceException }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://service.agent.megatravel.com/", name = "ServiceException")
+    public JAXBElement<ServiceException> createServiceException(ServiceException value) {
+        return new JAXBElement<ServiceException>(_ServiceException_QNAME, ServiceException.class, null, value);
     }
 
     /**
      * Create an instance of {@link JAXBElement }{@code <}{@link LoginResponse }{@code >}}
      * 
      */
-    @XmlElementDecl(namespace = "http://service.megatravel.com/", name = "loginResponse")
+    @XmlElementDecl(namespace = "http://service.agent.megatravel.com/", name = "loginResponse")
     public JAXBElement<LoginResponse> createLoginResponse(LoginResponse value) {
         return new JAXBElement<LoginResponse>(_LoginResponse_QNAME, LoginResponse.class, null, value);
     }

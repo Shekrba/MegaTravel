@@ -1,6 +1,8 @@
 package com.example.demo.controller;
 
 import com.example.demo.soap.CountryClient;
+import com.example.demo.soapxml.LoginResponse;
+import com.example.demo.soapxml.ServiceException_Exception;
 import com.example.demo.soapxml.UserCredentials;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -19,10 +21,16 @@ public class TestController {
     CountryClient cc;
 
     @RequestMapping(value = "/test", method = RequestMethod.GET)
-    public ResponseEntity<?> createAuthenticationToken() {
+    public ResponseEntity createAuthenticationToken() {
         UserCredentials uc=new UserCredentials();
-        uc.setPassword("user");
-        uc.setUsername("123");
-        return new ResponseEntity<>(cc.getCountry(uc), HttpStatus.OK);
+        uc.setPassword("123");
+        uc.setUsername("user");
+        LoginResponse lr=null;
+        try{
+            lr=cc.getCountry(uc);
+        }catch (ServiceException_Exception e){
+            return new ResponseEntity(e.getFaultInfo().getFaultDetails().get(0).getFaultCode(),HttpStatus.UNAUTHORIZED);
+        }
+        return ResponseEntity.ok(lr);
     }
 }

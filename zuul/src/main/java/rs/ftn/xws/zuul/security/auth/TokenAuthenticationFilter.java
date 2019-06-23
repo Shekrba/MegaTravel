@@ -5,7 +5,6 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.web.filter.OncePerRequestFilter;
-import rs.ftn.xws.zuul.model.TRegKorisnik;
 import rs.ftn.xws.zuul.security.TokenUtils;
 
 import javax.servlet.FilterChain;
