@@ -172,10 +172,11 @@ public class AgentController {
 
 
     @RequestMapping(value = "/occupancy/{id}",method = RequestMethod.POST)
-    public Zauzetost zauzmiSJedinica(@PathVariable("id")Long id, @RequestParam("odDatum") @DateTimeFormat(pattern="yyyy-MM-dd") LocalDate odDatum, @RequestParam("doDatum") @DateTimeFormat(pattern="yyyy-MM-dd") LocalDate doDatum){
+    public Zauzetost zauzmiSJedinica(@PathVariable("id")Long id, @RequestBody ZauzetostDTO zauzetostDTO){
 
         Zauzetost z = null;
-
+        LocalDate odDatum = zauzetostDTO.getOdDatum();
+        LocalDate doDatum = zauzetostDTO.getDoDatum();
         try {
             z = agentService.zauzmiSJedinicu(id, odDatum, doDatum);
         } catch (Exception e) {
