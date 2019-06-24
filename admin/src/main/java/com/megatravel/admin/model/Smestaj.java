@@ -131,6 +131,16 @@ public class Smestaj {
     )
     private List<Komentar> comments;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    private User agent;
+
+    public User getAgent() {
+        return agent;
+    }
+
+    public void setAgent(User agent) {
+        this.agent = agent;
+    }
 
     public String getNaziv() {
         return naziv;
