@@ -1,0 +1,23 @@
+<div id="accContainer">
+  <h2 >List of Accomodation :</h2> 
+    <table id="example" class="table table-hover table-striped table-bordered" style="width:100%">
+      <thead class="thead-dark">
+        <tr>
+          <th>#</th>
+          <th><input id="inputFilter" [(ngModel)]="filterName" type="text"  placeholder="Name"></th>
+          <th><input id="inputFilter" [(ngModel)]="filterLocation" type="text"  placeholder="Location"></th>
+          <th><input id="inputFilter" [(ngModel)]="filterType" type="text"  placeholder="Type"></th>
+          <th style="text-align: center;" ><button (click)="newAccomodation()" type="button" class="btn btn-primary">New Accomodation</button></th> 
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let accomodation of accomodations">
+          <td>{{accomodation.id}}</td>
+          <td>{{accomodation.naziv}}</td>
+          <td>{{accomodation.mesto+', '+accomodation.ulica+', '+accomodation.broj }}</td>
+          <td>{{accomodation.opis}}</td>
+          <td style="text-align: center;" ><button (click)="edit(accomodation.id)" style="margin-right: 10px;" class="btn"><i class="fa fa-edit"></i></button><button style="margin-right: 10px; background-color: green; " (click)="rooms(accomodation.id)" type="button" class="btn btn-success" >Rooms</button></td>
+        </tr>
+      </tbody>
+  </table>
+</div>

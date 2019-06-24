@@ -9,7 +9,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 import rs.ftn.xws.zuul.common.TimeProvider;
-import rs.ftn.xws.zuul.model.TRegKorisnik;
+import rs.ftn.xws.zuul.model.User;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
@@ -91,7 +91,7 @@ public class TokenUtils {
 	// Functions for validating JWT token data
 
 	public Boolean validateToken(String token, UserDetails userDetails) {
-		TRegKorisnik user = (TRegKorisnik) userDetails;
+		User user = (User) userDetails;
 		final String username = getUsernameFromToken(token);
 		final Date created = getIssuedAtDateFromToken(token);
 		

@@ -1,7 +1,7 @@
 package com.megatravel.login.controller;
 
 import com.megatravel.login.dto.UserDTO;
-import com.megatravel.login.model.TRegKorisnik;
+import com.megatravel.login.model.User;
 import com.megatravel.login.security.TokenUtils;
 import com.megatravel.login.security.auth.JwtAuthenticationRequest;
 
@@ -41,7 +41,7 @@ public class AuthenticationController {
 
 
 
-		TRegKorisnik user=loginService.checkCredentials(authenticationRequest);
+		User user=loginService.checkCredentials(authenticationRequest);
 		if(user!=null){
 			String jwt = tokenUtils.generateToken(authenticationRequest.getUsername());
 			int expiresIn = tokenUtils.getExpiredIn();

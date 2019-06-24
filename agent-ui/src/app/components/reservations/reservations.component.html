@@ -1,0 +1,30 @@
+<div id="accContainer">
+    <h2 >List of Reservations for:</h2> 
+      <table id="example" class="table table-hover table-striped table-bordered" style="width:100%">
+        <thead class="thead-dark">
+          <tr>
+            <th>#</th>
+            <th><input id="inputFilter"  type="text"  placeholder="Datum rezervacije"></th>
+            <th><input id="inputFilter"  type="text"  placeholder="Od:"></th>
+            <th><input id="inputFilter"  type="text"  placeholder="Do:"></th>
+            <th><input id="inputFilter"  type="text"  placeholder="Ukupna cena:"></th>
+            <th><input id="inputFilter"  type="text"  placeholder="Status:"></th>
+            <th><input id="inputFilter"  type="text"  placeholder="Korisnik:"></th>
+            <th colspan="2">Operations</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let reservation of reservations">
+            <td>{{reservation.id}}</td>
+            <td>{{reservation.datumRez | date: 'dd/MM/yyyy'}}</td>
+            <td>{{reservation.od | date: 'dd/MM/yyyy'}}</td>
+            <td>{{reservation._do | date: 'dd/MM/yyyy'}}</td>
+            <td>{{reservation.uCena}}</td>
+            <td>{{reservation.statusRezervacije}}</td>
+            <td>{{reservation.korisnik}}</td>
+            <td><button *ngIf="reservation.statusRezervacije === 'REZERVISANO'" (click)="confirm(reservation.id)" style="margin-right: 10px;" class="btn"><i class="fa fa-check"></i></button></td>
+            <td><button *ngIf="reservation.statusRezervacije === 'REZERVISANO'" (click)="decline(reservation.id)" style="margin-right: 10px;" class="btn remove"><i class="fa fa-times"></i></button></td>
+          </tr>
+        </tbody>
+    </table>
+  </div>

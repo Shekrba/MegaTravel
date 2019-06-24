@@ -1,0 +1,27 @@
+<div class="set">
+<div class="mainContainer">
+  <h2 id="header">Set occupancy for room of {{accomodation.naziv}}</h2>
+  
+  <div class="container">
+    <form>
+      <div class="form-group">
+        <label for="odDatum" class="col-2 col-form-label">Od: </label>
+        <input name="odDatum" class="form-control" [(ngModel)]="occupancy.odDatum" type="date" value="2011-08-19" id="odDatum">
+      </div>
+      <div class="form-group">
+        <label for="doDatum" class="col-2 col-form-label">Do: </label>
+        <input name="doDatum" [(ngModel)]="occupancy.doDatum" class="form-control" type="date" value="2011-08-19" id="doDatum">
+      </div>
+      <div class="row">
+        <div class="col-6">
+          <button type="submit" (click)="add()" class="btn btn-primary">Add occupancy</button>  
+        </div>
+        <div  class="col-6" >
+          <button type="submit" (click)="cancel()" class="btn btn-warning" style="float: right;" >Cancel</button>  
+        </div>
+      </div>
+
+    </form>
+  </div>
+  </div>
+  </div>

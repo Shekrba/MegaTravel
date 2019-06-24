@@ -1,0 +1,30 @@
+<div class="set">
+  <div class="mainContainer">
+    <h2 id="header">Answer</h2>
+    <div class="container">
+        <form>
+            <ul class="list-group">
+                <li class="list-group-item">Sender: {{message.posaljilac}}</li>
+                <li class="list-group-item">Subject: {{message.naslov}}
+                </li>
+                <li class="list-group-item">{{message.sadrzaj}}</li>
+            </ul>
+            <div class="form-group" style="margin-top:20px;">
+                <input  name="naslov" class="form-control" [(ngModel)]="answerMessage.naslov" type="text" placeholder="Enter Subject here"  id="naslov">
+            </div>
+            <div class="form-group">
+                <textarea class="form-control" [(ngModel)]="answerMessage.sadrzaj" rows="5" id="sadrzaj" name="sadrzaj" placeholder="Enter response here"></textarea>
+            </div>
+          <div class="row">
+            <div class="col-6">
+              <button type="submit" (click)="reply()" class="btn btn-primary">Reply</button>  
+            </div>
+            <div class="col-6" >
+              <button type="submit" (click)="cancel()" class="btn btn-warning" style="float: right;" >Cancel</button>  
+            </div>
+          </div>
+    
+        </form>
+      </div>   
+  </div>  
+</div>

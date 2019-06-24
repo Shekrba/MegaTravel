@@ -44,6 +44,9 @@ public class User implements UserDetails {
     @OneToMany(mappedBy = "korisnik")
     private List<Komentar> comments;
 
+    @OneToMany(mappedBy = "agent")
+    private List<Smestaj> smestaji;
+
     @Column(name = "posMatBroj", unique = false)
     private String posMatBroj;
 
@@ -61,6 +64,14 @@ public class User implements UserDetails {
 
     public User() {
 
+    }
+
+    public List<Smestaj> getSmestaji() {
+        return smestaji;
+    }
+
+    public void setSmestaji(List<Smestaj> smestaji) {
+        this.smestaji = smestaji;
     }
 
     public void setPassword(String password) {

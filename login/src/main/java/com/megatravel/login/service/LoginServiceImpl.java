@@ -1,7 +1,7 @@
 package com.megatravel.login.service;
 
 
-import com.megatravel.login.model.TRegKorisnik;
+import com.megatravel.login.model.User;
 import com.megatravel.login.repository.TRegKorisnikRepository;
 import com.megatravel.login.security.auth.JwtAuthenticationRequest;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,8 +23,8 @@ public class LoginServiceImpl implements  LoginService{
     }
 
     @Override
-    public TRegKorisnik checkCredentials(JwtAuthenticationRequest request) {
-        TRegKorisnik user=userRepository.findByUsername(request.getUsername());
+    public User checkCredentials(JwtAuthenticationRequest request) {
+        User user=userRepository.findByUsername(request.getUsername());
         if(user!=null){
             if(passwordEncoder().matches(request.getPassword(),user.getPassword())){
                 return user;

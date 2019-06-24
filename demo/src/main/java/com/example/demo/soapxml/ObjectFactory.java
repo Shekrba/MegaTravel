@@ -24,9 +24,20 @@ import javax.xml.namespace.QName;
 @XmlRegistry
 public class ObjectFactory {
 
-    private final static QName _UserCredentials_QNAME = new QName("http://service.megatravel.com/", "UserCredentials");
-    private final static QName _Login_QNAME = new QName("http://service.megatravel.com/", "login");
-    private final static QName _LoginResponse_QNAME = new QName("http://service.megatravel.com/", "loginResponse");
+    private final static QName _AddAccommodationResponse_QNAME = new QName("http://service.agent.megatravel.com/", "addAccommodationResponse");
+    private final static QName _UserCredentialsXMLDTO_QNAME = new QName("http://service.agent.megatravel.com/", "UserCredentialsXMLDTO");
+    private final static QName _SOAPFaultException_QNAME = new QName("http://service.agent.megatravel.com/", "SOAPFaultException");
+    private final static QName _SJedinicaXMLDTO_QNAME = new QName("http://service.agent.megatravel.com/", "SJedinicaXMLDTO");
+    private final static QName _KomentarXMLDTO_QNAME = new QName("http://service.agent.megatravel.com/", "KomentarXMLDTO");
+    private final static QName _FirstLogin_QNAME = new QName("http://service.agent.megatravel.com/", "firstLogin");
+    private final static QName _CategoryXMLDTO_QNAME = new QName("http://service.agent.megatravel.com/", "CategoryXMLDTO");
+    private final static QName _FirstLoginResponse_QNAME = new QName("http://service.agent.megatravel.com/", "firstLoginResponse");
+    private final static QName _AdresaXMLDTO_QNAME = new QName("http://service.agent.megatravel.com/", "AdresaXMLDTO");
+    private final static QName _AddAccommodation_QNAME = new QName("http://service.agent.megatravel.com/", "addAccommodation");
+    private final static QName _SmestajXMLDTO_QNAME = new QName("http://service.agent.megatravel.com/", "SmestajXMLDTO");
+    private final static QName _SOAPException_QNAME = new QName("http://service.agent.megatravel.com/", "SOAPException");
+    private final static QName _UslugaXMLDTO_QNAME = new QName("http://service.agent.megatravel.com/", "UslugaXMLDTO");
+    private final static QName _AccomodationTypeXMLDTO_QNAME = new QName("http://service.agent.megatravel.com/", "AccomodationTypeXMLDTO");
 
     /**
      * Create a new ObjectFactory that can be used to create new instances of schema derived classes for package: client2
@@ -36,54 +47,241 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link LoginResponse }
+     * Create an instance of {@link CategoryXMLDTO }
      * 
      */
-    public LoginResponse createLoginResponse() {
-        return new LoginResponse();
+    public CategoryXMLDTO createCategoryXMLDTO() {
+        return new CategoryXMLDTO();
     }
 
     /**
-     * Create an instance of {@link UserCredentials }
+     * Create an instance of {@link FirstLoginResponse }
      * 
      */
-    public UserCredentials createUserCredentials() {
-        return new UserCredentials();
+    public FirstLoginResponse createFirstLoginResponse() {
+        return new FirstLoginResponse();
     }
 
     /**
-     * Create an instance of {@link Login }
+     * Create an instance of {@link FirstLogin }
      * 
      */
-    public Login createLogin() {
-        return new Login();
+    public FirstLogin createFirstLogin() {
+        return new FirstLogin();
     }
 
     /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link UserCredentials }{@code >}}
+     * Create an instance of {@link KomentarXMLDTO }
      * 
      */
-    @XmlElementDecl(namespace = "http://service.megatravel.com/", name = "UserCredentials")
-    public JAXBElement<UserCredentials> createUserCredentials(UserCredentials value) {
-        return new JAXBElement<UserCredentials>(_UserCredentials_QNAME, UserCredentials.class, null, value);
+    public KomentarXMLDTO createKomentarXMLDTO() {
+        return new KomentarXMLDTO();
     }
 
     /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link Login }{@code >}}
+     * Create an instance of {@link SOAPFaultException }
      * 
      */
-    @XmlElementDecl(namespace = "http://service.megatravel.com/", name = "login")
-    public JAXBElement<Login> createLogin(Login value) {
-        return new JAXBElement<Login>(_Login_QNAME, Login.class, null, value);
+    public SOAPFaultException createSOAPFaultException() {
+        return new SOAPFaultException();
     }
 
     /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link LoginResponse }{@code >}}
+     * Create an instance of {@link SJedinicaXMLDTO }
      * 
      */
-    @XmlElementDecl(namespace = "http://service.megatravel.com/", name = "loginResponse")
-    public JAXBElement<LoginResponse> createLoginResponse(LoginResponse value) {
-        return new JAXBElement<LoginResponse>(_LoginResponse_QNAME, LoginResponse.class, null, value);
+    public SJedinicaXMLDTO createSJedinicaXMLDTO() {
+        return new SJedinicaXMLDTO();
+    }
+
+    /**
+     * Create an instance of {@link UserCredentialsXMLDTO }
+     * 
+     */
+    public UserCredentialsXMLDTO createUserCredentialsXMLDTO() {
+        return new UserCredentialsXMLDTO();
+    }
+
+    /**
+     * Create an instance of {@link AddAccommodationResponse }
+     * 
+     */
+    public AddAccommodationResponse createAddAccommodationResponse() {
+        return new AddAccommodationResponse();
+    }
+
+    /**
+     * Create an instance of {@link AccomodationTypeXMLDTO }
+     * 
+     */
+    public AccomodationTypeXMLDTO createAccomodationTypeXMLDTO() {
+        return new AccomodationTypeXMLDTO();
+    }
+
+    /**
+     * Create an instance of {@link UslugaXMLDTO }
+     * 
+     */
+    public UslugaXMLDTO createUslugaXMLDTO() {
+        return new UslugaXMLDTO();
+    }
+
+    /**
+     * Create an instance of {@link AddAccommodation }
+     * 
+     */
+    public AddAccommodation createAddAccommodation() {
+        return new AddAccommodation();
+    }
+
+    /**
+     * Create an instance of {@link SmestajXMLDTO }
+     * 
+     */
+    public SmestajXMLDTO createSmestajXMLDTO() {
+        return new SmestajXMLDTO();
+    }
+
+    /**
+     * Create an instance of {@link SOAPException }
+     * 
+     */
+    public SOAPException createSOAPException() {
+        return new SOAPException();
+    }
+
+    /**
+     * Create an instance of {@link AdresaXMLDTO }
+     * 
+     */
+    public AdresaXMLDTO createAdresaXMLDTO() {
+        return new AdresaXMLDTO();
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link AddAccommodationResponse }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://service.agent.megatravel.com/", name = "addAccommodationResponse")
+    public JAXBElement<AddAccommodationResponse> createAddAccommodationResponse(AddAccommodationResponse value) {
+        return new JAXBElement<AddAccommodationResponse>(_AddAccommodationResponse_QNAME, AddAccommodationResponse.class, null, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link UserCredentialsXMLDTO }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://service.agent.megatravel.com/", name = "UserCredentialsXMLDTO")
+    public JAXBElement<UserCredentialsXMLDTO> createUserCredentialsXMLDTO(UserCredentialsXMLDTO value) {
+        return new JAXBElement<UserCredentialsXMLDTO>(_UserCredentialsXMLDTO_QNAME, UserCredentialsXMLDTO.class, null, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link SOAPFaultException }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://service.agent.megatravel.com/", name = "SOAPFaultException")
+    public JAXBElement<SOAPFaultException> createSOAPFaultException(SOAPFaultException value) {
+        return new JAXBElement<SOAPFaultException>(_SOAPFaultException_QNAME, SOAPFaultException.class, null, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link SJedinicaXMLDTO }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://service.agent.megatravel.com/", name = "SJedinicaXMLDTO")
+    public JAXBElement<SJedinicaXMLDTO> createSJedinicaXMLDTO(SJedinicaXMLDTO value) {
+        return new JAXBElement<SJedinicaXMLDTO>(_SJedinicaXMLDTO_QNAME, SJedinicaXMLDTO.class, null, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link KomentarXMLDTO }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://service.agent.megatravel.com/", name = "KomentarXMLDTO")
+    public JAXBElement<KomentarXMLDTO> createKomentarXMLDTO(KomentarXMLDTO value) {
+        return new JAXBElement<KomentarXMLDTO>(_KomentarXMLDTO_QNAME, KomentarXMLDTO.class, null, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link FirstLogin }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://service.agent.megatravel.com/", name = "firstLogin")
+    public JAXBElement<FirstLogin> createFirstLogin(FirstLogin value) {
+        return new JAXBElement<FirstLogin>(_FirstLogin_QNAME, FirstLogin.class, null, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link CategoryXMLDTO }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://service.agent.megatravel.com/", name = "CategoryXMLDTO")
+    public JAXBElement<CategoryXMLDTO> createCategoryXMLDTO(CategoryXMLDTO value) {
+        return new JAXBElement<CategoryXMLDTO>(_CategoryXMLDTO_QNAME, CategoryXMLDTO.class, null, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link FirstLoginResponse }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://service.agent.megatravel.com/", name = "firstLoginResponse")
+    public JAXBElement<FirstLoginResponse> createFirstLoginResponse(FirstLoginResponse value) {
+        return new JAXBElement<FirstLoginResponse>(_FirstLoginResponse_QNAME, FirstLoginResponse.class, null, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link AdresaXMLDTO }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://service.agent.megatravel.com/", name = "AdresaXMLDTO")
+    public JAXBElement<AdresaXMLDTO> createAdresaXMLDTO(AdresaXMLDTO value) {
+        return new JAXBElement<AdresaXMLDTO>(_AdresaXMLDTO_QNAME, AdresaXMLDTO.class, null, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link AddAccommodation }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://service.agent.megatravel.com/", name = "addAccommodation")
+    public JAXBElement<AddAccommodation> createAddAccommodation(AddAccommodation value) {
+        return new JAXBElement<AddAccommodation>(_AddAccommodation_QNAME, AddAccommodation.class, null, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link SmestajXMLDTO }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://service.agent.megatravel.com/", name = "SmestajXMLDTO")
+    public JAXBElement<SmestajXMLDTO> createSmestajXMLDTO(SmestajXMLDTO value) {
+        return new JAXBElement<SmestajXMLDTO>(_SmestajXMLDTO_QNAME, SmestajXMLDTO.class, null, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link SOAPException }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://service.agent.megatravel.com/", name = "SOAPException")
+    public JAXBElement<SOAPException> createSOAPException(SOAPException value) {
+        return new JAXBElement<SOAPException>(_SOAPException_QNAME, SOAPException.class, null, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link UslugaXMLDTO }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://service.agent.megatravel.com/", name = "UslugaXMLDTO")
+    public JAXBElement<UslugaXMLDTO> createUslugaXMLDTO(UslugaXMLDTO value) {
+        return new JAXBElement<UslugaXMLDTO>(_UslugaXMLDTO_QNAME, UslugaXMLDTO.class, null, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link AccomodationTypeXMLDTO }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://service.agent.megatravel.com/", name = "AccomodationTypeXMLDTO")
+    public JAXBElement<AccomodationTypeXMLDTO> createAccomodationTypeXMLDTO(AccomodationTypeXMLDTO value) {
+        return new JAXBElement<AccomodationTypeXMLDTO>(_AccomodationTypeXMLDTO_QNAME, AccomodationTypeXMLDTO.class, null, value);
     }
 
 }
