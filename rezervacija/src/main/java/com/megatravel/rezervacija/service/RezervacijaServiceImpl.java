@@ -1,14 +1,17 @@
 package com.megatravel.rezervacija.service;
 
-import com.megatravel.rezervacija.dto.ReservationDTO;
-import com.megatravel.rezervacija.model.Rezervacija;
-import com.megatravel.rezervacija.model.SJedinica;
-import com.megatravel.rezervacija.model.User;
+import com.megatravel.rezervacija.dto.*;
+import com.megatravel.rezervacija.model.*;
 import com.megatravel.rezervacija.repository.RezervacijaRepository;
+import com.megatravel.rezervacija.repository.SJedinicaRepository;
+import com.megatravel.rezervacija.repository.SmestajRepository;
+import com.megatravel.rezervacija.repository.UserRepository;
+import com.netflix.discovery.converters.Auto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -17,10 +20,39 @@ public class RezervacijaServiceImpl implements  RezervacijaService {
     @Autowired
     RezervacijaRepository rezervazijaRepository;
 
-    @Override
-    public Rezervacija addRezervacija(Rezervacija rezervacija){
+    @Autowired
+    SmestajRepository smestajRepository;
 
-        return rezervacija;
+    @Autowired
+    SJedinicaRepository sJedinicaRepository;
+
+    @Autowired
+    UserRepository userRepository;
+
+    @Override
+    public String addRezervacija(MakeResDTO rezervacija){
+
+        Rezervacija rez = new Rezervacija();
+
+        User korisnik = userRepository.findOneById(rezervacija.getKorisnikId());
+        SJedinica sjedinica = sJedinicaRepository.findOneById(rezervacija.getSjedinicaId());
+
+        rez.setRated(false);
+        rez.setCanBeRated(false);
+        rez.setDo(rezervacija.getTo());
+        rez.setOd(rezervacija.getFrom());
+        rez.setDatumRez(new Date());
+        rez.setUCena(rezervacija.getCost());
+
+        korisnik.getRezervacija().add(rez);
+        rez.setKorisnik(korisnik);
+
+        sjedinica.getRezervacije().add(rez);
+        rez.setsJedinica(sjedinica);
+
+        rezervazijaRepository.save(rez);
+
+        return "Reservation made";
     }
 
     @Override
@@ -78,5 +110,44 @@ public class RezervacijaServiceImpl implements  RezervacijaService {
         rezervazijaRepository.save(rez);
 
         return "Update successful";
+    }
+
+    @Override
+    public SmestajDTO formReservation(formDTO form){
+        SmestajDTO smestajDTO = new SmestajDTO();
+
+        Smestaj smestaj = smestajRepository.findOneById(form.getHotelId());
+        SJedinica sjedinica = sJedinicaRepository.findOneById(form.getRoomId());
+
+        smestajDTO.setNaziv(smestaj.getNaziv());
+        smestajDTO.setId(smestaj.getId());
+        smestajDTO.setFrom(form.getFrom());
+        smestajDTO.setTo(form.getTo());
+
+        smestajDTO.setServices(new ArrayList<>());
+
+        for (Usluga u: smestaj.getUslugaList()) {
+            UslugaDTO uDTO = new UslugaDTO();
+
+            uDTO.setCena(u.getCena());
+            uDTO.setId(u.getId());
+            uDTO.setNaziv(u.getNaziv());
+            uDTO.setOpis(u.getOpis());
+
+            smestajDTO.getServices().add(uDTO);
+        }
+
+        smestajDTO.setBrojKreveta(sjedinica.getBrojKreveta());
+        smestajDTO.setRoom(sjedinica.getBroj());
+        smestajDTO.setRoomId(form.getRoomId());
+
+        Long days = (form.getTo().getTime() - form.getFrom().getTime()) / (1000 * 60 * 60 * 24);
+        double cost =  days * sjedinica.getCena();
+
+        System.out.println(cost);
+
+        smestajDTO.setCost(cost);
+
+        return smestajDTO;
     }
 }

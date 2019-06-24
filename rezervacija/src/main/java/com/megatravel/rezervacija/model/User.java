@@ -6,6 +6,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
@@ -53,6 +54,9 @@ public class User implements UserDetails {
     @Column(name = "adresa", unique = false)
     private String adresa;
 
+    @OneToMany(mappedBy = "korisnik")
+    protected List<Rezervacija> rezervacija = new ArrayList<>();
+
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinTable(name = "user_authority",
             joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
@@ -61,6 +65,18 @@ public class User implements UserDetails {
 
     public User() {
 
+    }
+
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
+    }
+
+    public List<Rezervacija> getRezervacija() {
+        return rezervacija;
+    }
+
+    public void setRezervacija(List<Rezervacija> rezervacija) {
+        this.rezervacija = rezervacija;
     }
 
     public void setPassword(String password) {

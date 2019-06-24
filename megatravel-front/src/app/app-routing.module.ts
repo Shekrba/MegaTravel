@@ -6,6 +6,7 @@ import { RegisterComponent } from './register/register.component';
 import { LoginComponent } from './login/login.component';
 import { HotelProfileComponent } from './hotel-profile/hotel-profile.component';
 import { RatingsComponent } from './ratings/ratings.component'
+import { ReservationComponent } from './reservation/reservation.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -14,6 +15,7 @@ const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'hotels/:id', component: HotelProfileComponent },
   { path: 'ratings', component: RatingsComponent },
+  { path: 'reservation', component: ReservationComponent },
   //redirect to home if url is not valid
   { path: '**', redirectTo: '' }
 ];

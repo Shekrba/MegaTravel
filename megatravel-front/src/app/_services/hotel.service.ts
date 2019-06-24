@@ -10,6 +10,7 @@ import { ɵCssKeyframesDriver } from '@angular/animations/browser';
 export class HotelServiceService {
 
   private ALL_HOTELS_URL = "http://localhost:8762/search-service/api/hotels"
+  private ALL_ROOMS_URL = "http://localhost:8762/search-service/api/rooms"
   private ALL_SERVICES_URL = "http://localhost:8762/search-service/api/services"
   private ALL_TYPES_URL = "http://localhost:8762/search-service/api/types"
   private GOOGLE_CLOUD = "https://us-central1-megatravel-244015.cloudfunctions.net"
@@ -32,11 +33,38 @@ export class HotelServiceService {
     return this.http.get<Hotel>(this.ALL_HOTELS_URL + "/" + id);
   }
 
+  getFilteredRooms(id,dateFrom,dateTo){
+    
+    return this.http.post<Hotel>(this.ALL_ROOMS_URL + "/" + id,{dateFrom:dateFrom,dateTo:dateTo}, {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json'
+      })
+    });
+  }
+
+  formReservation(form){
+    
+    return this.http.post<Hotel>(this.ALL_RESERVATIONS_URL + "/form",form, {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json'
+      })
+    });
+  }
+
   filterHotels(filter): Observable<Hotel[]> {
     return this.http.post<Hotel[]>(this.ALL_HOTELS_URL,filter, {
       headers: new HttpHeaders({
         'Content-Type': 'application/json'
       })
+    });
+  }
+
+  makeReservation(body): Observable<any> {
+    return this.http.post(this.ALL_RESERVATIONS_URL,body, {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+      }),
+      responseType : 'text'
     });
   }
 
@@ -102,4 +130,6 @@ export class HotelServiceService {
       responseType : 'text'
     });
   }
+
+
 }

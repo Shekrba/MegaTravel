@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { Hotel } from '../_model/hotel';
 import { HotelServiceService } from '../_services/hotel.service';
 import { Filter } from '../_model/filter';
@@ -25,6 +25,9 @@ export class HotelsComponent implements OnInit {
   types:[]
 
   services: string[] = [];
+
+  from : string = null;
+  to: string = null;
 
   constructor(private hotelService: HotelServiceService) { }
 
@@ -71,6 +74,8 @@ export class HotelsComponent implements OnInit {
     this.hotelService.filterHotels(this.filter).subscribe(
       res => {
         this.hotels = res;
+        this.from = this.filter.dateFrom;
+        this.to = this.filter.dateTo;
       },
       err => {
         alert("An error has occured while filtering hotels")

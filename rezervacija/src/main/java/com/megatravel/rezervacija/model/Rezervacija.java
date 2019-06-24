@@ -56,7 +56,7 @@ public class Rezervacija {
     protected Long id;
 
     @XmlElement(name = "SJedinica", required = true)
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.EAGER)
     protected SJedinica sJedinica;
 
     @XmlElement(name = "DatumRez", namespace = "https://github.com/Shekrba/MegaTravel", required = true)
@@ -76,10 +76,10 @@ public class Rezervacija {
 
     @XmlElement(name = "UCena", namespace = "https://github.com/Shekrba/MegaTravel")
     @Column(name = "ukupnaCena", unique = false, nullable = false)
-    protected int uCena;
+    protected double uCena;
 
     @XmlElement(name = "User", namespace = "https://github.com/Shekrba/MegaTravel/Korisnik", required = true)
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.EAGER)
     protected User korisnik;
 
     @Column(name = "canBeRated", unique = false, nullable = false)
@@ -128,11 +128,11 @@ public class Rezervacija {
         this._do = _do;
     }
 
-    public int getuCena() {
+    public double getuCena() {
         return uCena;
     }
 
-    public void setuCena(int uCena) {
+    public void setuCena(double uCena) {
         this.uCena = uCena;
     }
 
@@ -236,7 +236,7 @@ public class Rezervacija {
      * Gets the value of the uCena property.
      * 
      */
-    public int getUCena() {
+    public double getUCena() {
         return uCena;
     }
 
@@ -244,7 +244,7 @@ public class Rezervacija {
      * Sets the value of the uCena property.
      * 
      */
-    public void setUCena(int value) {
+    public void setUCena(double value) {
         this.uCena = value;
     }
 

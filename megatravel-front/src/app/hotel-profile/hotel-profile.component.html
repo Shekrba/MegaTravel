@@ -85,6 +85,23 @@
           <h4>Rooms</h4>
           <table class="table table-striped table-light rooms">
             <tr>
+              <td>
+                From:
+              </td>
+              <td>                 
+                <input type="date" class="form-control" [(ngModel)]="from">
+              </td>
+              <td>
+                To:
+              </td>
+              <td>                 
+                <input type="date"  class="form-control" [(ngModel)]="to">                 
+              </td>
+              <td>         
+                <button type="button" (click)="applyButton()" class="btn btn-primary">Apply</button>   
+              </td>
+            </tr>
+            <tr>
               <th>Number:</th>
               <th>Price:</th>
               <th>Number of beds:</th>
@@ -105,7 +122,7 @@
                 {{sj.dostupnost}}
               </td>
               <td>
-                <button routerLink="/login" *ngIf="sj.dostupnost" class="btn btn-success">Book</button>
+                <button [routerLink]="['/reservation',{hotelId:hotel.id,roomId:sj.id,from:dateFrom,to:dateTo}]" *ngIf="sj.dostupnost && book == true" class="btn btn-success">Book</button>
               </td>
             </tr>
           </table>

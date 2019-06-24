@@ -13,10 +13,47 @@ export class HotelProfileComponent implements OnInit {
   hotel: Hotel;
   increment = 0;
 
+  from:string = null;
+  to:string = null;
+
+  dateFrom:string = null;
+  dateTo = null;
+
+  book:boolean = false;
+
   constructor(private hotelService: HotelServiceService, private ar: ActivatedRoute) { }
 
   ngOnInit() {
     this.getOneHotel();
+
+    this.from = this.ar.snapshot.params['from'];
+    this.to = this.ar.snapshot.params['to'];
+
+    if(this.from != 'null' && this.to != 'null'){
+      this.book = true;
+      this.dateFrom = this.from;
+      this.dateTo = this.to;
+    }
+  }
+
+  public applyButton(){
+
+    let id;
+
+    this.ar.paramMap.subscribe(
+      params => {
+        id = params.get('id');
+      }
+    );
+    
+    if(this.from != 'null' && this.to != 'null'){
+      this.book = true;
+    }
+
+    this.dateFrom = this.from;
+    this.dateTo = this.to;
+
+    this.getFilteredRooms(id);
   }
 
   public getOneHotel(){
@@ -31,10 +68,27 @@ export class HotelProfileComponent implements OnInit {
 
     this.hotelService.getOneHotel(id).subscribe(
       res => {
-        this.hotel = res;        
+        this.hotel = res;
+
+        console.log(this.dateFrom);
+        
+        if(this.dateFrom != null && this.dateTo != null){
+          this.getFilteredRooms(id);
+        }
       },
       err => {
         alert("An error has occured while getting hotel " + id);
+      }
+    )
+  }
+
+  getFilteredRooms(id){
+    this.hotelService.getFilteredRooms(id,this.dateFrom,this.dateTo).subscribe(
+      res => {
+        this.hotel.sjedinice = res;        
+      },
+      err => {
+        alert("An error has occured while getting rooms of hotel " + id);
       }
     )
   }

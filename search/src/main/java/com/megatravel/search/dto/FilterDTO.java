@@ -1,5 +1,7 @@
 package com.megatravel.search.dto;
 
+import org.joda.time.LocalDate;
+
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -7,8 +9,8 @@ import java.util.List;
 public class FilterDTO {
     private String mesto;
     private int brojKreveta;
-    private Date dateFrom;
-    private Date dateTo;
+    private String dateFrom;
+    private String dateTo;
     private String tip;
     private String kategorija;
     private List<String> usluge = new ArrayList<>();
@@ -53,19 +55,19 @@ public class FilterDTO {
         this.brojKreveta = brojKreveta;
     }
 
-    public Date getDateFrom() {
+    public String getDateFrom() {
         return dateFrom;
     }
 
-    public void setDateFrom(Date dateFrom) {
+    public void setDateFrom(String dateFrom) {
         this.dateFrom = dateFrom;
     }
 
-    public Date getDateTo() {
+    public String getDateTo() {
         return dateTo;
     }
 
-    public void setDateTo(Date dateTo) {
+    public void setDateTo(String dateTo) {
         this.dateTo = dateTo;
     }
 }

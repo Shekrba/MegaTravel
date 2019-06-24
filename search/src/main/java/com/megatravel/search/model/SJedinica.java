@@ -69,7 +69,7 @@ public class SJedinica {
     @Column(name = "dostupnost", unique = false, nullable = false)
     protected Boolean dostupnost;
 
-    @OneToMany()
+    @OneToMany(mappedBy = "sJedinica")
     protected List<Rezervacija> rezervacije;
 
     @XmlAttribute(name = "Id")

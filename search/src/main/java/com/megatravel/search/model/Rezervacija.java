@@ -8,6 +8,8 @@
 
 package com.megatravel.search.model;
 
+import org.joda.time.LocalDate;
+
 import javax.persistence.*;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
@@ -60,7 +62,6 @@ public class Rezervacija {
     @GeneratedValue(strategy = GenerationType.AUTO)
     protected Long id;
 
-    @XmlElement(name = "SJedinica", required = true)
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     protected SJedinica sJedinica;
 

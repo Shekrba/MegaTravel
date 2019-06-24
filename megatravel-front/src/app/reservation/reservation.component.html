@@ -1,0 +1,35 @@
+<div class="container mt-5">
+    <h2 class="green mb-4">Booking</h2>  
+        <fieldset>
+          <div class="form-group">
+            <h5>Accommodation: {{hotel.naziv}}</h5>
+          </div>
+          <div class="form-group">
+            <h5>Room: {{hotel.room}}</h5>
+          </div>
+          <div *ngIf="hotel.from" class="form-group">
+            <h5>From: {{hotel.from.split("T")[0]}}</h5>
+          </div> 
+          <div *ngIf="hotel.to" class="form-group">
+            <h5>To: {{hotel.to.split("T")[0]}}</h5>
+          </div>
+          <div class="form-group">
+            <h5>Number of beds: {{hotel.brojKreveta}}</h5>
+          </div>
+          <div class="form-group">
+            <h5>Services: </h5>
+            <div class="card"> 
+                <div *ngFor="let service of hotel.services" class="custom-control custom-checkbox ml-2 mt-1 mb-1">
+                    <input type="checkbox" class="custom-control-input" id="{{service.id}}" (change)="checkService($event,service)">
+                    <label class="custom-control-label" for="{{service.id}}">{{service.naziv}}</label>
+                </div> 
+              </div>
+            </div>
+          <div class="form-group mt-5">
+              <h3>Cost: {{hotel.cost}}$</h3>
+          </div>
+          <div class="form-group">
+              <button (click)="makeReservaton()" class="btn btn-primary ml-3">Confirm</button>
+          </div>
+        </fieldset>
+    </div>

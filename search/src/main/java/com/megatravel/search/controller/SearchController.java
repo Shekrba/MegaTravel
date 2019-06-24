@@ -66,6 +66,11 @@ public class SearchController {
         return searchService.getTypes();
     }
 
+    @RequestMapping(value = "/rooms/{id}",method = RequestMethod.POST)
+    public List<SJedinicaDTO> getFilteredRoomes(@PathVariable("id")Long id,@RequestBody FilterDTO filter){
+        return searchService.getFilteredRooms(id,filter);
+    }
+
     public void smestajToDto(Smestaj s, SmestajDTO sDTO){
         sDTO.setId(s.getId());
         sDTO.setNaziv(s.getNaziv());
