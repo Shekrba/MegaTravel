@@ -44,13 +44,17 @@ public class RezervacijaServiceImpl implements  RezervacijaService {
         rez.setDatumRez(new Date());
         rez.setUCena(rezervacija.getCost());
 
+        rezervazijaRepository.save(rez);
+
         korisnik.getRezervacija().add(rez);
         rez.setKorisnik(korisnik);
+
+        userRepository.save(korisnik);
 
         sjedinica.getRezervacije().add(rez);
         rez.setsJedinica(sjedinica);
 
-        rezervazijaRepository.save(rez);
+        sJedinicaRepository.save(sjedinica);
 
         return "Reservation made";
     }

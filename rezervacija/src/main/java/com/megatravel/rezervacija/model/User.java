@@ -9,6 +9,7 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 public class User implements UserDetails {
@@ -55,7 +56,7 @@ public class User implements UserDetails {
     private String adresa;
 
     @OneToMany(mappedBy = "korisnik")
-    protected List<Rezervacija> rezervacija = new ArrayList<>();
+    protected Set<Rezervacija> rezervacija;
 
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinTable(name = "user_authority",
@@ -71,11 +72,11 @@ public class User implements UserDetails {
         this.enabled = enabled;
     }
 
-    public List<Rezervacija> getRezervacija() {
+    public Set<Rezervacija> getRezervacija() {
         return rezervacija;
     }
 
-    public void setRezervacija(List<Rezervacija> rezervacija) {
+    public void setRezervacija(Set<Rezervacija> rezervacija) {
         this.rezervacija = rezervacija;
     }
 

@@ -22,8 +22,6 @@ public class RezervacijaController {
 
     @RequestMapping(method = RequestMethod.POST)
     public ResponseEntity<String> addRezervacija(@RequestBody MakeResDTO rezervacija){
-        rezervacijaService.addRezervacija(rezervacija);
-
         try {
             String message = rezervacijaService.addRezervacija(rezervacija);
             return new ResponseEntity<String>(message,HttpStatus.OK);

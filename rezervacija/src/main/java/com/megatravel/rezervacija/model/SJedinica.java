@@ -11,6 +11,7 @@ package com.megatravel.rezervacija.model;
 import javax.persistence.*;
 import javax.xml.bind.annotation.*;
 import java.util.List;
+import java.util.Set;
 
 
 /**
@@ -70,7 +71,7 @@ public class SJedinica {
     protected Boolean dostupnost;
 
     @OneToMany(mappedBy = "sJedinica")
-    protected List<Rezervacija> rezervacije;
+    protected Set<Rezervacija> rezervacije;
 
     @XmlAttribute(name = "Id")
     @XmlSchemaType(name = "anySimpleType")
@@ -109,11 +110,11 @@ public class SJedinica {
         this.broj = broj;
     }
 
-    public List<Rezervacija> getRezervacije() {
+    public Set<Rezervacija> getRezervacije() {
         return rezervacije;
     }
 
-    public void setRezervacije(List<Rezervacija> rezervacije) {
+    public void setRezervacije(Set<Rezervacija> rezervacije) {
         this.rezervacije = rezervacije;
     }
 
