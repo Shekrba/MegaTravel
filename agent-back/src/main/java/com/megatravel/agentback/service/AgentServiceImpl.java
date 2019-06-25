@@ -7,6 +7,7 @@ import com.megatravel.agentback.dto.UslugaDTO;
 import com.megatravel.agentback.model.*;
 import com.megatravel.agentback.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -43,9 +44,13 @@ public class AgentServiceImpl implements AgentService {
     @Autowired
     CenovnikSJediniceRepository cenovnikSJediniceRepository;
 
+    @Autowired
+    UserRepository userRepository;
+
     @Override
     public List<Smestaj> getSmestaje() {
-        List<Smestaj> ret = smestajRepository.findAll();
+        User u = userRepository.fetchAccommodations(SecurityContextHolder.getContext().getAuthentication().getName());
+        List<Smestaj> ret = u.getSmestaji();
 
         return ret;
     }
@@ -243,14 +248,18 @@ public class AgentServiceImpl implements AgentService {
     }
 
     @Override
-    public Zauzetost zauzmiSJedinicu(Long sjedId, LocalDate odDatum, LocalDate doDatum) {
+    public Rezervacija zauzmiSJedinicu(Long sjedId, LocalDate odDatum, LocalDate doDatum) {
 
-        Zauzetost z = new Zauzetost();
+        Rezervacija z = new Rezervacija();
         z.setsJedinica(sjedinicaRepository.findOneById(sjedId));
-        z.setDatumOd(odDatum);
-        z.setDatumDo(doDatum);
+        z.setOd(odDatum);
+        z.set_do(doDatum);
+        z.setDatumRez(LocalDate.now());
+        z.setStatusRezervacije(StatusRezervacije.REZERVISANO);
+        z.setKorisnik(SecurityContextHolder.getContext().getAuthentication().getName());
+        z.setuCena(0);
 
-        zauzetostRepository.save(z);
+        rezervacijaRepository.save(z);
 
         return z;
     }
