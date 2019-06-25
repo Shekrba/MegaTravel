@@ -15,12 +15,21 @@ import { Accomodation } from '../../model/Accomodation';
 export class AccomodationsComponent implements OnInit {
 
   private accomodations : Accomodation[] = [];
+  private filterAccomodations : Accomodation[] = [];
+
+  filterName: string = '';
+  filterLocation: string = '';
+  filterOpis: string = '';
 
   constructor(private loginService : LoginService, 
     private accomodationService: AccomodationService,
     private router : Router
     ) {
-    this.accomodationService.getAccomodations().subscribe(data => { this.accomodations = data; console.log(data) });
+    this.accomodationService.getAccomodations().subscribe(
+      data => {
+         this.accomodations = data;
+         this.filterAccomodations = data; 
+      });
   }
 
   ngOnInit() {
@@ -40,5 +49,31 @@ export class AccomodationsComponent implements OnInit {
     this.loginService.setShowMenu(false);
     this.router.navigate(['/editAccomodation', id]);
   }
+
+  trackByIdentity = (index: number, item: Accomodation): number => item.id;
   
+  filter() : void {
+    const { 
+      accomodations,
+      filterLocation,
+      filterOpis,
+      filterName
+    } = this;
+    let filterData = accomodations;
+    
+    filterName && filterData? filterData = filterData.filter( o => o.naziv.toLowerCase().includes(filterName.toLowerCase()) )
+     : filterData;
+
+    filterLocation && filterData ? filterData = filterData.filter( o => {
+      let location = `${o.mesto}, ${o.ulica}, ${o.broj}`;
+      return location.toLowerCase().includes(filterLocation.toLowerCase())
+    }) : filterData;
+
+    filterOpis && filterData ? filterData = filterData.filter(o => o.opis.toLowerCase().includes(filterOpis.toLowerCase())) : filterData
+
+    this.filterAccomodations = filterData;
+
+  }
+
+
 }

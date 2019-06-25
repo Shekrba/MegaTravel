@@ -4,14 +4,14 @@
       <thead class="thead-dark">
         <tr>
           <th>#</th>
-          <th><input id="inputFilter" [(ngModel)]="filterLocation" type="text"  placeholder="Numer of people:"></th>
-          <th><input id="inputFilter" [(ngModel)]="filterType" type="text"  placeholder="Number of beds: "></th>
-          <th><input id="inputFilter" [(ngModel)]="filterName" type="text"  placeholder="Price"></th>
+          <th><input id="inputFilter" name="filterBroj"  [(ngModel)]="filterBroj" type="number" min="0" (input)="filter()"  placeholder="Numer of people:"></th>
+          <th><input id="inputFilter" name="filterBrojKreveta" [(ngModel)]="filterBrojKreveta" type="number" min="0" (input)="filter()"  placeholder="Number of beds: "></th>
+          <th><input id="inputFilter" name="filterCena" [(ngModel)]="filterCena" type="number" min="0" (input)="filter()"  placeholder="Price"></th>
           <th style="text-align: center;" ><button (click)="newAccomodationUnit()" type="button" class="btn btn-primary">New Room</button></th> 
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let accomodationUnit of accomodationUnits">
+        <tr *ngFor="let accomodationUnit of filteredAccomodationUnits; trackBy:trackByIdentity">
           <td>{{accomodationUnit.id}}</td>
           <td>{{accomodationUnit.broj}}</td>
           <td>{{accomodationUnit.brojKreveta}}</td>

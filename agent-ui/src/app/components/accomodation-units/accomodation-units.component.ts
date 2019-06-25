@@ -15,6 +15,11 @@ export class AccomodationUnitsComponent implements OnInit {
   idAccomodation : number;
   accomodationUnits : Array<AccomodationUnit> = [];
   accomodation : Accomodation;
+  filteredAccomodationUnits : Array<AccomodationUnit> = [];
+
+  filterBroj : number = 0;
+  filterBrojKreveta : number = 0;
+  filterCena : number = 0;
 
   constructor(private route : ActivatedRoute,
     private accomodationService: AccomodationService,
@@ -23,7 +28,11 @@ export class AccomodationUnitsComponent implements OnInit {
   ){
     
     this.idAccomodation = parseInt(this.route.snapshot.paramMap.get("id"));
-    this.accomodationService.getAccomodationUnits(this.idAccomodation).subscribe( data => this.accomodationUnits = data )
+    this.accomodationService.getAccomodationUnits(this.idAccomodation).subscribe( 
+      data => {
+        this.accomodationUnits = data;
+        this.filteredAccomodationUnits = data;
+    })
     this.accomodationService.getAccomodation(this.idAccomodation).subscribe( data => this.accomodation = data )
   }
 
@@ -48,6 +57,29 @@ export class AccomodationUnitsComponent implements OnInit {
   occupancy(id :number) {
     this.loginService.setShowMenu(false);
     this.router.navigate(['/occupancy',this.idAccomodation, id]);
+  }
+
+  trackByIdentity = (index: number, item: AccomodationUnit): number => item.id;
+
+
+  filter() : void {
+    const {
+      filterBroj,
+      filterBrojKreveta,
+      filterCena,
+      accomodationUnits
+    } = this;
+
+    
+
+    let filterData = accomodationUnits;
+
+    filterBroj && filterData && filterBroj !== 0 ? filterData = filterData.filter(o => o.broj <= filterBroj) : filterData;
+    filterBrojKreveta && filterData && filterBrojKreveta !== 0 ? filterData = filterData.filter(o => o.brojKreveta <= filterBrojKreveta) : filterData
+    filterCena && filterData && filterCena !== 0 ? filterData = filterData.filter(o => o.cena <= filterCena) : filterData
+
+    this.filteredAccomodationUnits = filterData;
+
   }
 
 
