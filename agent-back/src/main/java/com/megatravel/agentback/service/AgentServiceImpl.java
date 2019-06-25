@@ -40,6 +40,8 @@ public class AgentServiceImpl implements AgentService {
     @Autowired
     PorukaRepository porukaRepository;
 
+    @Autowired
+    CenovnikSJediniceRepository cenovnikSJediniceRepository;
 
     @Override
     public List<Smestaj> getSmestaje() {
@@ -329,5 +331,19 @@ public class AgentServiceImpl implements AgentService {
     @Override
     public Poruka getPoruka(Long id) {
         return porukaRepository.findOneById(id);
+    }
+
+    @Override
+    public CenovnikSJedinice postaviCenu(Long sjedId, LocalDate odDatum, LocalDate doDatum, double cena) {
+
+        CenovnikSJedinice c = new CenovnikSJedinice();
+        c.setsJedinica(sjedinicaRepository.findOneById(sjedId));
+        c.setDatumDo(doDatum);
+        c.setDatumOd(odDatum);
+        c.setCena(cena);
+
+        cenovnikSJediniceRepository.save(c);
+
+        return c;
     }
 }

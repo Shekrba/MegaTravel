@@ -39,5 +39,7 @@ public interface AgentService {
     public Poruka addOdgovor(PorukaDTO porukaDTO, Long idPitanja);
     public Poruka getPoruka(Long id);
 
+    public CenovnikSJedinice postaviCenu(Long sjedId, LocalDate odDatum, LocalDate doDatum, double cena);
+
 
 }
