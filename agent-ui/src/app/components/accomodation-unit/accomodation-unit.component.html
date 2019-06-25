@@ -1,29 +1,34 @@
-<div class="mainContainer">
-<h3 id="header">New Accomodation Unit</h3>
+<div class="set">
+  <div class="mainContainer">
+  <h3 id="header">New Accomodation Unit</h3>
+  <div class="container">
+    <form>
+          <div class="form-group">
+          <label for="place">Name of acc unit: </label>
+          <input name="naziv" [(ngModel)]="accomodationUnit.naziv" type="text" class="form-control" id="naziv">
+          </div> 
+          <div class="form-group">
+          <label for="place">Number of people: </label>
+          <input name="broj" [(ngModel)]="accomodationUnit.broj" type="text" class="form-control" id="broj">
+          </div>  
+          <div class="form-group">
+          <label for="brojKreveta">Number of beds: </label>
+          <input name="brojKreveta" [(ngModel)]="accomodationUnit.brojKreveta" type="text" class="form-control" id="brojKreveta">
+          </div>  
+          <div class="form-group">
+          <label for="cena">Price: </label>
+          <input name="cena" [(ngModel)]="accomodationUnit.cena" type="text" class="form-control" id="cena" min="0">
+          </div>  
+          <div class="row">
+          <div class="col-6">
+            <button type="submit" (click)="add()" class="btn btn-primary">Add accomodation unit</button>  
+          </div>
+          <div  class="col-6" >
+            <button type="submit" (click)="cancel()" class="btn btn-warning" style="float: right;" >Cancel</button>  
+          </div>
+          </div>
 
-<div class="container">
-  <form>
-        <div class="form-group">
-        <label for="place">Number of people: </label>
-        <input name="broj" [(ngModel)]="accomodationUnit.broj" type="text" class="form-control" id="broj">
-        </div>  
-        <div class="form-group">
-        <label for="brojKreveta">Number of beds: </label>
-        <input name="brojKreveta" [(ngModel)]="accomodationUnit.brojKreveta" type="text" class="form-control" id="brojKreveta">
-        </div>  
-        <div class="form-group">
-        <label for="cena">Price: </label>
-        <input name="cena" [(ngModel)]="accomodationUnit.cena" type="text" class="form-control" id="cena" min="0">
-        </div>  
-        <div class="row">
-        <div class="col-6">
-          <button type="submit" (click)="add()" class="btn btn-primary">Add accomodation unit</button>  
-        </div>
-        <div  class="col-6" >
-          <button type="submit" (click)="cancel()" class="btn btn-warning" style="float: right;" >Cancel</button>  
-        </div>
-        </div>
-
-  </form>
-</div>
+    </form>
+  </div>
+  </div>
 </div>

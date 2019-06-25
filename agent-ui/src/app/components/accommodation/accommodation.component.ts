@@ -4,6 +4,8 @@ import { AccomodationService } from '../../services/accomodation.service';
 import { LoginService } from '../../services/login.service';
 
 import { Accomodation } from '../../model/Accomodation';
+import { Picture } from '../../model/Picture';
+import { VirtualTimeScheduler } from 'rxjs';
 
 @Component({
   selector: 'app-accommodation',
@@ -15,8 +17,12 @@ export class AccommodationComponent implements OnInit {
   options : Array<any>;
   showCancelTime : boolean = false;
   source : string = "";
-  images : Array<any> = [];
+  images : Array<Picture> = [];
   wayForIncome : string ='';
+  id: number = 1;
+  showImageList : boolean = false;
+  btnText : string = 'Show image List';
+  showImage : boolean = true;
 
   accomodation : Accomodation = new Accomodation();
 
@@ -38,11 +44,17 @@ export class AccommodationComponent implements OnInit {
 
   projectImage(file: File) : void{ 
     let reader = new FileReader;
+    const { id } = this;
     // TODO: Define type of 'e'
     reader.onload = (e: any) => {
         // Simply set e.target.result as our <img> src in the layout
         this.source = e.target.result;
-        this.images.push(e.target.result);
+        let picture = new Picture();
+        picture.id = id;
+        picture.data = e.target.result;
+        this.images.push(picture);
+        this.source = picture.data;
+        this.id = id + 1;
     };
     // This will process our file and get it's attributes/data
     reader.readAsDataURL(file);
@@ -53,16 +65,37 @@ export class AccommodationComponent implements OnInit {
     this.projectImage($event.target['files'][0]);
   }
 
-  removeImage(id : number) : void {
-    this.images.splice(id , 1);
-  }
-
+ 
   add() : void {
     this.accomodationService.addAcomodation(this.accomodation).subscribe(response => {
       window.alert('Smestaj uspesno dodat!');
       this.router.navigate(['/accomodations'])},
       error => window.alert("Neuspesno dodavanje smestaja!")
     );
+  }
+
+  showListImg() : void {
+    const { showImageList } = this;
+    this.showImageList = !showImageList;
+    if(showImageList)
+    {
+      this.btnText = 'Show image List';
+      return;
+    }
+    this.btnText = 'Hide image List'
+    
+  }
+
+  show(id: number): void {
+    const imgSrc = this.images.find((o) => o.id === id);
+    this.source = imgSrc.data;
+  }
+
+  remove(id :number): void {
+    const image  = this.images.find(o => o.id === id);
+    if(image.data === this.source)
+      this.source = '';
+    this.images = this.images.filter(o => o.id !== id)
   }
  
 

@@ -1,7 +1,23 @@
-.container {
-    padding-top: 5%;
-    margin: auto;
+.set {
+    margin-top : 50px;
 }
+.container {
+    padding-top: 4%;
+    margin-bottom: 2%;
+}
+
+#header {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.mainContainer {
+    border: 1px solid;
+    margin: auto;
+    width: 80%;;
+
+}
+
 
 img {
     width: 300px;
