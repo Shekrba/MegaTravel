@@ -15,12 +15,11 @@ export class AppComponent implements OnInit{
   private showNavBar : BehaviorSubject<boolean>;
 
   constructor(private loginService: LoginService, private router: Router) {
-    
+    this.showNavBar = this.loginService.getShowMenu();
   }
 
   ngOnInit() {
-    
-    
+   
   }
 
   
