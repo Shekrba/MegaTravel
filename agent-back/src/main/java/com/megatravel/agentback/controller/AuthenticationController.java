@@ -1,5 +1,6 @@
 package com.megatravel.agentback.controller;
 
+import com.megatravel.agentback.dto.UserDTO;
 import com.megatravel.agentback.model.User;
 import com.megatravel.agentback.model.UserTokenState;
 import com.megatravel.agentback.security.TokenUtils;
@@ -60,8 +61,16 @@ public class AuthenticationController {
 		String jwt = tokenUtils.generateToken(user.getUsername());
 		int expiresIn = tokenUtils.getExpiredIn();
 
+		UserDTO userDTO=new UserDTO();
+		userDTO.setExpiresIn(expiresIn);
+		userDTO.setId(user.getId());
+		userDTO.setIme(user.getIme());
+		userDTO.setPrezime(user.getPrezime());
+		userDTO.setUsername(user.getUsername());
+		userDTO.setToken(jwt);
+
 		// Vrati token kao odgovor na uspesno autentifikaciju
-		return ResponseEntity.ok(new UserTokenState(jwt, expiresIn));
+		return ResponseEntity.ok(userDTO);
 	}
 
 	@RequestMapping(value = "/refresh", method = RequestMethod.POST)
