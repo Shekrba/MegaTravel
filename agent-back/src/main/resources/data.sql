@@ -1,6 +1,9 @@
-INSERT INTO user (id, username, password, ime, prezime, email, enabled, last_password_reset_date) VALUES (1, 'user', '$2a$04$Vbug2lwwJGrvUXTj6z7ff.97IzVBkrJ1XfApfGNl.Z695zqcnPYra', 'Marko', 'Markovic', 'user@example.com', true, '2017-10-01 21:58:58');
+/*INSERT INTO user (id, username, password, ime, prezime, email, enabled, last_password_reset_date) VALUES (1, 'user', '$2a$04$Vbug2lwwJGrvUXTj6z7ff.97IzVBkrJ1XfApfGNl.Z695zqcnPYra', 'Marko', 'Markovic', 'user@example.com', true, '2017-10-01 21:58:58');
 INSERT INTO AUTHORITY (id, name) VALUES (1, 'ROLE_AGENT');
 INSERT INTO USER_AUTHORITY (user_id, authority_id) VALUES (1, 1);
+
+INSERT INTO user (id, username, password, ime, prezime, email, enabled, last_password_reset_date) VALUES (2, 'user1', '$2a$04$Vbug2lwwJGrvUXTj6z7ff.97IzVBkrJ1XfApfGNl.Z695zqcnPYra', 'Marko1', 'Markovic1', 'user1@example.com', true, '2017-10-01 21:58:58');
+INSERT INTO USER_AUTHORITY (user_id, authority_id) VALUES (2, 1);
 
 insert into usluga (id, naziv, cena, opis) values (1,'Spa', 20, 'For bath.');
 insert into usluga (id, naziv, cena, opis) values (2,'WIFI', 5, 'Internet.');
@@ -103,4 +106,4 @@ INSERT INTO poruka(id, datum_slanja, naslov, posaljilac, primalac, sadrzaj, stat
 
 
 
-
+*/

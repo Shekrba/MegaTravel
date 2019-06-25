@@ -115,18 +115,18 @@ public class AgentController {
 
 
     @RequestMapping(value = "/occupancy/{id}",method = RequestMethod.POST)
-    public Zauzetost zauzmiSJedinica(@PathVariable("id")Long id, @RequestBody ZauzetostDTO zauzetostDTO){
+    public Rezervacija zauzmiSJedinica(@PathVariable("id")Long id, @RequestBody ZauzetostDTO zauzetostDTO){
 
-        Zauzetost z = null;
+        Rezervacija r = null;
         LocalDate odDatum = zauzetostDTO.getOdDatum();
         LocalDate doDatum = zauzetostDTO.getDoDatum();
         try {
-            z = agentService.zauzmiSJedinicu(id, odDatum, doDatum);
+            r = agentService.zauzmiSJedinicu(id, odDatum, doDatum);
         } catch (Exception e) {
             e.printStackTrace();
         }
 
-        return z;
+        return r;
     }
 
     @RequestMapping(value = "/reservations/{id}",method = RequestMethod.GET)
