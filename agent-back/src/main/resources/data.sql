@@ -1,3 +1,7 @@
+INSERT INTO user (id, username, password, ime, prezime, email, enabled, last_password_reset_date) VALUES (1, 'user', '$2a$04$Vbug2lwwJGrvUXTj6z7ff.97IzVBkrJ1XfApfGNl.Z695zqcnPYra', 'Marko', 'Markovic', 'user@example.com', true, '2017-10-01 21:58:58');
+INSERT INTO AUTHORITY (id, name) VALUES (1, 'ROLE_AGENT');
+INSERT INTO USER_AUTHORITY (user_id, authority_id) VALUES (1, 1);
+
 insert into usluga (id, naziv, cena, opis) values (1,'Spa', 20, 'For bath.');
 insert into usluga (id, naziv, cena, opis) values (2,'WIFI', 5, 'Internet.');
 insert into usluga (id, naziv, cena, opis) values (3,'Breakfast', 10, 'For eat.');
@@ -53,8 +57,8 @@ insert into category_service(category_id, service_id) values (5,1);
 insert into adresa(id,broj,latitude,longitude,mesto,pos_broj,ulica) values (1,20,2.2,3.3,'Novi Sad','21000','Polgar Andrasa');
 insert into adresa(id,broj,latitude,longitude,mesto,pos_broj,ulica) values (2,13,2.2,3.3,'Novi Sad','21000','Trifuna Dimica');
 
-insert into smestaj(id,naziv,opis,period_otkaza,accomodation_type_id,adresa_id) values (1,'Hotel Park','Super hotel',10,1,1);
-insert into smestaj(id,naziv,opis,period_otkaza,accomodation_type_id,adresa_id) values (2,'Hotel Prezident','Super hotel',10,1,2);
+insert into smestaj(id,naziv,opis,period_otkaza,accomodation_type_id,adresa_id,agent_id) values (1,'Hotel Park','Super hotel',10,1,1,1);
+insert into smestaj(id,naziv,opis,period_otkaza,accomodation_type_id,adresa_id,agent_id) values (2,'Hotel Prezident','Super hotel',10,1,2,1);
 
 insert services_smestaj(smestaj_id,service_id) values (1,10);
 insert services_smestaj(smestaj_id,service_id) values (1,11);
