@@ -123,6 +123,9 @@ public class Smestaj {
     @ManyToOne(fetch = FetchType.EAGER)
     private Category category;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    private User agent;
+
     public Category getCategory() {
         return category;
     }
