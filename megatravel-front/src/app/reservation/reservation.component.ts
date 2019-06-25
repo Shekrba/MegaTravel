@@ -3,6 +3,7 @@ import { HotelServiceService } from '../_services/hotel.service';
 import { ActivatedRoute, Data } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { Router } from '@angular/router';
+import { AuthenticationService } from '../_services/authentication.service';
 
 @Component({
   selector: 'app-reservation',
@@ -22,7 +23,7 @@ export class ReservationComponent implements OnInit {
 
   services = []
 
-  constructor(private hotelService: HotelServiceService, private ar: ActivatedRoute,private toastr: ToastrService,private router: Router) { }
+  constructor(private hotelService: HotelServiceService, private ar: ActivatedRoute,private toastr: ToastrService,private router: Router,private authService:AuthenticationService) { }
 
   ngOnInit() {
 
@@ -68,7 +69,7 @@ export class ReservationComponent implements OnInit {
       from : this.body.from,
       to : this.body.to,
       cost : this.hotel.cost,
-      korisnikId : 1,
+      korisnikId : this.authService.currentUserValue.id,
       sjedinicaId : this.body.roomId,
       services : this.services
     }

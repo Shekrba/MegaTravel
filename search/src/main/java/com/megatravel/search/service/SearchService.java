@@ -2,9 +2,7 @@ package com.megatravel.search.service;
 
 import com.megatravel.search.dto.FilterDTO;
 import com.megatravel.search.dto.SJedinicaDTO;
-import com.megatravel.search.model.SJedinica;
 import com.megatravel.search.model.Smestaj;
-import com.megatravel.search.model.Usluga;
 
 import java.util.List;
 

@@ -6,9 +6,11 @@
 //
 
 
-package com.megatravel.rezervacija.model;
+package rs.ftn.xws.discoveryserver.model;
 
 import javax.persistence.*;
+import javax.xml.bind.annotation.*;
+import javax.xml.datatype.XMLGregorianCalendar;
 import java.util.Date;
 
 @Entity

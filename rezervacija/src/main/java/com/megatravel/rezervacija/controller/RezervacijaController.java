@@ -63,13 +63,5 @@ public class RezervacijaController {
         return rezervacijaService.formReservation(form);
     }
 
-    @RequestMapping(value = "/comment", method = RequestMethod.POST)
-    public ResponseEntity<String> addComment(@RequestBody CommentDTO commentDTO){
-        try {
-            String message = rezervacijaService.addComment(commentDTO);
-            return new ResponseEntity<String>(message,HttpStatus.OK);
-        }catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
-    }
+
 }

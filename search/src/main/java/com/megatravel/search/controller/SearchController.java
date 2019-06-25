@@ -81,9 +81,6 @@ public class SearchController {
         sDTO.setBroj(s.getAdresa().getBroj());
         sDTO.setUlica(s.getAdresa().getUlica());
 
-        for (Slika slika: s.getSlike()) {
-            sDTO.getSlike().add(slika.getSrc());
-        }
 
         for (Usluga usluga: s.getUslugaList()) {
             UslugaDTO uslugaDTO = new UslugaDTO();

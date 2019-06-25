@@ -1,7 +1,6 @@
 package com.megatravel.admin.dto;
 
 import com.megatravel.admin.model.Adresa;
-import com.megatravel.admin.model.TTipSmestaja;
 
 import java.util.ArrayList;
 import java.util.List;

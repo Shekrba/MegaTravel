@@ -14,5 +14,4 @@ public interface RezervacijaService {
     public List<ReservationDTO>getReservationsToRate(Long user_id);
     public String setRatedTrue(Long id);
     public SmestajDTO formReservation(formDTO form);
-    public String addComment(CommentDTO commentDTO);
 }

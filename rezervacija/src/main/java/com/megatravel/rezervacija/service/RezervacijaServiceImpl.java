@@ -6,12 +6,14 @@ import com.megatravel.rezervacija.repository.*;
 import com.netflix.discovery.converters.Auto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 @Transactional(readOnly = true)
 @Service
@@ -29,8 +31,6 @@ public class RezervacijaServiceImpl implements  RezervacijaService {
     @Autowired
     UserRepository userRepository;
 
-    @Autowired
-    KomentarRepository komentarRepository;
 
     @Transactional(readOnly = false, propagation = Propagation.REQUIRES_NEW)
     @Override
@@ -68,23 +68,6 @@ public class RezervacijaServiceImpl implements  RezervacijaService {
         sJedinicaRepository.save(sjedinica);
 
         return "Reservation made";
-    }
-
-    @Override
-    public String addComment(CommentDTO commentDTO){
-
-        Smestaj smestaj = smestajRepository.findOneById(commentDTO.getSmestajId());
-
-        Komentar komentar = new Komentar();
-        komentar.setId(commentDTO.getId());
-        komentar.setKorisnik(new User());
-        komentar.setOdobren(false);
-        komentar.setSmestaj(smestaj);
-        komentar.setTekst(commentDTO.getTekst());
-
-        komentarRepository.save(komentar);
-
-        return "Comment saved";
     }
 
     @Override
@@ -149,7 +132,7 @@ public class RezervacijaServiceImpl implements  RezervacijaService {
         SmestajDTO smestajDTO = new SmestajDTO();
 
         Smestaj smestaj = smestajRepository.findOneById(form.getHotelId());
-        SJedinica sjedinica = sJedinicaRepository.findOneById(form.getRoomId());
+        SJedinica sjedinica = sJedinicaRepository.getOne(form.getRoomId());
 
         smestajDTO.setNaziv(smestaj.getNaziv());
         smestajDTO.setId(smestaj.getId());

@@ -6,11 +6,12 @@
 //
 
 
-package com.megatravel.search.model;
+package rs.ftn.xws.discoveryserver.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
+import javax.xml.bind.annotation.*;
 import java.util.ArrayList;
 import java.util.List;
 

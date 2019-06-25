@@ -6,9 +6,10 @@
 //
 
 
-package com.megatravel.search.model;
+package rs.ftn.xws.discoveryserver.model;
 
 import javax.persistence.*;
+import javax.xml.bind.annotation.*;
 
 
 @Entity

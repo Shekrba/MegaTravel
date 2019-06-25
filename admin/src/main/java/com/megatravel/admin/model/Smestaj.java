@@ -22,64 +22,6 @@ import javax.xml.bind.annotation.XmlType;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 
-/**
- * <p>Java class for anonymous complex type.
- *
- * <p>The following schema fragment specifies the expected content contained within this class.
- *
- * <pre>
- * &lt;complexType>
- *   &lt;complexContent>
- *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
- *       &lt;sequence>
- *         &lt;element ref="{https://github.com/Shekrba/MegaTravel/Smestaj}SJedinica" maxOccurs="unbounded"/>
- *         &lt;element name="TipSmestaja" type="{https://github.com/Shekrba/MegaTravel/Smestaj}TTipSmestaja"/>
- *         &lt;element ref="{https://github.com/Shekrba/MegaTravel/Smestaj}Adresa"/>
- *         &lt;element name="Opis" type="{http://www.w3.org/2001/XMLSchema}string"/>
- *         &lt;element name="DodatneUsluge">
- *           &lt;complexType>
- *             &lt;complexContent>
- *               &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
- *                 &lt;sequence>
- *                   &lt;element ref="{https://github.com/Shekrba/MegaTravel/Smestaj}Usluga" maxOccurs="unbounded" minOccurs="0"/>
- *                 &lt;/sequence>
- *               &lt;/restriction>
- *             &lt;/complexContent>
- *           &lt;/complexType>
- *         &lt;/element>
- *         &lt;element name="PeriodOtkaza">
- *           &lt;simpleType>
- *             &lt;restriction base="{http://www.w3.org/2001/XMLSchema}int">
- *               &lt;minInclusive value="0"/>
- *             &lt;/restriction>
- *           &lt;/simpleType>
- *         &lt;/element>
- *         &lt;element name="Slika" maxOccurs="unbounded">
- *           &lt;complexType>
- *             &lt;complexContent>
- *               &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
- *                 &lt;attribute name="src" type="{http://www.w3.org/2001/XMLSchema}anySimpleType" />
- *               &lt;/restriction>
- *             &lt;/complexContent>
- *           &lt;/complexType>
- *         &lt;/element>
- *       &lt;/sequence>
- *       &lt;attribute name="Id" type="{http://www.w3.org/2001/XMLSchema}anySimpleType" />
- *     &lt;/restriction>
- *   &lt;/complexContent>
- * &lt;/complexType>
- * </pre>
- *
- *
- */
-@XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "", propOrder = {
-        "sJedinica",
-        "adresa",
-        "opis",
-        "periodOtkaza"
-})
-@XmlRootElement(name = "Smestaj")
 @Entity
 public class Smestaj {
 

@@ -6,9 +6,10 @@
 //
 
 
-package com.megatravel.rezervacija.model;
+package rs.ftn.xws.discoveryserver.model;
 
 import javax.persistence.*;
+import javax.xml.bind.annotation.*;
 import java.util.Set;
 
 @Entity

@@ -8,53 +8,9 @@
 
 package com.megatravel.search.model;
 
-import org.joda.time.LocalDate;
-
 import javax.persistence.*;
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlSchemaType;
-import javax.xml.bind.annotation.XmlType;
-import javax.xml.datatype.XMLGregorianCalendar;
 import java.util.Date;
 
-
-/**
- * <p>Java class for anonymous complex type.
- * 
- * <p>The following schema fragment specifies the expected content contained within this class.
- * 
- * <pre>
- * &lt;complexType>
- *   &lt;complexContent>
- *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
- *       &lt;sequence>
- *         &lt;element ref="{https://github.com/Shekrba/MegaTravel/Smestaj}SJedinica"/>
- *         &lt;element name="DatumRez" type="{http://www.w3.org/2001/XMLSchema}date"/>
- *         &lt;element name="Od" type="{http://www.w3.org/2001/XMLSchema}date"/>
- *         &lt;element name="Do" type="{http://www.w3.org/2001/XMLSchema}date"/>
- *         &lt;element name="UCena" type="{http://www.w3.org/2001/XMLSchema}int"/>
- *         &lt;element ref="{https://github.com/Shekrba/MegaTravel/Korisnik}Korisnik"/>
- *       &lt;/sequence>
- *     &lt;/restriction>
- *   &lt;/complexContent>
- * &lt;/complexType>
- * </pre>
- * 
- * 
- */
-@XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "", propOrder = {
-    "sJedinica",
-    "datumRez",
-    "od",
-    "_do",
-    "uCena",
-    "korisnik"
-})
-@XmlRootElement(name = "Rezervacija", namespace = "https://github.com/Shekrba/MegaTravel")
 @Entity
 public class Rezervacija {
 
@@ -62,30 +18,22 @@ public class Rezervacija {
     @GeneratedValue(strategy = GenerationType.AUTO)
     protected Long id;
 
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.EAGER)
     protected SJedinica sJedinica;
 
-    @XmlElement(name = "DatumRez", namespace = "https://github.com/Shekrba/MegaTravel", required = true)
-    @XmlSchemaType(name = "date")
     @Column(name = "datumRez", unique = false, nullable = false)
     protected Date datumRez;
 
-    @XmlElement(name = "Od", namespace = "https://github.com/Shekrba/MegaTravel", required = true)
-    @XmlSchemaType(name = "date")
     @Column(name = "od", unique = false, nullable = false)
     protected Date od;
 
-    @XmlElement(name = "Do", namespace = "https://github.com/Shekrba/MegaTravel", required = true)
-    @XmlSchemaType(name = "date")
     @Column(name = "do", unique = false, nullable = false)
     protected Date _do;
 
-    @XmlElement(name = "UCena", namespace = "https://github.com/Shekrba/MegaTravel")
     @Column(name = "ukupnaCena", unique = false, nullable = false)
-    protected int uCena;
+    protected double uCena;
 
-    @XmlElement(name = "User", namespace = "https://github.com/Shekrba/MegaTravel/Korisnik", required = true)
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.EAGER)
     protected User korisnik;
 
     @Column(name = "canBeRated", unique = false, nullable = false)
@@ -134,123 +82,51 @@ public class Rezervacija {
         this._do = _do;
     }
 
-    public int getuCena() {
+    public double getuCena() {
         return uCena;
     }
 
-    public void setuCena(int uCena) {
+    public void setuCena(double uCena) {
         this.uCena = uCena;
     }
 
-    /**
-     * Gets the value of the sJedinica property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link SJedinica }
-     *     
-     */
     public SJedinica getSJedinica() {
         return sJedinica;
     }
 
-    /**
-     * Sets the value of the sJedinica property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link SJedinica }
-     *     
-     */
     public void setSJedinica(SJedinica value) {
         this.sJedinica = value;
     }
 
-    /**
-     * Gets the value of the datumRez property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link XMLGregorianCalendar }
-     *     
-     */
     public Date getDatumRez() {
         return datumRez;
     }
 
-    /**
-     * Sets the value of the datumRez property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link XMLGregorianCalendar }
-     *     
-     */
     public void setDatumRez(Date value) {
         this.datumRez = value;
     }
 
-    /**
-     * Gets the value of the od property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link XMLGregorianCalendar }
-     *     
-     */
     public Date getOd() {
         return od;
     }
 
-    /**
-     * Sets the value of the od property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link XMLGregorianCalendar }
-     *     
-     */
     public void setOd(Date value) {
         this.od = value;
     }
 
-    /**
-     * Gets the value of the do property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link XMLGregorianCalendar }
-     *     
-     */
     public Date getDo() {
         return _do;
     }
 
-    /**
-     * Sets the value of the do property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link XMLGregorianCalendar }
-     *     
-     */
     public void setDo(Date value) {
         this._do = value;
     }
 
-    /**
-     * Gets the value of the uCena property.
-     * 
-     */
-    public int getUCena() {
+    public double getUCena() {
         return uCena;
     }
 
-    /**
-     * Sets the value of the uCena property.
-     * 
-     */
-    public void setUCena(int value) {
+    public void setUCena(double value) {
         this.uCena = value;
     }
 

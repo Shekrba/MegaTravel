@@ -1,7 +1,6 @@
 package com.megatravel.search.repository;
 
 import com.megatravel.search.model.SJedinica;
-import com.megatravel.search.model.Smestaj;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;

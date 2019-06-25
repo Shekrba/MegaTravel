@@ -11,91 +11,28 @@ package com.megatravel.search.model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
-import javax.xml.bind.annotation.*;
 import java.util.ArrayList;
 import java.util.List;
 
 
-/**
- * <p>Java class for anonymous complex type.
- *
- * <p>The following schema fragment specifies the expected content contained within this class.
- *
- * <pre>
- * &lt;complexType>
- *   &lt;complexContent>
- *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
- *       &lt;sequence>
- *         &lt;element ref="{https://github.com/Shekrba/MegaTravel/Smestaj}SJedinica" maxOccurs="unbounded"/>
- *         &lt;element name="TipSmestaja" type="{https://github.com/Shekrba/MegaTravel/Smestaj}TTipSmestaja"/>
- *         &lt;element ref="{https://github.com/Shekrba/MegaTravel/Smestaj}Adresa"/>
- *         &lt;element name="Opis" type="{http://www.w3.org/2001/XMLSchema}string"/>
- *         &lt;element name="DodatneUsluge">
- *           &lt;complexType>
- *             &lt;complexContent>
- *               &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
- *                 &lt;sequence>
- *                   &lt;element ref="{https://github.com/Shekrba/MegaTravel/Smestaj}Usluga" maxOccurs="unbounded" minOccurs="0"/>
- *                 &lt;/sequence>
- *               &lt;/restriction>
- *             &lt;/complexContent>
- *           &lt;/complexType>
- *         &lt;/element>
- *         &lt;element name="PeriodOtkaza">
- *           &lt;simpleType>
- *             &lt;restriction base="{http://www.w3.org/2001/XMLSchema}int">
- *               &lt;minInclusive value="0"/>
- *             &lt;/restriction>
- *           &lt;/simpleType>
- *         &lt;/element>
- *         &lt;element name="Slika" maxOccurs="unbounded">
- *           &lt;complexType>
- *             &lt;complexContent>
- *               &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
- *                 &lt;attribute name="src" type="{http://www.w3.org/2001/XMLSchema}anySimpleType" />
- *               &lt;/restriction>
- *             &lt;/complexContent>
- *           &lt;/complexType>
- *         &lt;/element>
- *       &lt;/sequence>
- *       &lt;attribute name="Id" type="{http://www.w3.org/2001/XMLSchema}anySimpleType" />
- *     &lt;/restriction>
- *   &lt;/complexContent>
- * &lt;/complexType>
- * </pre>
- *
- *
- */
-@XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "", propOrder = {
-        "sJedinica",
-        "adresa",
-        "opis",
-        "periodOtkaza"
-})
-@XmlRootElement(name = "Smestaj")
 @Entity
 public class Smestaj {
 
     @Column(name = "naziv", unique = false, nullable = false)
     private String naziv;
 
-    @XmlElement(name = "SJedinica", required = true)
     @OneToMany(mappedBy = "smestaj")
     private List<SJedinica> sJedinica;
 
     @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private AccomodationType accomodationType;
 
-    @XmlElement(name = "Adresa", required = true)
     @OneToOne(fetch=FetchType.LAZY, cascade=CascadeType.ALL, optional=true)
     private Adresa adresa;
 
-    @XmlElement(name = "Opis", required = true)
     @Column(name = "opis", unique = false, nullable = true)
     private String opis;
 
-    @XmlElement(name = "DodatneUsluge", required = true)
     @ManyToMany
     @JoinTable(
             name = "services_smestaj",
@@ -105,12 +42,9 @@ public class Smestaj {
     @JsonIgnore
     private List<Usluga> uslugaList = new ArrayList<>();
 
-    @XmlElement(name = "PeriodOtkaza")
     @Column(name = "periodOtkaza", unique = false, nullable = false)
     private int periodOtkaza;
 
-    @XmlAttribute(name = "Id")
-    @XmlSchemaType(name = "anySimpleType")
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -118,23 +52,15 @@ public class Smestaj {
     @ManyToOne(fetch = FetchType.EAGER)
     private Category category;
 
-    @OneToMany(mappedBy = "smestaj")
-    protected List<Slika> slike;
-
     @OneToMany(
             mappedBy = "smestaj",
             fetch = FetchType.LAZY,
             cascade = CascadeType.ALL
     )
-    private List<Komentar> comments;
 
-    public List<Slika> getSlike() {
-        return slike;
-    }
+    @ManyToOne(fetch = FetchType.LAZY)
+    private User agent;
 
-    public void setSlike(List<Slika> slike) {
-        this.slike = slike;
-    }
 
     public String getNaziv() {
         return naziv;
@@ -163,28 +89,7 @@ public class Smestaj {
 
 
 
-    /**
-     * Gets the value of the sJedinica property.
-     *
-     * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the sJedinica property.
-     *
-     * <p>
-     * For example, to add a new item, do as follows:
-     * <pre>
-     *    getSJedinica().add(newItem);
-     * </pre>
-     *
-     *
-     * <p>
-     * Objects of the following type(s) are allowed in the list
-     * {@link SJedinica }
-     *
-     *
-     */
+
     public List<SJedinica> getSJedinica() {
         if (getsJedinica() == null) {
             setsJedinica(new ArrayList<SJedinica>());
@@ -193,50 +98,22 @@ public class Smestaj {
     }
 
 
-    /**
-     * Gets the value of the adresa property.
-     *
-     * @return
-     *     possible object is
-     *     {@link Adresa }
-     *
-     */
+
     public Adresa getAdresa() {
         return adresa;
     }
 
-    /**
-     * Sets the value of the adresa property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link Adresa }
-     *
-     */
+
     public void setAdresa(Adresa value) {
         this.adresa = value;
     }
 
-    /**
-     * Gets the value of the opis property.
-     *
-     * @return
-     *     possible object is
-     *     {@link String }
-     *
-     */
+
     public String getOpis() {
         return opis;
     }
 
-    /**
-     * Sets the value of the opis property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *
-     */
+
     public void setOpis(String value) {
         this.opis = value;
     }
@@ -245,44 +122,23 @@ public class Smestaj {
 
 
 
-    /**
-     * Gets the value of the periodOtkaza property.
-     *
-     */
     public int getPeriodOtkaza() {
         return periodOtkaza;
     }
 
-    /**
-     * Sets the value of the periodOtkaza property.
-     *
-     */
+
     public void setPeriodOtkaza(int value) {
         this.periodOtkaza = value;
     }
 
 
 
-    /**
-     * Gets the value of the id property.
-     *
-     * @return
-     *     possible object is
-     *     {@link String }
-     *
-     */
+
     public Long getId() {
         return id;
     }
 
-    /**
-     * Sets the value of the id property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *
-     */
+
     public void setId(Long value) {
         this.id = value;
     }
@@ -312,54 +168,8 @@ public class Smestaj {
         this.uslugaList = uslugaList;
     }
 
-    public List<Komentar> getComments() {
-        return comments;
-    }
-
-    @JsonIgnore
-    public void setComments(List<Komentar> comments) {
-        this.comments = comments;
-    }
 
 
-    /**
-     * <p>Java class for anonymous complex type.
-     *
-     * <p>The following schema fragment specifies the expected content contained within this class.
-     *
-     * <pre>
-     * &lt;complexType>
-     *   &lt;complexContent>
-     *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
-     *       &lt;sequence>
-     *         &lt;element ref="{https://github.com/Shekrba/MegaTravel/Smestaj}Usluga" maxOccurs="unbounded" minOccurs="0"/>
-     *       &lt;/sequence>
-     *     &lt;/restriction>
-     *   &lt;/complexContent>
-     * &lt;/complexType>
-     * </pre>
-     *
-     *
-     */
-
-
-    /**
-     * <p>Java class for anonymous complex type.
-     *
-     * <p>The following schema fragment specifies the expected content contained within this class.
-     *
-     * <pre>
-     * &lt;complexType>
-     *   &lt;complexContent>
-     *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
-     *       &lt;attribute name="src" type="{http://www.w3.org/2001/XMLSchema}anySimpleType" />
-     *     &lt;/restriction>
-     *   &lt;/complexContent>
-     * &lt;/complexType>
-     * </pre>
-     *
-     *
-     */
 
 
 

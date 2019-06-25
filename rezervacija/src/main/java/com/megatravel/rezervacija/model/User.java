@@ -6,7 +6,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Set;
@@ -43,8 +42,6 @@ public class User implements UserDetails {
     @Enumerated(EnumType.STRING)
     private UserStatus status;
 
-    @OneToMany(mappedBy = "korisnik")
-    private List<Komentar> comments;
 
     @Column(name = "posMatBroj", unique = false)
     private String posMatBroj;
@@ -63,6 +60,9 @@ public class User implements UserDetails {
             joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "authority_id", referencedColumnName = "id"))
     private List<Authority> authorities;
+
+    @OneToMany(mappedBy = "agent")
+    private List<Smestaj> smestaji;
 
     public User() {
 
@@ -147,16 +147,6 @@ public class User implements UserDetails {
     public void setStatus(UserStatus status) {
         this.status = status;
     }
-
-
-    public List<Komentar> getComments() {
-        return comments;
-    }
-
-    public void setComments(List<Komentar> comments) {
-        this.comments = comments;
-    }
-
 
     public String getPosMatBroj() {
         return posMatBroj;

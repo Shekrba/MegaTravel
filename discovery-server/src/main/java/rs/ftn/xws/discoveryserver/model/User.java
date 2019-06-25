@@ -1,4 +1,4 @@
-package com.megatravel.search.model;
+package rs.ftn.xws.discoveryserver.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.security.core.GrantedAuthority;
