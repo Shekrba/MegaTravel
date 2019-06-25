@@ -19,8 +19,8 @@ export class AppComponent implements OnInit{
   }
 
   ngOnInit() {
-    this.showNavBar = this.loginService.getShowMenu();
-    this.router.navigate(['/']);
+    
+    
   }
 
   

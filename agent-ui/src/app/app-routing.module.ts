@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
+import { AppComponent } from './app.component'; 
 import { AccomodationsComponent } from './components/accomodations/accomodations.component';
 import { LoginComponent } from './components/login/login.component';
 import { AccommodationComponent } from './components/accommodation/accommodation.component';
@@ -16,6 +17,7 @@ import { OccupancyComponent } from './components/occupancy/occupancy.component';
 
 const routes : Routes = [
   { path: '', redirectTo: '/login', pathMatch: 'full' },
+  { path: '', component: AppComponent, children: [
   { path: 'login', component: LoginComponent },
   { path: 'accomodations', component: AccomodationsComponent },
   { path: 'accomodation', component: AccommodationComponent },
@@ -26,7 +28,7 @@ const routes : Routes = [
   { path: 'reservations/:idAccomodation/:idUnit', component: ReservationsComponent },
   { path: 'messages', component: MesssagesComponent },
   { path: 'message/:id', component: MessageComponent },
-  { path: 'occupancy/:idAccomodation/:idUnit', component: OccupancyComponent }
+  { path: 'occupancy/:idAccomodation/:idUnit', component: OccupancyComponent }]}
 ];
 
 
