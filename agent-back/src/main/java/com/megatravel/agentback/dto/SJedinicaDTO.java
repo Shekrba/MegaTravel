@@ -6,6 +6,15 @@ public class SJedinicaDTO {
     private int brojKreveta;
     private double cena;
     private Boolean dostupnost;
+    private String naziv;
+
+    public void setNaziv(String naziv) {
+        this.naziv = naziv;
+    }
+
+    public String getNaziv() {
+        return naziv;
+    }
 
     public Long getId() {
         return id;

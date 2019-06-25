@@ -65,6 +65,8 @@ public class SJedinica {
     @Column(name = "brojKreveta", unique = false, nullable = false)
     protected int brojKreveta;
 
+    @Column(name = "naziv", unique = false, nullable = true)
+    protected String naziv;
 
     @XmlAttribute(name = "Id")
     @XmlSchemaType(name = "anySimpleType")
@@ -84,10 +86,31 @@ public class SJedinica {
     @OneToMany
     protected List<Zauzetost> listaZauzetosti;
 
+    @OneToMany
+    protected List<CenovnikSJedinice> listaCena;
+
+
+    @JsonIgnore
+    public void setListaCena(List<CenovnikSJedinice> listaCena) {
+        this.listaCena = listaCena;
+    }
+
+    public List<CenovnikSJedinice> getListaCena() {
+        return listaCena;
+    }
 
     public List<Rezervacija> getRezervacije() {
         return rezervacije;
     }
+
+    public void setNaziv(String naziv) {
+        this.naziv = naziv;
+    }
+
+    public String getNaziv() {
+        return naziv;
+    }
+
 
     @JsonIgnore
     public void setRezervacije(List<Rezervacija> rezervacije) {
