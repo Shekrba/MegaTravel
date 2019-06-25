@@ -12,7 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.persistence.LockModeType;
 import java.util.List;
 
-@Transactional(propagation = Propagation.MANDATORY,isolation = Isolation.SERIALIZABLE)
+@Transactional(propagation = Propagation.MANDATORY)
 @Repository
 public interface RezervacijaRepository extends JpaRepository<Rezervacija, Long> {
 
