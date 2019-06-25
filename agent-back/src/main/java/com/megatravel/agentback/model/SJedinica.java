@@ -57,6 +57,8 @@ import java.util.List;
 @Entity
 public class SJedinica {
 
+
+    //default cena ako nema u cenovniku po datumima neke drugacije
     @XmlElement(name = "Cena")
     @Column(name = "cena", unique = false, nullable = false)
     protected double cena;
