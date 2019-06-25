@@ -143,7 +143,7 @@
           <p>Type: {{hotel.tip}}</p>
           <p>Address: {{hotel.ulica}} {{hotel.broj}}, {{hotel.mesto}}</p>
           <p class="card-text">{{hotel.opis}}</p>
-          <a [routerLink]="['/hotels/'+hotel.id,{from:from,to:to}]" class="btn btn-warning">Check out</a>
+          <a routerLink="/hotels/{{hotel.id}}" class="btn btn-warning">Check out</a>
         </div>
       </div>
     </div>

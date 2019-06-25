@@ -16,6 +16,11 @@ export class HotelServiceService {
   private GOOGLE_CLOUD = "https://us-central1-megatravel-244015.cloudfunctions.net"
   private ALL_RESERVATIONS_URL = "http://localhost:8762/reservation-service/api/reservations"
 
+  from : string = null;
+  to: string = null;
+  hotelId = null;
+  roomId = null;
+
   constructor(private http: HttpClient) { }
 
   getAllHotels(): Observable<Hotel[]>{
@@ -33,7 +38,7 @@ export class HotelServiceService {
     return this.http.get<Hotel>(this.ALL_HOTELS_URL + "/" + id);
   }
 
-  getFilteredRooms(id,dateFrom,dateTo){
+  getFilteredRooms(id,dateFrom,dateTo): Observable<any>{
     
     return this.http.post<Hotel>(this.ALL_ROOMS_URL + "/" + id,{dateFrom:dateFrom,dateTo:dateTo}, {
       headers: new HttpHeaders({
@@ -42,12 +47,22 @@ export class HotelServiceService {
     });
   }
 
-  formReservation(form){
+  formReservation(form): Observable<any>{
     
     return this.http.post<Hotel>(this.ALL_RESERVATIONS_URL + "/form",form, {
       headers: new HttpHeaders({
         'Content-Type': 'application/json'
       })
+    });
+  }
+
+  addComment(body): Observable<any>{
+    
+    return this.http.post(this.ALL_RESERVATIONS_URL + "/comment",body, {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json'
+      }),
+      responseType : 'text'
     });
   }
 
@@ -107,7 +122,7 @@ export class HotelServiceService {
     });
   }
 
-  setRatedTrue(id){
+  setRatedTrue(id): Observable<any>{
     return this.http.put(this.ALL_RESERVATIONS_URL+"/rate/"+id, {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',

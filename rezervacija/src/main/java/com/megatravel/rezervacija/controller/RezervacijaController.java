@@ -1,9 +1,6 @@
 package com.megatravel.rezervacija.controller;
 
-import com.megatravel.rezervacija.dto.MakeResDTO;
-import com.megatravel.rezervacija.dto.ReservationDTO;
-import com.megatravel.rezervacija.dto.SmestajDTO;
-import com.megatravel.rezervacija.dto.formDTO;
+import com.megatravel.rezervacija.dto.*;
 import com.megatravel.rezervacija.model.Rezervacija;
 import com.megatravel.rezervacija.service.RezervacijaService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -64,5 +61,15 @@ public class RezervacijaController {
     @RequestMapping(value = "/form", method = RequestMethod.POST)
     public SmestajDTO formReservation(@RequestBody formDTO form) {
         return rezervacijaService.formReservation(form);
+    }
+
+    @RequestMapping(value = "/comment", method = RequestMethod.POST)
+    public ResponseEntity<String> addComment(@RequestBody CommentDTO commentDTO){
+        try {
+            String message = rezervacijaService.addComment(commentDTO);
+            return new ResponseEntity<String>(message,HttpStatus.OK);
+        }catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
     }
 }

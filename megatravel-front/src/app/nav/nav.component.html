@@ -6,17 +6,23 @@
     
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav ml-auto mr-3">
-        <li class="nav-item">
-          <a class="nav-link" routerLink="">Home <span class="sr-only">(current)</span></a>
+        <li class="nav-item mr-5" *ngIf="currentUser$ | async as user">
+          <a class="nav-link active"><i>{{user.ime}}</i></a>
         </li>
         <li class="nav-item">
+          <a class="nav-link ml-5" routerLink="">Home <span class="sr-only">(current)</span></a>
+        </li>
+        <li class="nav-item" *ngIf="authenticationService.currentUserValue == null">
           <a class="nav-link" routerLink="/login">Sign In</a>
         </li>
-        <li class="nav-item">
+        <li class="nav-item" *ngIf="authenticationService.currentUserValue == null">
           <a class="nav-link" routerLink="/register">Sign Up</a>
         </li>
         <li class="nav-item" *ngIf="currentUser$ | async as user">
-          <a class="nav-link">{{user.ime}}</a>
+          <a class="nav-link" routerLink="/ratings">Ratings</a>
+        </li>
+        <li class="nav-item" *ngIf="currentUser$ | async as user">
+          <a class="nav-link ml-3" routerLink="/login" (click)="logout()">Logout</a>
         </li>
       </ul>
     </div>

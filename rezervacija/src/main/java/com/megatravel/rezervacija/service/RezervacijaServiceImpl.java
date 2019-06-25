@@ -2,18 +2,18 @@ package com.megatravel.rezervacija.service;
 
 import com.megatravel.rezervacija.dto.*;
 import com.megatravel.rezervacija.model.*;
-import com.megatravel.rezervacija.repository.RezervacijaRepository;
-import com.megatravel.rezervacija.repository.SJedinicaRepository;
-import com.megatravel.rezervacija.repository.SmestajRepository;
-import com.megatravel.rezervacija.repository.UserRepository;
+import com.megatravel.rezervacija.repository.*;
 import com.netflix.discovery.converters.Auto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+@Transactional(readOnly = true)
 @Service
 public class RezervacijaServiceImpl implements  RezervacijaService {
 
@@ -29,13 +29,24 @@ public class RezervacijaServiceImpl implements  RezervacijaService {
     @Autowired
     UserRepository userRepository;
 
+    @Autowired
+    KomentarRepository komentarRepository;
+
+    @Transactional(readOnly = false, propagation = Propagation.REQUIRES_NEW)
     @Override
     public String addRezervacija(MakeResDTO rezervacija){
+
+        SJedinica sjedinica = sJedinicaRepository.findOneById(rezervacija.getSjedinicaId());
+
+        SJedinica check = sJedinicaRepository.findIfTaken(rezervacija.getFrom(),rezervacija.getTo(),rezervacija.getSjedinicaId());
+
+        if(check != null){
+            return "Room was booked in the meantime";
+        }
 
         Rezervacija rez = new Rezervacija();
 
         User korisnik = userRepository.findOneById(rezervacija.getKorisnikId());
-        SJedinica sjedinica = sJedinicaRepository.findOneById(rezervacija.getSjedinicaId());
 
         rez.setRated(false);
         rez.setCanBeRated(false);
@@ -57,6 +68,23 @@ public class RezervacijaServiceImpl implements  RezervacijaService {
         sJedinicaRepository.save(sjedinica);
 
         return "Reservation made";
+    }
+
+    @Override
+    public String addComment(CommentDTO commentDTO){
+
+        Smestaj smestaj = smestajRepository.findOneById(commentDTO.getSmestajId());
+
+        Komentar komentar = new Komentar();
+        komentar.setId(commentDTO.getId());
+        komentar.setKorisnik(new User());
+        komentar.setOdobren(false);
+        komentar.setSmestaj(smestaj);
+        komentar.setTekst(commentDTO.getTekst());
+
+        komentarRepository.save(komentar);
+
+        return "Comment saved";
     }
 
     @Override

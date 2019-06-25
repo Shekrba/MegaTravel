@@ -26,9 +26,6 @@ export class HotelsComponent implements OnInit {
 
   services: string[] = [];
 
-  from : string = null;
-  to: string = null;
-
   constructor(private hotelService: HotelServiceService) { }
 
   ngOnInit() {
@@ -74,8 +71,8 @@ export class HotelsComponent implements OnInit {
     this.hotelService.filterHotels(this.filter).subscribe(
       res => {
         this.hotels = res;
-        this.from = this.filter.dateFrom;
-        this.to = this.filter.dateTo;
+        this.hotelService.from = this.filter.dateFrom;
+        this.hotelService.to = this.filter.dateTo;
       },
       err => {
         alert("An error has occured while filtering hotels")

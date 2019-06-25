@@ -26,10 +26,16 @@ export class ReservationComponent implements OnInit {
 
   ngOnInit() {
 
-    this.body.from = this.ar.snapshot.params['from'];
-    this.body.to = this.ar.snapshot.params['to'];
-    this.body.hotelId = this.ar.snapshot.params['hotelId'];
-    this.body.roomId = this.ar.snapshot.params['roomId'];
+    this.body.from = this.hotelService.from;
+    this.body.to = this.hotelService.to;
+    this.body.hotelId = this.hotelService.hotelId;
+    this.body.roomId = this.hotelService.roomId;
+
+    console.log(this.hotelService.from);
+    console.log(this.hotelService.to);
+    console.log(this.hotelService.hotelId);
+    console.log(this.hotelService.roomId);
+    
 
     this.hotelService.formReservation(this.body).subscribe(
       res => {
@@ -70,6 +76,12 @@ export class ReservationComponent implements OnInit {
     this.hotelService.makeReservation(reservation).subscribe(
       res => {
         this.toastr.success("Reservation was made.", "Booking");
+        
+        this.hotelService.from = null;
+        this.hotelService.to = null;
+        this.hotelService.hotelId = null;
+        this.hotelService.roomId = null;
+
         this.router.navigate(['/']);  
       },
       err => {

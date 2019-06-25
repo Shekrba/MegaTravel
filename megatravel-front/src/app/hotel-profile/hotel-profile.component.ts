@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Hotel } from '../_model/hotel';
 import { HotelServiceService } from '../_services/hotel.service';
-import { ActivatedRoute } from '@angular/router'
+import { ActivatedRoute, Router } from '@angular/router'
+import { HotelsComponent } from '../hotels/hotels.component';
+import { AuthenticationService } from '../_services/authentication.service';
 
 @Component({
   selector: 'app-hotel-profile',
@@ -21,19 +23,34 @@ export class HotelProfileComponent implements OnInit {
 
   book:boolean = false;
 
-  constructor(private hotelService: HotelServiceService, private ar: ActivatedRoute) { }
+  constructor(private hotelService: HotelServiceService, private ar: ActivatedRoute, private router: Router, private authService: AuthenticationService) { }
 
   ngOnInit() {
     this.getOneHotel();
 
-    this.from = this.ar.snapshot.params['from'];
-    this.to = this.ar.snapshot.params['to'];
+    this.from = this.hotelService.from;
+    this.to = this.hotelService.to;
 
-    if(this.from != 'null' && this.to != 'null'){
+    if(this.from != null && this.to != null){
       this.book = true;
       this.dateFrom = this.from;
       this.dateTo = this.to;
     }
+  }
+
+  public Book(hotelId,roomId){
+
+    if(this.authService.currentUserValue == null){
+      this.router.navigate(['/login']);
+      return;
+    }
+
+    this.hotelService.hotelId = hotelId;
+    this.hotelService.roomId = roomId;
+    this.hotelService.from = this.dateFrom;
+    this.hotelService.to = this.dateTo;
+
+    this.router.navigate(['/reservation']);  
   }
 
   public applyButton(){
@@ -46,7 +63,7 @@ export class HotelProfileComponent implements OnInit {
       }
     );
     
-    if(this.from != 'null' && this.to != 'null'){
+    if(this.from != null && this.to != null){
       this.book = true;
     }
 

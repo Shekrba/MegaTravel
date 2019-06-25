@@ -122,7 +122,7 @@
                 {{sj.dostupnost}}
               </td>
               <td>
-                <button [routerLink]="['/reservation',{hotelId:hotel.id,roomId:sj.id,from:dateFrom,to:dateTo}]" *ngIf="sj.dostupnost && book == true" class="btn btn-success">Book</button>
+                <button (click)="Book(hotel.id,sj.id)" *ngIf="sj.dostupnost && book == true" class="btn btn-success">Book</button>   
               </td>
             </tr>
           </table>

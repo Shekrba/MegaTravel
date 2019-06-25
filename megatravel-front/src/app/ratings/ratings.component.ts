@@ -105,6 +105,8 @@ export class RatingsComponent implements OnInit {
     
         this.ratings = this.toRateRatings;
 
+        this.addComment({id: r.ocena_id,tekst : r.komentar, smestajId : r.smestaj_id});
+
         this.getCloudData();
     
         this.toastr.success("Stay is successfully rated.", "Rating");
@@ -127,10 +129,23 @@ export class RatingsComponent implements OnInit {
 
     this.hotelService.updateRating(r.vrednost,r.komentar,r.ocena_id).subscribe(
       res => {
+        this.addComment({id: r.ocena_id,tekst : r.komentar, smestajId : r.smestaj_id});
         this.toastr.success("Rating is successfully upated.", "Rating update");  
       },
       err => {
         alert("An error has occured while rating a stay");
+      }
+    );
+  }
+
+  public addComment(body){
+    this.hotelService.addComment(body).subscribe(
+      res => {
+        console.log(res);
+         
+      },
+      err => {
+        alert("An error has occured while adding a comment");
       }
     );
   }
