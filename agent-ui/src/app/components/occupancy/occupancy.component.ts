@@ -6,6 +6,7 @@ import { AccomodationService } from '../../services/accomodation.service';
 import { LoginService } from '../../services/login.service';
 import { Accomodation } from '../../model/Accomodation';
 import { Occupancy } from '../../model/Occupancy';
+import { AccomodationUnit } from '../../model/AccomodationUnit';
 
 @Component({
   selector: 'app-occupancy',
@@ -18,7 +19,8 @@ export class OccupancyComponent implements OnInit {
   idAccomodationUnit : number;
   occupancy: Occupancy = new Occupancy();
   accomodation : Accomodation = new Accomodation();
-
+  accomodationUnit : AccomodationUnit = new AccomodationUnit();
+  
   constructor(
     private route : ActivatedRoute,
     private accomodationService: AccomodationService,
@@ -29,6 +31,9 @@ export class OccupancyComponent implements OnInit {
     this.idAccomodationUnit = parseInt(this.route.snapshot.paramMap.get("idUnit"));
     this.accomodationService.getAccomodation(this.idAccomodation).subscribe(
       response => this.accomodation = response
+    );
+    this.accomodationService.getAccomodationUnit(this.idAccomodationUnit).subscribe(
+      data => this.accomodationUnit = data
     );
     
   }
