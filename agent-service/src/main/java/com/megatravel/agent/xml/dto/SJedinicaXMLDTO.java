@@ -12,7 +12,7 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlSchemaType;
 import javax.xml.bind.annotation.XmlType;
-
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
 
 /**
@@ -67,11 +67,15 @@ public class SJedinicaXMLDTO {
 
     @XmlAttribute(name = "id", required = true)
     @XmlSchemaType(name = "anySimpleType")
+    @XmlJavaTypeAdapter(type=Long.class, value= WSLongAdapter.class)
     private Long id;
     
     @XmlAttribute(name = "smestajID", required = true)
     @XmlSchemaType(name = "anySimpleType")
-    private String smestajID;
+    @XmlJavaTypeAdapter(type=Long.class, value= WSLongAdapter.class)
+    private Long smestajID;
 
     private int broj;
+
+    private String username;
 }

@@ -51,6 +51,10 @@ public class Adresa {
     @OneToOne(mappedBy="adresa",fetch=FetchType.EAGER, cascade=CascadeType.ALL, optional=true)
     private Smestaj smestaj;
 
+    public Adresa(){
+
+    }
+
     public double getLatitude() {
         return latitude;
     }
