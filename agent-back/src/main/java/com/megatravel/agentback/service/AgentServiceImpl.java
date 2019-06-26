@@ -1,9 +1,6 @@
 package com.megatravel.agentback.service;
 
-import com.megatravel.agentback.dto.PorukaDTO;
-import com.megatravel.agentback.dto.SJedinicaDTO;
-import com.megatravel.agentback.dto.SmestajDTO;
-import com.megatravel.agentback.dto.UslugaDTO;
+import com.megatravel.agentback.dto.*;
 import com.megatravel.agentback.model.*;
 import com.megatravel.agentback.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,7 +42,11 @@ public class AgentServiceImpl implements AgentService {
     CenovnikSJediniceRepository cenovnikSJediniceRepository;
 
     @Autowired
+    MesecRepository mesecRepository;
+
+    @Autowired
     UserRepository userRepository;
+
 
     @Override
     public List<Smestaj> getSmestaje() {
@@ -343,13 +344,22 @@ public class AgentServiceImpl implements AgentService {
     }
 
     @Override
-    public CenovnikSJedinice postaviCenu(Long sjedId, LocalDate odDatum, LocalDate doDatum, double cena) {
+    public Cenovnik postaviCenu(CenovnikSJediniceDTO cDTO) {
 
-        CenovnikSJedinice c = new CenovnikSJedinice();
-        c.setsJedinica(sjedinicaRepository.findOneById(sjedId));
-        c.setDatumDo(doDatum);
-        c.setDatumOd(odDatum);
-        c.setCena(cena);
+        Cenovnik c = new Cenovnik();
+        c.setsJedinica(sjedinicaRepository.findOneById(cDTO.getIdSJedinice()));
+
+        List<MesecDTO> m = cDTO.getListaMeseca();
+
+        for (MesecDTO mesec:m
+             ) {
+            Mesec me = new Mesec();
+            me.setMesec(mesec.getMesec());
+            me.setMesecnaCena(mesec.getCena());
+            me.setCenovnik(c);
+
+            mesecRepository.save(me);
+        }
 
         cenovnikSJediniceRepository.save(c);
 

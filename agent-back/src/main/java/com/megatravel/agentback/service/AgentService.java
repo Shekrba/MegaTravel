@@ -1,9 +1,6 @@
 package com.megatravel.agentback.service;
 
-import com.megatravel.agentback.dto.PorukaDTO;
-import com.megatravel.agentback.dto.SJedinicaDTO;
-import com.megatravel.agentback.dto.SmestajDTO;
-import com.megatravel.agentback.dto.UslugaDTO;
+import com.megatravel.agentback.dto.*;
 import com.megatravel.agentback.model.*;
 
 import java.time.LocalDate;
@@ -39,7 +36,7 @@ public interface AgentService {
     public Poruka addOdgovor(PorukaDTO porukaDTO, Long idPitanja);
     public Poruka getPoruka(Long id);
 
-    public CenovnikSJedinice postaviCenu(Long sjedId, LocalDate odDatum, LocalDate doDatum, double cena);
+    public Cenovnik postaviCenu(CenovnikSJediniceDTO cDTO);
 
 
 }

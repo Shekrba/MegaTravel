@@ -7,7 +7,6 @@ import com.megatravel.agentback.model.*;
 import com.megatravel.agentback.service.AgentService;
 import generated.GetTestResponse;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -32,6 +31,7 @@ public class AgentController {
     @RequestMapping(value = "/accomodations",method = RequestMethod.GET)
     public List<SmestajDTO> getSmestaje()
     {
+
         List<Smestaj> list = agentService.getSmestaje();
         List<SmestajDTO> listDTO = new ArrayList<>();
 
@@ -219,14 +219,12 @@ public class AgentController {
 
 
     @RequestMapping(value = "/pricelist/{id}",method = RequestMethod.POST)
-    public CenovnikSJedinice postaviCenovnikSJedinice(@PathVariable("id")Long id, @RequestBody CenovnikSJediniceDTO cenovnikSJediniceDTO){
+    public Cenovnik postaviCenovnikSJedinice(@PathVariable("id")Long id, @RequestBody CenovnikSJediniceDTO cenovnikSJediniceDTO){
 
-        CenovnikSJedinice c = null;
-        LocalDate odDatum = cenovnikSJediniceDTO.getDatumOd();
-        LocalDate doDatum = cenovnikSJediniceDTO.getDatumDo();
-        double cena = cenovnikSJediniceDTO.getCena();
+        Cenovnik c = null;
+
         try {
-            c = agentService.postaviCenu(id, odDatum, doDatum, cena);
+            c = agentService.postaviCenu(cenovnikSJediniceDTO);
         } catch (Exception e) {
             e.printStackTrace();
         }

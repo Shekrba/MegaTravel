@@ -89,15 +89,15 @@ public class SJedinica {
     protected List<Zauzetost> listaZauzetosti;
 
     @OneToMany
-    protected List<CenovnikSJedinice> listaCena;
+    protected List<Cenovnik> listaCena;
 
 
     @JsonIgnore
-    public void setListaCena(List<CenovnikSJedinice> listaCena) {
+    public void setListaCena(List<Cenovnik> listaCena) {
         this.listaCena = listaCena;
     }
 
-    public List<CenovnikSJedinice> getListaCena() {
+    public List<Cenovnik> getListaCena() {
         return listaCena;
     }
 
