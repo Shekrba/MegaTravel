@@ -13,4 +13,6 @@ public interface SearchService {
     public List<String> getUslugeByNaziv();
     public List<String> getTypes();
     public List<SJedinicaDTO> getFilteredRooms(Long id, FilterDTO filter);
+    public String getUsername(Long id);
+    public String getSmestajNaziv(Long id);
 }

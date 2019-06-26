@@ -15,6 +15,7 @@ export class HotelServiceService {
   private ALL_TYPES_URL = "http://localhost:8762/search-service/api/types"
   private GOOGLE_CLOUD = "https://us-central1-megatravel-244015.cloudfunctions.net"
   private ALL_RESERVATIONS_URL = "http://localhost:8762/reservation-service/api/reservations"
+  private USERNAME_URL = "http://localhost:8762/search-service/api/user"
 
   from : string = null;
   to: string = null;
@@ -134,6 +135,18 @@ export class HotelServiceService {
       }),
       responseType : 'text'
     });
+  }
+
+  getAllComments(id): Observable<any>{
+    return this.http.post(this.GOOGLE_CLOUD+"/getCommentsForHotel",{smestaj_id : id},{
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json'
+      })
+    });
+  }
+
+  getUsername(id) : Observable<any>{
+    return this.http.get(this.USERNAME_URL+"/"+id,{responseType: 'text'});
   }
 
 

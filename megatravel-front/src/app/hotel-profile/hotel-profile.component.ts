@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Hotel } from '../_model/hotel';
 import { HotelServiceService } from '../_services/hotel.service';
-import { ActivatedRoute, Router } from '@angular/router'
+import { ActivatedRoute, Router, Data } from '@angular/router'
 import { HotelsComponent } from '../hotels/hotels.component';
 import { AuthenticationService } from '../_services/authentication.service';
 
@@ -22,6 +22,8 @@ export class HotelProfileComponent implements OnInit {
   dateTo = null;
 
   book:boolean = false;
+
+  komentari : Data = []
 
   constructor(private hotelService: HotelServiceService, private ar: ActivatedRoute, private router: Router, private authService: AuthenticationService) { }
 
@@ -86,6 +88,8 @@ export class HotelProfileComponent implements OnInit {
     this.hotelService.getOneHotel(id).subscribe(
       res => {
         this.hotel = res;
+        
+        this.getComments(id);
 
         console.log(this.dateFrom);
         
@@ -95,6 +99,38 @@ export class HotelProfileComponent implements OnInit {
       },
       err => {
         alert("An error has occured while getting hotel " + id);
+      }
+    )
+  }
+
+  getComments(id){
+    this.hotelService.getAllComments(id).subscribe(
+      res => {
+
+        for(let i=0; i<res.length; i++){
+          let ocena = res[i];
+          
+          this.hotelService.getUsername(ocena.korisnik_id).subscribe(
+            res => {
+              let u = res;
+                
+              let kom = {
+                text : ocena.komentar,
+                id : ocena.ocena_id,
+                username : u,
+                vrednost: ocena.vrednost
+                }
+        
+                this.komentari.push(kom);           
+            },
+            err => {
+              alert("An error has occured while getting a username.");
+            }
+          )
+        }
+      },
+      err => {
+        alert("An error has occured while getting all comments.");
       }
     )
   }

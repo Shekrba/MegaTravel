@@ -53,16 +53,6 @@ public class AdminServiceImpl implements  AdminService{
     }
 
     @Override
-    public String getUsername(Long id){
-        return userRepository.getOne(id).getUsername();
-    }
-
-    @Override
-    public String getSmestajNaziv(Long id){
-        return smestajRepository.getOne(id).getNaziv();
-    }
-
-    @Override
     public Usluga updateUsluga(UslugaDTO usluga, Long id){
         Usluga updateUsluga = uslugaRepository.findOneById(id);
         updateUsluga.setCena(usluga.getCena());

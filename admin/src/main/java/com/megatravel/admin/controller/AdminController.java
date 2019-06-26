@@ -97,16 +97,6 @@ public class AdminController {
         return adminService.getKorisnike();
     }
 
-    @RequestMapping(value = "/user/{id}", method = RequestMethod.GET)
-    public String getUsername(@PathVariable("id")Long id){
-        return adminService.getUsername(id);
-    }
-
-    @RequestMapping(value = "/accommodation/{id}", method = RequestMethod.GET)
-    public String getSmestjNaziv(@PathVariable("id")Long id){
-        return adminService.getSmestajNaziv(id);
-    }
-
     @RequestMapping(value = "/agent", method = RequestMethod.POST)
     public User addAgent(@RequestBody AgentDTO agent){
         return adminService.addAgent(agent);

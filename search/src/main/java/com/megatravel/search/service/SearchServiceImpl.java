@@ -3,10 +3,7 @@ package com.megatravel.search.service;
 import com.megatravel.search.dto.FilterDTO;
 import com.megatravel.search.dto.SJedinicaDTO;
 import com.megatravel.search.model.*;
-import com.megatravel.search.repository.AccomodationTypeRepository;
-import com.megatravel.search.repository.SJedinicaRepository;
-import com.megatravel.search.repository.SmestajRepository;
-import com.megatravel.search.repository.UslugaRepository;
+import com.megatravel.search.repository.*;
 import org.joda.time.LocalDate;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
@@ -34,6 +31,9 @@ public class SearchServiceImpl implements SearchService{
 
     @Autowired
     SJedinicaRepository sJedinicaRepository;
+
+    @Autowired
+    UserRepository userRepository;
 
     @Override
     public List<Smestaj> getSmesaje(){
@@ -177,5 +177,15 @@ public class SearchServiceImpl implements SearchService{
         }
 
         return acts;
+    }
+
+    @Override
+    public String getUsername(Long id){
+        return userRepository.getOne(id).getUsername();
+    }
+
+    @Override
+    public String getSmestajNaziv(Long id){
+        return smestajRepository.getOne(id).getNaziv();
     }
 }

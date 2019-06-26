@@ -11,6 +11,7 @@ export class AdminServiceService {
 
 
   private ALL_SERVICES_URL = `${BASE_URL}/api/admin/services`;
+  private SEARCH_URL ="http://localhost:8762/search-service/api"
   private CLOUD_URL = "https://us-central1-megatravel-244015.cloudfunctions.net";
   private ALL_USERS_URL = `${BASE_URL}/api/admin/user`;
   private ALL_AGENTS_URL = `${BASE_URL}/api/admin/agent`;
@@ -58,11 +59,11 @@ export class AdminServiceService {
   }
 
   getUsername(id) : Observable<any>{
-    return this.http.get(`${BASE_URL}/api/admin/user/`+id,{responseType: 'text'});
+    return this.http.get(this.SEARCH_URL+"/user/"+id,{responseType: 'text'});
   }
 
   getSmestajNaziv(id) : Observable<any>{
-    return this.http.get(`${BASE_URL}/api/admin/accommodation/`+id,{responseType: 'text'});
+    return this.http.get(this.SEARCH_URL+"/accommodation/"+id,{responseType: 'text'});
   }
 
   publishing(body): Observable<any>{

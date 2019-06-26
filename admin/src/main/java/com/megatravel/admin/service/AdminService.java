@@ -31,6 +31,5 @@ public interface AdminService {
     public AccTypeDTO addAcomodationType(AccTypeDTO accTypeDTO);
     public String deleteType(Long id);
 
-    public String getUsername(Long id);
-    public String getSmestajNaziv(Long id);
+
 }

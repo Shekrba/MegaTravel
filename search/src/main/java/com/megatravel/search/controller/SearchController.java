@@ -71,6 +71,16 @@ public class SearchController {
         return searchService.getFilteredRooms(id,filter);
     }
 
+    @RequestMapping(value = "/user/{id}", method = RequestMethod.GET)
+    public String getUsername(@PathVariable("id")Long id){
+        return searchService.getUsername(id);
+    }
+
+    @RequestMapping(value = "/accommodation/{id}", method = RequestMethod.GET)
+    public String getSmestjNaziv(@PathVariable("id")Long id){
+        return searchService.getSmestajNaziv(id);
+    }
+
     public void smestajToDto(Smestaj s, SmestajDTO sDTO){
         sDTO.setId(s.getId());
         sDTO.setNaziv(s.getNaziv());

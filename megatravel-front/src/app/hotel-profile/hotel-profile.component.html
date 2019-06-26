@@ -129,4 +129,30 @@
     </div>
     </div>
   </div>
+  <div class="container ml-auto mr-auto mt-5">
+    <h2 class="white mb-4">Comments</h2>
+      <div *ngFor="let k of komentari" class="card mt-3 ml-5 mr-5">
+          <div class="card-header" id="headingOne">
+            <div class="row">
+              <div class="col text-left">
+                <h4 class="mb-0"><b>{{k.username}}</b></h4>
+              </div>
+              <div class="col text-right">
+                <i class="fa fa-star fa-lg"></i>
+                <i class="fa fa-star fa-lg" *ngIf="k.vrednost>=2"></i>
+                <i class="fa fa-star-o fa-lg" *ngIf="k.vrednost<2"></i>
+                <i class="fa fa-star fa-lg" *ngIf="k.vrednost>=3"></i>
+                <i class="fa fa-star-o fa-lg" *ngIf="k.vrednost<3"></i>
+                <i class="fa fa-star fa-lg" *ngIf="k.vrednost>=4"></i>
+                <i class="fa fa-star-o fa-lg" *ngIf="k.vrednost<4"></i>
+                <i class="fa fa-star fa-lg" *ngIf="k.vrednost==5"></i>
+                <i class="fa fa-star-o fa-lg" *ngIf="k.vrednost<5"></i>
+              </div>
+            </div>
+          </div>
+          <div class="card-body" *ngIf="k.text!=''">
+            <p>{{k.text}}</p>
+          </div>
+      </div>
+  </div>
 </div>
