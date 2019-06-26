@@ -73,15 +73,6 @@ public class AdminController {
         return adminService.addAccomodation(smestaj);
     }
 
-    @RequestMapping(value = "/comments", method = RequestMethod.GET)
-    public List<KomentarDTO> getComments()
-    {
-        return adminService.getUnapprovedComments();
-    }
-    @RequestMapping(value = "/comments/{id}", method = RequestMethod.PUT)
-    public KomentarDTO odobriKomentar(@PathVariable("id")Long id){
-        return adminService.odobriKomentar(id);
-    }
 
     @RequestMapping(value = "/user/{id}", method = RequestMethod.PUT)
     public UserDTO blockKorisnik(@PathVariable("id")Long id){
@@ -104,6 +95,16 @@ public class AdminController {
     @RequestMapping(value = "/user", method = RequestMethod.GET)
     public List<UserDTO> getKorisnike(){
         return adminService.getKorisnike();
+    }
+
+    @RequestMapping(value = "/user/{id}", method = RequestMethod.GET)
+    public String getUsername(@PathVariable("id")Long id){
+        return adminService.getUsername(id);
+    }
+
+    @RequestMapping(value = "/accommodation/{id}", method = RequestMethod.GET)
+    public String getSmestjNaziv(@PathVariable("id")Long id){
+        return adminService.getSmestajNaziv(id);
     }
 
     @RequestMapping(value = "/agent", method = RequestMethod.POST)

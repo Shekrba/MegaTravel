@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { HotelServiceService } from '../_services/hotel.service';
 import { ToastrService } from 'ngx-toastr';
+import { AuthenticationService } from '../_services/authentication.service';
 
 @Component({
   selector: 'app-ratings',
@@ -29,7 +30,7 @@ export class RatingsComponent implements OnInit {
     smestaj_naziv:null
   }];
 
-  constructor(private hotelService : HotelServiceService, private toastr: ToastrService) { }
+  constructor(private hotelService : HotelServiceService, private toastr: ToastrService, private authService: AuthenticationService) { }
 
   ngOnInit() {
     this.getRezToRate();
@@ -37,7 +38,10 @@ export class RatingsComponent implements OnInit {
   }
 
   getRezToRate(){
-    this.hotelService.getRezToRate(1).subscribe(
+
+    let userId = this.authService.currentUserValue.id
+
+    this.hotelService.getRezToRate(userId).subscribe(
       res => {
         this.toRateRatings = res;
         this.ratings = res;
@@ -49,7 +53,10 @@ export class RatingsComponent implements OnInit {
   }
 
   getCloudData(){
-    this.hotelService.getCloudData(1).subscribe(
+
+    let userId = this.authService.currentUserValue.id
+
+    this.hotelService.getCloudData(userId).subscribe(
       res => {
         this.ratedRatings = res;
 
@@ -105,8 +112,6 @@ export class RatingsComponent implements OnInit {
     
         this.ratings = this.toRateRatings;
 
-        this.addComment({id: r.ocena_id,tekst : r.komentar, smestajId : r.smestaj_id});
-
         this.getCloudData();
     
         this.toastr.success("Stay is successfully rated.", "Rating");
@@ -129,23 +134,10 @@ export class RatingsComponent implements OnInit {
 
     this.hotelService.updateRating(r.vrednost,r.komentar,r.ocena_id).subscribe(
       res => {
-        this.addComment({id: r.ocena_id,tekst : r.komentar, smestajId : r.smestaj_id});
         this.toastr.success("Rating is successfully upated.", "Rating update");  
       },
       err => {
         alert("An error has occured while rating a stay");
-      }
-    );
-  }
-
-  public addComment(body){
-    this.hotelService.addComment(body).subscribe(
-      res => {
-        console.log(res);
-         
-      },
-      err => {
-        alert("An error has occured while adding a comment");
       }
     );
   }

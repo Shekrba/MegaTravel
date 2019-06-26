@@ -117,6 +117,7 @@ public class RezervacijaServiceImpl implements  RezervacijaService {
     }
 
     @Override
+    @Transactional(readOnly = false)
     public String setRatedTrue(Long id){
         Rezervacija rez = rezervazijaRepository.findOneById(id);
 

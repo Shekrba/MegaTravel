@@ -6,6 +6,7 @@ import com.megatravel.admin.repository.*;
 import com.netflix.discovery.converters.Auto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,9 +16,6 @@ public class AdminServiceImpl implements  AdminService{
 
     @Autowired
     UslugaRepository uslugaRepository;
-
-    @Autowired
-    KomentarRepository komentarRepository;
 
     @Autowired
     UserRepository userRepository;
@@ -55,6 +53,16 @@ public class AdminServiceImpl implements  AdminService{
     }
 
     @Override
+    public String getUsername(Long id){
+        return userRepository.getOne(id).getUsername();
+    }
+
+    @Override
+    public String getSmestajNaziv(Long id){
+        return smestajRepository.getOne(id).getNaziv();
+    }
+
+    @Override
     public Usluga updateUsluga(UslugaDTO usluga, Long id){
         Usluga updateUsluga = uslugaRepository.findOneById(id);
         updateUsluga.setCena(usluga.getCena());
@@ -72,49 +80,6 @@ public class AdminServiceImpl implements  AdminService{
         uslugaDTO.setCena(usluga.getCena());
         uslugaDTO.setId(usluga.getId());
         return  uslugaDTO;
-    }
-
-
-    @Override
-    public SJedinica setTip(Long id, TTipSmestaja tip){
-        return new SJedinica();
-    }
-
-    @Override
-    public KomentarDTO odobriKomentar(Long id){
-        Komentar komentar = komentarRepository.findOneById(id);
-        komentar.setOdobren(!komentar.isOdobren());
-        komentarRepository.save(komentar);
-
-        String username = komentar.getKorisnik().getUsername();
-        String smestaj = "";
-        if(komentar.getSmestaj() != null)
-            smestaj = komentar.getSmestaj().getNaziv();
-        boolean publish = komentar.isOdobren();
-        String text = komentar.getTekst();
-
-        KomentarDTO kdto = new KomentarDTO(username,smestaj,text,id,publish);
-
-        return kdto;
-    }
-
-    @Override
-    public List<KomentarDTO> getUnapprovedComments() {
-        List<Komentar> komentars = komentarRepository.findAll();
-        List<KomentarDTO> komentarDTOS = new ArrayList<>();
-
-        for(Komentar komentar : komentars)
-        {
-            String username = komentar.getKorisnik().getUsername();
-            String smestaj = "";
-            if(komentar.getSmestaj() != null)
-                smestaj = komentar.getSmestaj().getNaziv();
-            boolean publish = komentar.isOdobren();
-            String text = komentar.getTekst();
-            Long id = komentar.getId();
-            komentarDTOS.add(new KomentarDTO(username,smestaj,text,id,publish));
-        }
-        return komentarDTOS;
     }
 
     @Override

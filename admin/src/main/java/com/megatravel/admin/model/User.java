@@ -8,6 +8,7 @@ import javax.persistence.*;
 import java.sql.Timestamp;
 import java.util.Collection;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 public class User implements UserDetails {
@@ -41,11 +42,6 @@ public class User implements UserDetails {
     @Enumerated(EnumType.STRING)
     private UserStatus status;
 
-    @OneToMany(mappedBy = "korisnik")
-    private List<Komentar> comments;
-
-    @OneToMany(mappedBy = "agent")
-    private List<Smestaj> smestaji;
 
     @Column(name = "posMatBroj", unique = false)
     private String posMatBroj;
@@ -56,22 +52,22 @@ public class User implements UserDetails {
     @Column(name = "adresa", unique = false)
     private String adresa;
 
+
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinTable(name = "user_authority",
             joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "authority_id", referencedColumnName = "id"))
     private List<Authority> authorities;
 
+    @OneToMany(mappedBy = "agent")
+    private List<Smestaj> smestaji;
+
     public User() {
 
     }
 
-    public List<Smestaj> getSmestaji() {
-        return smestaji;
-    }
-
-    public void setSmestaji(List<Smestaj> smestaji) {
-        this.smestaji = smestaji;
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
     }
 
     public void setPassword(String password) {
@@ -141,16 +137,6 @@ public class User implements UserDetails {
     public void setStatus(UserStatus status) {
         this.status = status;
     }
-
-
-    public List<Komentar> getComments() {
-        return comments;
-    }
-
-    public void setComments(List<Komentar> comments) {
-        this.comments = comments;
-    }
-
 
     public String getPosMatBroj() {
         return posMatBroj;

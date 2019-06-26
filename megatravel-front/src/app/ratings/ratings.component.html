@@ -20,25 +20,25 @@
       <th class="white bg-primary"></th>
     </tr>
     <tr *ngFor="let r of ratings">
-      <td>{{r.smestaj_naziv}}</td>
-      <td>{{r.from.split("T")[0]}}</td>
-      <td>{{r.to.split("T")[0]}}</td>
-      <td>
-        <select [(ngModel)]="r.vrednost" class="form-control">
-          <option>1</option>
-          <option>2</option>
-          <option>3</option>
-          <option>4</option>
-          <option>5</option>
-        </select>
-      </td>
-      <td>
-        <input [(ngModel)]="r.komentar" class="form-control" type="text">
-      </td>
-      <td>
-        <button *ngIf="tab == 'toRate'" (click)="rate(r)" class="btn btn-success">Rate</button>
-        <button *ngIf="tab == 'rated'" (click)="updateRating(r)" class="btn btn-primary">Update</button>
-      </td>
+        <td>{{r.smestaj_naziv}}</td>
+        <td>{{r.from.split("T")[0]}}</td>
+        <td>{{r.to.split("T")[0]}}</td>
+        <td>
+          <select [(ngModel)]="r.vrednost" class="form-control">
+            <option>1</option>
+            <option>2</option>
+            <option>3</option>
+            <option>4</option>
+            <option>5</option>
+          </select>
+        </td>
+        <td>
+          <input [(ngModel)]="r.komentar" class="form-control" type="text">
+        </td>
+        <td>
+          <button *ngIf="tab == 'toRate'" (click)="rate(r)" class="btn btn-success">Rate</button>
+          <button *ngIf="tab == 'rated'" (click)="updateRating(r)" class="btn btn-primary">Update</button>
+        </td>
     </tr>
   </table>
 </div>

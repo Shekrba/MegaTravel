@@ -11,7 +11,7 @@ export class AdminServiceService {
 
 
   private ALL_SERVICES_URL = `${BASE_URL}/api/admin/services`;
-  private ALL_COMMENTS_URL = `${BASE_URL}/api/admin/comments`;
+  private CLOUD_URL = "https://us-central1-megatravel-244015.cloudfunctions.net";
   private ALL_USERS_URL = `${BASE_URL}/api/admin/user`;
   private ALL_AGENTS_URL = `${BASE_URL}/api/admin/agent`;
   private ALL_ADMINS_URL = `${BASE_URL}/api/admin/add`;
@@ -50,14 +50,27 @@ export class AdminServiceService {
   }
 
   getAllComments(): Observable<any>{
-    return this.http.get(this.ALL_COMMENTS_URL);
-  }
-
-  publishing(k): Observable<any>{
-    return this.http.put(this.ALL_COMMENTS_URL+"/"+k.id,k,{
+    return this.http.post(this.CLOUD_URL+"/getAllComments",{},{
       headers: new HttpHeaders({
         'Content-Type': 'application/json'
       })
+    });
+  }
+
+  getUsername(id) : Observable<any>{
+    return this.http.get(`${BASE_URL}/api/admin/user/`+id,{responseType: 'text'});
+  }
+
+  getSmestajNaziv(id) : Observable<any>{
+    return this.http.get(`${BASE_URL}/api/admin/accommodation/`+id,{responseType: 'text'});
+  }
+
+  publishing(body): Observable<any>{
+    return this.http.post(this.CLOUD_URL+"/publishing",body,{
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json'
+      }),
+      responseType : 'text'
     });
   }
 

@@ -76,7 +76,13 @@ export class ReservationComponent implements OnInit {
 
     this.hotelService.makeReservation(reservation).subscribe(
       res => {
-        this.toastr.success("Reservation was made.", "Booking");
+
+        if(res == "Room was booked in the meantime"){
+          this.toastr.error(res, "Booking unsuccessful");
+        }
+        else{
+          this.toastr.success("Reservation was made.", "Booking");
+        }
         
         this.hotelService.from = null;
         this.hotelService.to = null;

@@ -56,16 +56,6 @@ export class HotelServiceService {
     });
   }
 
-  addComment(body): Observable<any>{
-    
-    return this.http.post(this.ALL_RESERVATIONS_URL + "/comment",body, {
-      headers: new HttpHeaders({
-        'Content-Type': 'application/json'
-      }),
-      responseType : 'text'
-    });
-  }
-
   filterHotels(filter): Observable<Hotel[]> {
     return this.http.post<Hotel[]>(this.ALL_HOTELS_URL,filter, {
       headers: new HttpHeaders({

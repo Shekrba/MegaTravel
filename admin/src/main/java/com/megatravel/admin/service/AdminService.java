@@ -13,9 +13,6 @@ public interface AdminService {
     public Usluga updateUsluga(UslugaDTO usluga, Long id);
     public UslugaDTO getUsluga(Long id);
     public List<Usluga> getUsluge();
-    public SJedinica setTip(Long id, TTipSmestaja tip);
-    public KomentarDTO odobriKomentar(Long id);
-    public List<KomentarDTO> getUnapprovedComments();
 
     public AdminDTO addAdmin(AdminDTO adminDTO);
     public User blockKorisnik(Long id);
@@ -33,4 +30,7 @@ public interface AdminService {
     public List<AccTypeDTO> getAccomodationTypes();
     public AccTypeDTO addAcomodationType(AccTypeDTO accTypeDTO);
     public String deleteType(Long id);
+
+    public String getUsername(Long id);
+    public String getSmestajNaziv(Long id);
 }
