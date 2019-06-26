@@ -25,6 +25,7 @@ insert into category(naziv, vrednost) values ('FOUR STAR',4);
 insert into category(naziv, vrednost) values ('THREE STAR',3);
 insert into category(naziv, vrednost) values ('TWO STAR',2);
 insert into category(naziv, vrednost) values ('ONE STAR',1);
+insert into category(naziv, vrednost) values ('UNCATEGORIZED',0);
 
 insert into accomodation_type(id,naziv) values (1,'hotel');
 insert into accomodation_type(id,naziv) values (2,'apartman');

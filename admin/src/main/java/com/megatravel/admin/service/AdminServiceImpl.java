@@ -205,8 +205,6 @@ public class AdminServiceImpl implements  AdminService{
             if(accomodationServices.size() >= categoryServices.size())
             {
                 boolean isOk = true;
-                if(categoryServices.size() == 0)
-                    isOk = false;
                 for(Usluga categoryService : categoryServices)
                 {
 
@@ -234,10 +232,7 @@ public class AdminServiceImpl implements  AdminService{
                     smestaj.setCategory(category);
             }
         }
-        else
-        {
-            smestaj.setCategory(null);
-        }
+
     }
 
     @Override
