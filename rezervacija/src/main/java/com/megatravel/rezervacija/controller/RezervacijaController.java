@@ -28,18 +28,24 @@ public class RezervacijaController {
     }
 
     @RequestMapping(value = "/{id}",method = RequestMethod.DELETE)
-    public Rezervacija deleteRezervacija(@PathVariable("id")Long id){
-        return rezervacijaService.deleteRezervacija(id);
-    }
-
-    @RequestMapping(method = RequestMethod.GET)
-    public List<Rezervacija> getRezervacije(){
-        return rezervacijaService.getRezervacije();
+    public ResponseEntity<String> deleteRezervacija(@PathVariable("id")Long id){
+        try {
+            String message = rezervacijaService.deleteRezervacija(id);
+            return new ResponseEntity<String>(message, HttpStatus.OK);
+        }catch (Exception e)
+        {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public Rezervacija getRezervacija(@PathVariable("id")Long id){
         return rezervacijaService.getRezervacija(id);
+    }
+
+    @RequestMapping(value = "/user/{id}", method = RequestMethod.GET)
+    public List<ReservationDTO> getUserReservations(@PathVariable("id")Long userId){
+        return rezervacijaService.getUserReservations(userId);
     }
 
     @RequestMapping(value = "/rate/{id}", method = RequestMethod.GET)

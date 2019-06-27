@@ -7,8 +7,26 @@ public class ReservationDTO {
     private Long korisnik_id;
     private Long smestaj_id;
     private String smestaj_naziv;
+    private double cost;
     private Date from;
     private Date to;
+    private boolean canCancel;
+
+    public boolean isCanCancel() {
+        return canCancel;
+    }
+
+    public void setCanCancel(boolean canCancel) {
+        this.canCancel = canCancel;
+    }
+
+    public double getCost() {
+        return cost;
+    }
+
+    public void setCost(double cost) {
+        this.cost = cost;
+    }
 
     public Long getId() {
         return id;

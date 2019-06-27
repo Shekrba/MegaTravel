@@ -42,6 +42,17 @@ public class Rezervacija {
     @Column(name = "rated", unique = false, nullable = false)
     protected boolean rated;
 
+    @Column(name = "canceled", unique = false, nullable = false,columnDefinition="boolean default false")
+    protected boolean canceled = false;
+
+    public boolean isCanceled() {
+        return canceled;
+    }
+
+    public void setCanceled(boolean canceled) {
+        this.canceled = canceled;
+    }
+
     public boolean isRated() {
         return rated;
     }

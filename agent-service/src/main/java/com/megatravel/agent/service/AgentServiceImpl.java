@@ -137,7 +137,7 @@ public class AgentServiceImpl implements AgentService {
 	}
 
 	@Override
-	public SmestajXMLDTO editAccommodation(SmestajXMLDTO accommodation) throws SOAPFaultException, SOAPException {
+	public boolean editAccommodation(SmestajXMLDTO accommodation) throws SOAPFaultException, SOAPException {
 		User u=userRepository.fetchAccommodations(accommodation.getUsername());
 		if(u!=null){
 			Smestaj s=smestajRepository.getOne(accommodation.getId());
@@ -164,8 +164,8 @@ public class AgentServiceImpl implements AgentService {
 
 			smestajRepository.save(s);
 
-			SmestajXMLDTO ret=accommodation;
-			return ret;
+
+			return true;
 		}
 		String faultString = "Bad username";
 		String faultCodeValue = "401";
@@ -181,8 +181,11 @@ public class AgentServiceImpl implements AgentService {
 
 	@Override
 	public SJedinicaXMLDTO addAccommodationUnit(SJedinicaXMLDTO accommodationUnit) throws SOAPFaultException, SOAPException {
-		System.out.println(accommodationUnit.getSmestajID());
 		Smestaj s=smestajRepository.findById(accommodationUnit.getSmestajID()).orElse(null);
+		//proveri da li je validan user poslao zahtev
+		if(!s.getAgent().getUsername().equals(accommodationUnit.getUsername())){
+			s=null;
+		}
 		if(s!=null){
 			SJedinica sj=new SJedinica(accommodationUnit);
 			sJedinicaRepository.save(sj);
@@ -192,12 +195,36 @@ public class AgentServiceImpl implements AgentService {
 
 
 			SJedinicaXMLDTO ret=accommodationUnit;
-			System.out.println(sj.getId()+" : IDDDDDDDDDDDDD");
 			ret.setId(sj.getId());
 			return ret;
 		}
-		String faultString = "Bad user";
-		String faultCodeValue = "401";
+		String faultString = "Unprocessable Entity";
+		String faultCodeValue = "422";
+		QName faultCode = new QName("http://service.agent.megatravel.com/", faultCodeValue);
+		SOAPFault soapFault = null;
+		try {
+			soapFault = SOAPFactory.newInstance(SOAPConstants.SOAP_1_1_PROTOCOL).createFault(faultString, faultCode);
+			throw new javax.xml.ws.soap.SOAPFaultException(soapFault);
+		} catch (SOAPException e1) {
+			throw e1;
+		}
+	}
+
+
+	@Override
+	public boolean editAccommodationUnit(SJedinicaXMLDTO accommodationUnit) throws SOAPFaultException, SOAPException {
+		SJedinica sj=sJedinicaRepository.findById(accommodationUnit.getId()).orElse(null);
+		if(accommodationUnit.getUsername().equals(sj.getSmestaj().getAgent().getUsername())){
+			sj.setBroj(accommodationUnit.getBroj());
+			sj.setBrojKreveta(accommodationUnit.getBrojKreveta());
+			sj.setCena(accommodationUnit.getCena());
+			sj.setDostupnost(accommodationUnit.getDostupnost());
+			sJedinicaRepository.save(sj);
+
+			return true;
+		}
+		String faultString = "Unprocessable Entity";
+		String faultCodeValue = "422";
 		QName faultCode = new QName("http://service.agent.megatravel.com/", faultCodeValue);
 		SOAPFault soapFault = null;
 		try {

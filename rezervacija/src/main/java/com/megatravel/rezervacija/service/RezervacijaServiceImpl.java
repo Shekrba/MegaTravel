@@ -71,12 +71,51 @@ public class RezervacijaServiceImpl implements  RezervacijaService {
     }
 
     @Override
-    public Rezervacija deleteRezervacija(Long id){
+    public List<ReservationDTO> getUserReservations(Long userId){
+        List<Rezervacija> rezervacije = rezervazijaRepository.findUserReservations(userId);
+        List<ReservationDTO> reservationDTOS = new ArrayList<>();
 
-        Rezervacija rezervacija = new Rezervacija();
-        rezervacija.setId(id);
+        for (Rezervacija r: rezervacije) {
+            ReservationDTO rDTO = new ReservationDTO();
 
-        return rezervacija;
+            Date now = new Date();
+
+            int periodOtkaza = r.getsJedinica().getSmestaj().getPeriodOtkaza();
+            Long days = (r.getOd().getTime() - now.getTime()) / (1000 * 60 * 60 * 24);
+
+            if(days < periodOtkaza){
+                rDTO.setCanCancel(false);
+            }
+            else{
+                rDTO.setCanCancel(true);
+            }
+
+            rDTO.setFrom(r.getOd());
+            rDTO.setTo(r.getDo());
+            rDTO.setSmestaj_naziv(r.getSJedinica().getSmestaj().getNaziv());
+            rDTO.setKorisnik_id(userId);
+            rDTO.setId(r.getId());
+            rDTO.setCost(r.getUCena());
+            rDTO.setSmestaj_id(r.getSJedinica().getSmestaj().getId());
+
+            reservationDTOS.add(rDTO);
+        }
+
+        return reservationDTOS;
+
+    }
+
+    @Transactional(readOnly = false)
+    @Override
+    public String deleteRezervacija(Long id){
+
+        Rezervacija rezervacija = rezervazijaRepository.getOne(id);
+
+        rezervacija.setCanceled(true);
+
+        rezervazijaRepository.save(rezervacija);
+
+        return "Reservation canceled";
     }
 
     @Override

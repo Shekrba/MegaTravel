@@ -8,6 +8,7 @@ import { HotelProfileComponent } from './hotel-profile/hotel-profile.component';
 import { RatingsComponent } from './ratings/ratings.component'
 import { ReservationComponent } from './reservation/reservation.component';
 import { AuthGuard } from './_guards';
+import { ManageReservationsComponent } from './manage-reservations/manage-reservations.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -17,6 +18,7 @@ const routes: Routes = [
   { path: 'hotels/:id', component: HotelProfileComponent },
   { path: 'ratings', component: RatingsComponent, canActivate:[AuthGuard] },
   { path: 'reservation', component: ReservationComponent, canActivate:[AuthGuard] },
+  { path: 'reservations', component: ManageReservationsComponent, canActivate:[AuthGuard] },
   //redirect to home if url is not valid
   { path: '**', redirectTo: '' }
 ];

@@ -16,9 +16,12 @@ import java.util.List;
 @Repository
 public interface RezervacijaRepository extends JpaRepository<Rezervacija, Long> {
 
-    @Query("SELECT r FROM Rezervacija r WHERE r.canBeRated = 1 AND r.korisnik.id = ?1 And r.rated = 0")
+    @Query("SELECT r FROM Rezervacija r WHERE r.canBeRated = 1 AND r.korisnik.id = ?1 And r.rated = 0 AND r.canceled=0")
     List<Rezervacija> findAllToRate(Long user_id);
 
     @Lock(LockModeType.PESSIMISTIC_READ)
     Rezervacija findOneById(Long id);
+
+    @Query("SELECT r FROM Rezervacija r WHERE r.korisnik.id=?1 AND r.canceled=0")
+    List<Rezervacija> findUserReservations(Long id);
 }

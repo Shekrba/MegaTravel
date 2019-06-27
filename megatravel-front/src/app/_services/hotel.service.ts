@@ -149,5 +149,12 @@ export class HotelServiceService {
     return this.http.get(this.USERNAME_URL+"/"+id,{responseType: 'text'});
   }
 
+  getUserReservations(id): Observable<any>{
+    return this.http.get(this.ALL_RESERVATIONS_URL+"/user/"+id);
+  }
+
+  cancelReservation(id): Observable<any>{
+    return this.http.delete(this.ALL_RESERVATIONS_URL+"/"+id,{responseType: 'text'});
+  }
 
 }

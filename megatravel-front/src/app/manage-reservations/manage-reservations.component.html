@@ -1,0 +1,25 @@
+<div class="container">
+  <table class="table mt-5 ml-auto mr-auto">
+    <tr>
+      <th class="white bg-primary">Accommodation</th>
+      <th class="white bg-primary">Date From</th>
+      <th class="white bg-primary">Date To</th>
+      <th class="white bg-primary">Cost</th>
+      <th class="white bg-primary"></th>
+      <th class="white bg-primary"></th>
+    </tr>
+    <tr *ngFor="let r of reservations">
+        <td>{{r.smestaj_naziv}}</td>
+        <td>{{r.from.split("T")[0]}}</td>
+        <td>{{r.to.split("T")[0]}}</td>
+        <td>{{r.cost}}$</td>
+        <td>
+          <button class="btn btn-warning">Messages</button>
+        </td>
+        <td>
+          <button (click)="cancelReservation(r)" *ngIf="r.canCancel==true" class="btn btn-dark">Cancel</button>
+        </td>
+    </tr>
+  </table>
+</div>
+

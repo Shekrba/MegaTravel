@@ -89,14 +89,7 @@ public class SJedinica {
     }
 
 
-    public boolean isDostupnost() {
-        return dostupnost;
-    }
 
-
-    public void setDostupnost(boolean value) {
-        this.dostupnost = value;
-    }
 
 
     public Long getId() {

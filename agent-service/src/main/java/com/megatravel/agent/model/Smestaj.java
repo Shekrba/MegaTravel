@@ -26,15 +26,11 @@ public class Smestaj {
     @Column(name = "naziv", unique = false, nullable = false)
     private String naziv;
 
-
     @OneToMany(mappedBy = "smestaj",fetch=FetchType.EAGER, cascade = CascadeType.ALL)
     private Set<SJedinica> sJedinica=new HashSet<>();
 
-    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.EAGER)
     private AccomodationType accomodationType;
-
-
-
 
 
     @OneToOne(fetch=FetchType.EAGER, cascade=CascadeType.ALL, optional=true)
@@ -65,12 +61,6 @@ public class Smestaj {
 
     @ManyToOne(fetch = FetchType.EAGER)
     private Category category;
-
-    @OneToMany(
-            mappedBy = "smestaj",
-            fetch = FetchType.LAZY,
-            cascade = CascadeType.ALL
-    )
 
 
     @ManyToOne(fetch = FetchType.EAGER)
