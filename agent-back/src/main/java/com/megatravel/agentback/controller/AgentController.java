@@ -11,9 +11,13 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 @RestController
@@ -42,6 +46,71 @@ public class AgentController {
         }
 
         return listDTO;
+    }
+
+    @RequestMapping(value = "/hoteli/{id}",method = RequestMethod.GET)
+    public SmestajDTO getSmestaj(@PathVariable("id")Long id){
+
+        Smestaj smestaj = agentService.getSmestaj(id);
+        SmestajDTO smestajDTO = new SmestajDTO();
+
+        smestajToDto(smestaj,smestajDTO);
+
+        return smestajDTO;
+    }
+
+    @RequestMapping(value = "/smestajAdd",method = RequestMethod.POST)
+    public ResponseEntity<Smestaj> addSJedinica(@RequestBody SmestajDTO smestaj){
+
+        Smestaj addedSmestaj = null;
+
+        try {
+            addedSmestaj = agentService.addSmestaj(smestaj);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+
+        return new ResponseEntity<Smestaj>(addedSmestaj,HttpStatus.OK);
+    }
+
+    @PostMapping(value = "/upload/{id}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ResponseEntity<?> uploadFile(@RequestParam("images") MultipartFile[] files, @PathVariable("id") Long id) throws IOException {
+        System.out.println(id);
+        agentService.uploadImages(id,files);
+
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @RequestMapping(value="images/{id}", method = RequestMethod.GET)
+    List<String> getImages(@PathVariable("id") Long id) throws UnsupportedEncodingException
+    {
+        List<String> images = agentService.getImages(id);
+        return images;
+    }
+
+    @RequestMapping(value = "/smestajUpdate",method = RequestMethod.PUT)
+    public Smestaj updateSmestaj(@RequestBody SmestajDTO smestaj){
+
+        Smestaj updatedSmestaj = null;
+
+        try {
+            updatedSmestaj = agentService.updateSmestaj(smestaj);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return updatedSmestaj;
+    }
+
+    @RequestMapping(value = "/smestajDelete/{id}",method = RequestMethod.DELETE)
+    public ResponseEntity<List<Smestaj>> deleteSmestaj(@PathVariable("id")Long id){
+        List<Smestaj> smestajs = agentService.getSmestaje();
+        List<Smestaj> smestaji = agentService.deleteSmestaj(id);
+        if(smestaji.size() == smestajs.size())
+            return new ResponseEntity<>(HttpStatus.METHOD_NOT_ALLOWED);
+        else
+            return  new ResponseEntity<List<Smestaj>>(smestaji, HttpStatus.OK);
     }
 
     @RequestMapping(value = "/types", method = RequestMethod.GET)
@@ -266,9 +335,7 @@ public class AgentController {
         sDTO.setLongitude(s.getAdresa().getLongitude());
         sDTO.setPosBroj(s.getAdresa().getPosBroj());
 
-        for (Slika slika: s.getSlika()) {
-            sDTO.getSlike().add(slika.getSrc());
-        }
+
 
         for (Usluga usluga: s.getUslugaList()) {
             UslugaDTO uslugaDTO = new UslugaDTO();

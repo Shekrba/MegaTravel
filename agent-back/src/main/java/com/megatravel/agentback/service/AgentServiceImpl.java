@@ -6,9 +6,13 @@ import com.megatravel.agentback.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.List;
 
 @Service
@@ -46,6 +50,9 @@ public class AgentServiceImpl implements AgentService {
 
     @Autowired
     UserRepository userRepository;
+
+    @Autowired
+    ImageRepository imageRepository;
 
 
     @Override
@@ -160,6 +167,8 @@ public class AgentServiceImpl implements AgentService {
         adresa.setPosBroj(smestaj.getPosBroj());
         smestajNew.setAdresa(adresa);
 
+        smestajNew.setAgent(userRepository.findOneByUsername(SecurityContextHolder.getContext().getAuthentication().getName()));
+
         smestajNew.setOpis(smestaj.getOpis());
         smestajNew.setPeriodOtkaza(smestaj.getPeriodOtkaza());
 
@@ -213,8 +222,6 @@ public class AgentServiceImpl implements AgentService {
             if(accomodationServices.size() >= categoryServices.size())
             {
                 boolean isOk = true;
-                if(categoryServices.size() == 0)
-                    isOk = false;
                 for(Usluga categoryService : categoryServices)
                 {
 
@@ -242,10 +249,7 @@ public class AgentServiceImpl implements AgentService {
                     smestaj.setCategory(category);
             }
         }
-        else
-        {
-            smestaj.setCategory(null);
-        }
+
     }
 
     @Override
@@ -365,4 +369,35 @@ public class AgentServiceImpl implements AgentService {
 
         return c;
     }
+
+    @Override
+    public boolean uploadImages(Long idSmestaj, MultipartFile[] files) throws IOException {
+        Smestaj smestaj = smestajRepository.findOneById(idSmestaj);
+
+        for(MultipartFile file : files){
+            byte[] bytes = file.getBytes();
+            Image image = new Image();
+            image.setSmestaj(smestaj);
+            image.setData(bytes);
+            imageRepository.save(image);
+        }
+        return true;
+    }
+
+    @Override
+    public List<String> getImages(Long id) throws UnsupportedEncodingException
+    {
+        Smestaj smestaj = smestajRepository.findOneById(id);
+        ArrayList<String> retList = new ArrayList<>();
+        List<Image> images = smestaj.getSlike();
+        for(Image image : images)
+        {
+            byte[] encodeBase64 = Base64.getEncoder().encode(image.getData());
+            String base64Encoded = new String(encodeBase64, "UTF-8");
+            retList.add(base64Encoded);
+        }
+
+        return retList;
+    }
+
 }

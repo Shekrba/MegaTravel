@@ -17,6 +17,7 @@
           <td>{{accomodation.mesto+', '+accomodation.ulica+', '+accomodation.broj }}</td>
           <td>{{accomodation.opis}}</td>
           <td style="text-align: center;" ><button (click)="edit(accomodation.id)" style="margin-right: 10px;" class="btn"><i class="fa fa-edit"></i></button><button style="margin-right: 10px; background-color: green; " (click)="rooms(accomodation.id)" type="button" class="btn btn-success" >Rooms</button></td>
+          <td style="text-align: center;"> <button (click)="images(accomodation.id)" type="button" class="btn btn-info">Images</button> </td>
         </tr>
       </tbody>
   </table>

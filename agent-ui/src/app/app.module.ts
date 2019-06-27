@@ -21,6 +21,7 @@ import { ReservationsComponent } from './components/reservations/reservations.co
 import { MesssagesComponent } from './components/messsages/messsages.component';
 import { MessageComponent } from './components/message/message.component';
 import { OccupancyComponent } from './components/occupancy/occupancy.component';
+import { AccomodationImagesComponent } from './components/accomodation-images/accomodation-images.component';
 
 @NgModule({
   declarations: [
@@ -36,7 +37,8 @@ import { OccupancyComponent } from './components/occupancy/occupancy.component';
     ReservationsComponent,
     MesssagesComponent,
     MessageComponent,
-    OccupancyComponent
+    OccupancyComponent,
+    AccomodationImagesComponent
   ],
   imports: [
     BrowserModule,

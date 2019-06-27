@@ -62,6 +62,11 @@ public class User implements UserDetails {
     @OneToMany(mappedBy = "agent")
     private Set<Smestaj> smestaji = new HashSet<>();
 
+    @OneToMany(mappedBy = "primalac")
+    private Set<Poruka> received = new HashSet<>();
+
+    @OneToMany(mappedBy = "posiljalac")
+    private Set<Poruka> sent = new HashSet<>();
 
     public User() {
 
@@ -144,6 +149,21 @@ public class User implements UserDetails {
         this.enabled = enabled;
     }
 
+    public Set<Poruka> getReceived() {
+        return received;
+    }
+
+    public void setReceived(Set<Poruka> received) {
+        this.received = received;
+    }
+
+    public Set<Poruka> getSent() {
+        return sent;
+    }
+
+    public void setSent(Set<Poruka> sent) {
+        this.sent = sent;
+    }
 
     @Override
     public boolean isEnabled() {

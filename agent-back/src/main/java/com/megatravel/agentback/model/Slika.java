@@ -17,16 +17,7 @@ public class Slika {
     @Column(name = "src", unique = false, nullable = false)
     protected String src;
 
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    protected Smestaj smestaj;
 
-    public Smestaj getSmestaj() {
-        return smestaj;
-    }
-
-    public void setSmestaj(Smestaj smestaj) {
-        this.smestaj = smestaj;
-    }
 
     public Long getId() {
         return id;

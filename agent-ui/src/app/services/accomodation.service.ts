@@ -8,6 +8,8 @@ import { Accomodation } from '../model/Accomodation';
 import { AccomodationUnit } from '../model/AccomodationUnit';
 import { Occupancy } from '../model/Occupancy';
 import { Message } from '../model/Message';
+import { Picture } from '../model/Picture';
+
 
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -48,7 +50,17 @@ export class AccomodationService {
   } 
 
   addAcomodation(body: Accomodation): Observable<any> {
-    return this.http.post(`${ROOT_URL}/smestajAdd`, body, httpOptions);
+    return this.http.post(`${ROOT_URL}/smestajAdd`, body);
+  }
+
+  uploadImages(images: Array<Picture>, id : number): Observable<any> {
+    let formData = new FormData();
+    for(let i = 0; i < images.length; i++)
+    {
+      formData.append("images", images[i].data);
+    }
+    console.log(formData.getAll("images"))
+    return this.http.post(`${ROOT_URL}/upload/${id}`, formData);
   }
 
   updateAccomodation(body: Accomodation): Observable<any> {
@@ -89,6 +101,10 @@ export class AccomodationService {
 
   answerMessage(id:number, body: Message) : Observable<any> {
     return this.http.post(`${ROOT_URL}/answerMessage/${id}`, body, httpOptions);
+  }
+
+  getImages( id:number ) : Observable<any> {
+    return this.http.get(`${ROOT_URL}/images/${id}`);  
   }
 
 

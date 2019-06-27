@@ -52,39 +52,7 @@ public class AgentServiceImpl implements AgentService {
 	@Autowired
 	SJedinicaRepository sJedinicaRepository;
 
-	@Override
-	public String firstLogin(UserCredentialsXMLDTO credentials) throws SOAPFaultException,SOAPException {
-		User u=userRepository.findByUsername(credentials.getUsername());
-		if(u!=null) {
-			if (u.getAuthorities().contains(authorityRepository.findByName("ROLE_AGENT"))) {
-				HttpHeaders headers = new HttpHeaders();
-				headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
-				headers.setContentType(MediaType.APPLICATION_JSON);
-				ObjectMapper om = new ObjectMapper();
-				String json = "";
-				try {
-					json = om.writeValueAsString(credentials);
-				} catch (JsonProcessingException e) {
-					e.printStackTrace();
-				}
-				HttpEntity<String> entity = new HttpEntity<String>(json, headers);
 
-				ResponseEntity<String> response = restTemplate.exchange(
-						"http://localhost:8762/login-service/auth/login", HttpMethod.POST, entity, String.class);
-				return response.getBody();
-			}
-		}
-		String faultString = "Bad credentials";
-		String faultCodeValue = "401";
-		QName faultCode = new QName("http://service.agent.megatravel.com/", faultCodeValue);
-		SOAPFault soapFault = null;
-		try {
-			soapFault = SOAPFactory.newInstance(SOAPConstants.SOAP_1_1_PROTOCOL).createFault(faultString, faultCode);
-			throw new javax.xml.ws.soap.SOAPFaultException(soapFault);
-		} catch (SOAPException e1) {
-			throw e1;
-		}
-	}
 
 
 	@Override

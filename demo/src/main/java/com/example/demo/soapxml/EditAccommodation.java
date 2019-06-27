@@ -8,12 +8,12 @@ import javax.xml.bind.annotation.XmlType;
 
 
 /**
- * <p>Java class for addAccommodation complex type.
+ * <p>Java class for editAccommodation complex type.
  * 
  * <p>The following schema fragment specifies the expected content contained within this class.
  * 
  * <pre>
- * &lt;complexType name="addAccommodation">
+ * &lt;complexType name="editAccommodation">
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
@@ -27,10 +27,10 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "addAccommodation", propOrder = {
+@XmlType(name = "editAccommodation", propOrder = {
     "accommodation"
 })
-public class AddAccommodation {
+public class EditAccommodation {
 
     @XmlElement(name = "Accommodation")
     protected SmestajXMLDTO accommodation;

@@ -58,6 +58,7 @@ public class User implements UserDetails {
 
     @OneToMany(mappedBy = "primalac")
     private Set<Poruka> received = new HashSet<>();
+
     @OneToMany(mappedBy = "posiljalac")
     private Set<Poruka> sent = new HashSet<>();
 
