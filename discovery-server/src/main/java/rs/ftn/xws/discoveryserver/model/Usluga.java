@@ -13,7 +13,9 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import javax.persistence.*;
 import javax.xml.bind.annotation.*;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 public class Usluga {
@@ -37,7 +39,7 @@ public class Usluga {
 
     @ManyToMany(mappedBy = "uslugaList")
     private
-    List<Category> categoryList = new ArrayList<>();
+    Set<Category> categoryList = new HashSet<>();
 
 
     public List<Smestaj> getSmestaj() {
@@ -81,11 +83,11 @@ public class Usluga {
     }
 
 
-    public List<Category> getCategoryList() {
+    public Set<Category> getCategoryList() {
         return categoryList;
     }
 
-    public void setCategoryList(List<Category> categoryList) {
+    public void setCategoryList(Set<Category> categoryList) {
         this.categoryList = categoryList;
     }
 }
