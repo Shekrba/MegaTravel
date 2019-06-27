@@ -44,6 +44,9 @@ public class Rezervacija {
     @Column(name = "rated", unique = false, nullable = false)
     protected boolean rated;
 
+    @Column(name = "canceled", unique = false, nullable = false,columnDefinition="boolean default false")
+    protected boolean canceled = false;
+
     public boolean isRated() {
         return rated;
     }
@@ -58,6 +61,14 @@ public class Rezervacija {
 
     public void setCanBeRated(boolean canBeRated) {
         this.canBeRated = canBeRated;
+    }
+
+    public boolean isCanceled() {
+        return canceled;
+    }
+
+    public void setCanceled(boolean canceled) {
+        this.canceled = canceled;
     }
 
     public Long getId() {

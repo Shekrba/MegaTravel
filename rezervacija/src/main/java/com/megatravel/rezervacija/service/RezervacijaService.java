@@ -8,10 +8,11 @@ import java.util.List;
 public interface RezervacijaService {
 
     public String addRezervacija(MakeResDTO rezervacija);
-    public Rezervacija deleteRezervacija(Long id);
+    public String deleteRezervacija(Long id);
     public List<Rezervacija> getRezervacije();
     public Rezervacija getRezervacija(Long id);
     public List<ReservationDTO>getReservationsToRate(Long user_id);
     public String setRatedTrue(Long id);
     public SmestajDTO formReservation(formDTO form);
+    public List<ReservationDTO> getUserReservations(Long userId);
 }
