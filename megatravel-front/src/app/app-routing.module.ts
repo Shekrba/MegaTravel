@@ -9,6 +9,8 @@ import { RatingsComponent } from './ratings/ratings.component'
 import { ReservationComponent } from './reservation/reservation.component';
 import { AuthGuard } from './_guards';
 import { ManageReservationsComponent } from './manage-reservations/manage-reservations.component';
+import { NewMessageComponent } from './new-message/new-message.component';
+import { MessagesComponent } from './messages/messages.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -19,6 +21,8 @@ const routes: Routes = [
   { path: 'ratings', component: RatingsComponent, canActivate:[AuthGuard] },
   { path: 'reservation', component: ReservationComponent, canActivate:[AuthGuard] },
   { path: 'reservations', component: ManageReservationsComponent, canActivate:[AuthGuard] },
+  { path: 'newmessage' ,component: NewMessageComponent, canActivate:[AuthGuard] },
+  { path: 'messages', component: MessagesComponent, canActivate:[AuthGuard] },
   //redirect to home if url is not valid
   { path: '**', redirectTo: '' }
 ];

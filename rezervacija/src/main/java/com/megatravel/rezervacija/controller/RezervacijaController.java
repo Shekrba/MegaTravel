@@ -69,5 +69,25 @@ public class RezervacijaController {
         return rezervacijaService.formReservation(form);
     }
 
+    @RequestMapping(value = "/message", method = RequestMethod.POST)
+    public ResponseEntity<String> newMessage(@RequestBody PorukaDTO porukaDTO){
+        try {
+                String message = rezervacijaService.newMessage(porukaDTO);
+            return new ResponseEntity<String>(message, HttpStatus.OK);
+        }catch (Exception e)
+        {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @RequestMapping(value = "/message/inbox/{id}", method = RequestMethod.GET)
+    public List<PorukaDTO> getInboxMessages(@PathVariable("id")Long user_id) {
+        return rezervacijaService.getInboxMessages(user_id);
+    }
+
+    @RequestMapping(value = "/message/sent/{id}", method = RequestMethod.GET)
+    public List<PorukaDTO> getSentMessages(@PathVariable("id")Long user_id) {
+        return rezervacijaService.getSentMessages(user_id);
+    }
 
 }

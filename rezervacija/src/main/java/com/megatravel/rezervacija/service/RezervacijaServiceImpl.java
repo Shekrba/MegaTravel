@@ -31,6 +31,9 @@ public class RezervacijaServiceImpl implements  RezervacijaService {
     @Autowired
     UserRepository userRepository;
 
+    @Autowired
+    PorukaRepository porukaRepository;
+
 
     @Transactional(readOnly = false, propagation = Propagation.REQUIRES_NEW)
     @Override
@@ -103,6 +106,61 @@ public class RezervacijaServiceImpl implements  RezervacijaService {
 
         return reservationDTOS;
 
+    }
+
+    @Transactional(readOnly = false)
+    @Override
+    public String newMessage(PorukaDTO porukaDTO){
+
+        User from = userRepository.getOne(porukaDTO.getFrom());
+        User to = userRepository.getOne(porukaDTO.getTo());
+
+        Poruka poruka = new Poruka();
+        poruka.setId(porukaDTO.getId());
+        poruka.setSadrzaj(porukaDTO.getText());
+        poruka.setPosiljalac(from);
+        poruka.setPrimalac(to);
+        porukaRepository.save(poruka);
+
+        return "Message sent";
+    }
+
+    @Override
+    public List<PorukaDTO> getInboxMessages(Long user_id){
+        List<Poruka> poruke = porukaRepository.findInbox(user_id);
+        List<PorukaDTO> porukeDTO = new ArrayList<>();
+
+        for (Poruka p : poruke) {
+
+            PorukaDTO pDTO = new PorukaDTO();
+
+            pDTO.setAgent(p.getPosiljalac().getUsername());
+            pDTO.setText(p.getSadrzaj());
+            pDTO.setId(p.getId());
+
+            porukeDTO.add(pDTO);
+        }
+
+        return porukeDTO;
+    }
+
+    @Override
+    public List<PorukaDTO> getSentMessages(Long user_id){
+        List<Poruka> poruke = porukaRepository.findSent(user_id);
+        List<PorukaDTO> porukeDTO = new ArrayList<>();
+
+        for (Poruka p : poruke) {
+
+            PorukaDTO pDTO = new PorukaDTO();
+
+            pDTO.setAgent(p.getPrimalac().getUsername());
+            pDTO.setText(p.getSadrzaj());
+            pDTO.setId(p.getId());
+
+            porukeDTO.add(pDTO);
+        }
+
+        return porukeDTO;
     }
 
     @Transactional(readOnly = false)

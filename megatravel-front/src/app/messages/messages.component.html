@@ -1,0 +1,43 @@
+<div class="container">
+  <ul class="nav nav-tabs mt-5">
+    <li (click)="inboxButton()" class="nav-item">
+      <button *ngIf="tab=='inbox'" class="nav-link active"><b>Inbox</b></button>
+      <button *ngIf="tab=='sent'" class="btn btn-link nav-link">Inbox</button>
+    </li>
+    <li (click)="sentButton()" class="nav-item">
+      <button *ngIf="tab=='sent'" class="nav-link active"><b>Sent</b></button>
+      <button *ngIf="tab=='inbox'" class="btn btn-link nav-link">Sent</button>
+    </li>
+  </ul>
+
+  <div *ngIf="tab=='inbox'">
+    <div *ngFor="let p of porukeInbox" class="card mt-3 ml-5 mr-5">
+        <div class="card-header" id="headingOne">
+          <div class="row">
+            <div class="col text-left">
+              <h4 class="mb-0">From: <b>{{p.agent}}</b></h4>
+            </div>
+          </div>
+        </div>
+        <div class="card-body">
+          <p>{{p.text}}</p>
+        </div>
+    </div>
+  </div>
+
+  <div *ngIf="tab=='sent'">
+    <div *ngFor="let p of porukeSent" class="card mt-3 ml-5 mr-5">
+        <div class="card-header" id="headingOne">
+          <div class="row">
+            <div class="col text-left">
+              <h4 class="mb-0">To: <b>{{p.agent}}</b></h4>
+            </div>
+          </div>
+        </div>
+        <div class="card-body">
+          <p>{{p.text}}</p>
+        </div>
+    </div>
+  </div>
+
+</div>

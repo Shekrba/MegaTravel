@@ -7,6 +7,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import javax.persistence.*;
 import java.sql.Timestamp;
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -64,8 +65,37 @@ public class User implements UserDetails {
     @OneToMany(mappedBy = "agent")
     private List<Smestaj> smestaji;
 
+    @OneToMany(mappedBy = "primalac")
+    private Set<Poruka> received = new HashSet<>();
+    @OneToMany(mappedBy = "posiljalac")
+    private Set<Poruka> sent = new HashSet<>();
+
     public User() {
 
+    }
+
+    public List<Smestaj> getSmestaji() {
+        return smestaji;
+    }
+
+    public void setSmestaji(List<Smestaj> smestaji) {
+        this.smestaji = smestaji;
+    }
+
+    public Set<Poruka> getReceived() {
+        return received;
+    }
+
+    public void setReceived(Set<Poruka> received) {
+        this.received = received;
+    }
+
+    public Set<Poruka> getSent() {
+        return sent;
+    }
+
+    public void setSent(Set<Poruka> sent) {
+        this.sent = sent;
     }
 
     public void setEnabled(boolean enabled) {
