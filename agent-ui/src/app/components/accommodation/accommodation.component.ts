@@ -51,9 +51,8 @@ export class AccommodationComponent implements OnInit {
         this.source = e.target.result;
         let picture = new Picture();
         picture.id = id;
-        picture.data = e.target.result;
+        picture.data = file;
         this.images.push(picture);
-        this.source = picture.data;
         this.id = id + 1;
     };
     // This will process our file and get it's attributes/data
@@ -62,14 +61,25 @@ export class AccommodationComponent implements OnInit {
 
   updateSource($event: Event) : void {
     // We access he file with $event.target['files'][0]
+    console.log($event.target['files'][0]);
     this.projectImage($event.target['files'][0]);
   }
 
- 
+  project(file: File) : void {
+    let reader = new FileReader;
+    reader.onload = (e: any) => {
+      this.source = e.target.result;
+    }
+    reader.readAsDataURL(file);
+  }
+
   add() : void {
     this.accomodationService.addAcomodation(this.accomodation).subscribe(response => {
       window.alert('Smestaj uspesno dodat!');
-      this.router.navigate(['/accomodations'])},
+      this.accomodationService.uploadImages(this.images, response.id).subscribe(
+        data => this.router.navigate(['/accomodations'])
+      )
+    },
       error => window.alert("Neuspesno dodavanje smestaja!")
     );
   }
@@ -88,7 +98,7 @@ export class AccommodationComponent implements OnInit {
 
   show(id: number): void {
     const imgSrc = this.images.find((o) => o.id === id);
-    this.source = imgSrc.data;
+    this.project(imgSrc.data)
   }
 
   remove(id :number): void {

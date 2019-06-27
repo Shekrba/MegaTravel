@@ -1,4 +1,5 @@
-/*INSERT INTO user (id, username, password, ime, prezime, email, enabled, last_password_reset_date) VALUES (1, 'user', '$2a$04$Vbug2lwwJGrvUXTj6z7ff.97IzVBkrJ1XfApfGNl.Z695zqcnPYra', 'Marko', 'Markovic', 'user@example.com', true, '2017-10-01 21:58:58');
+/*
+INSERT INTO user (id, username, password, ime, prezime, email, enabled, last_password_reset_date) VALUES (1, 'user', '$2a$04$Vbug2lwwJGrvUXTj6z7ff.97IzVBkrJ1XfApfGNl.Z695zqcnPYra', 'Marko', 'Markovic', 'user@example.com', true, '2017-10-01 21:58:58');
 INSERT INTO AUTHORITY (id, name) VALUES (1, 'ROLE_AGENT');
 INSERT INTO USER_AUTHORITY (user_id, authority_id) VALUES (1, 1);
 
@@ -22,6 +23,7 @@ insert into category(naziv, vrednost) values ('FOUR STAR',4);
 insert into category(naziv, vrednost) values ('THREE STAR',3);
 insert into category(naziv, vrednost) values ('TWO STAR',2);
 insert into category(naziv, vrednost) values ('ONE STAR',1);
+insert into category(naziv, vrednost) values ('UNCATEGORIZED',0);
 
 insert into accomodation_type(id,naziv) values (1,'hotel');
 insert into accomodation_type(id,naziv) values (2,'apartman');
@@ -102,7 +104,6 @@ INSERT INTO poruka(id, datum_slanja, naslov, posaljilac, primalac, sadrzaj, stat
 INSERT INTO poruka(id, datum_slanja, naslov, posaljilac, primalac, sadrzaj, status) VALUES (4, '2019-06-22', 'Naslov4', 'k4', 'Agent', 'poruka4', 'NEODGOVORENO');
 INSERT INTO poruka(id, datum_slanja, naslov, posaljilac, primalac, sadrzaj, status) VALUES (5, '2019-06-22', 'Naslov5', 'k5', 'Agent', 'poruka5', 'NEODGOVORENO');
 
-
-
-
 */
+
+

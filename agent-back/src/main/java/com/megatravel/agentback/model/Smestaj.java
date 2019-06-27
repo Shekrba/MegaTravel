@@ -72,7 +72,7 @@ import java.util.List;
         "adresa",
         "opis",
         "periodOtkaza",
-        "slika"
+
 })
 @XmlRootElement(name = "Smestaj")
 @Entity
@@ -110,9 +110,8 @@ public class Smestaj {
     @Column(name = "periodOtkaza", unique = false, nullable = false)
     protected int periodOtkaza;
 
-    @XmlElement(name = "Slika", required = true)
-    @OneToMany(mappedBy = "smestaj")
-    protected List<Slika> slika;
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "smestaj")
+    private List<Image> slike = new ArrayList<>();
 
     @XmlAttribute(name = "Id")
     @XmlSchemaType(name = "anySimpleType")
@@ -160,9 +159,7 @@ public class Smestaj {
         this.uslugaList = uslugaList;
     }
 
-    public void setSlika(List<Slika> slika) {
-        this.slika = slika;
-    }
+
 
     /**
      * Gets the value of the sJedinica property.
@@ -286,12 +283,7 @@ public class Smestaj {
      *
      *
      */
-    public List<Slika> getSlika() {
-        if (slika == null) {
-            slika = new ArrayList<Slika>();
-        }
-        return this.slika;
-    }
+
 
     /**
      * Gets the value of the id property.
@@ -324,6 +316,24 @@ public class Smestaj {
     @JsonIgnore
     public void setAccomodationType(AccomodationType accomodationType) {
         this.accomodationType = accomodationType;
+    }
+
+    public User getAgent() {
+        return agent;
+    }
+
+    @JsonIgnore
+    public void setAgent(User agent) {
+        this.agent = agent;
+    }
+
+    public List<Image> getSlike() {
+        return slike;
+    }
+
+    @JsonIgnore
+    public void setSlike(List<Image> slike) {
+        this.slike = slike;
     }
 
 

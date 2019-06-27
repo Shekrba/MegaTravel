@@ -2,7 +2,10 @@ package com.megatravel.agentback.service;
 
 import com.megatravel.agentback.dto.*;
 import com.megatravel.agentback.model.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -37,6 +40,10 @@ public interface AgentService {
     public Poruka getPoruka(Long id);
 
     public Cenovnik postaviCenu(CenovnikSJediniceDTO cDTO);
+
+    public boolean uploadImages(Long idSmestaj, MultipartFile[] files) throws IOException;
+
+    List<String> getImages(Long id) throws UnsupportedEncodingException;
 
 
 }

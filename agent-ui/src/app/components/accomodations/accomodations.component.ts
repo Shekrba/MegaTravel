@@ -75,5 +75,9 @@ export class AccomodationsComponent implements OnInit {
 
   }
 
+  images(id : number) : void {
+    this.router.navigate(['/images',id]);
+  }
+
 
 }
