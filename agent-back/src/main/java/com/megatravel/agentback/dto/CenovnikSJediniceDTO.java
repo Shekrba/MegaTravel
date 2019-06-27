@@ -1,39 +1,28 @@
 package com.megatravel.agentback.dto;
 
 import java.time.LocalDate;
+import java.util.List;
 
 public class CenovnikSJediniceDTO {
 
-    private LocalDate datumOd;
-    private LocalDate datumDo;
-    private double cena;
+    private Long idSJedinice;
+    private List<MesecDTO> listaMeseca;
 
-
-    public void setDatumOd(LocalDate datumOd) {
-        this.datumOd = datumOd;
+    public void setIdSJedinice(Long idSJedinice) {
+        this.idSJedinice = idSJedinice;
     }
 
-    public void setDatumDo(LocalDate datumDo) {
-        this.datumDo = datumDo;
+    public void setListaMeseca(List<MesecDTO> meseci) {
+        this.listaMeseca = meseci;
     }
 
-    public void setCena(double cena) {
-        this.cena = cena;
+    public Long getIdSJedinice() {
+        return idSJedinice;
     }
 
-
-    public LocalDate getDatumOd() {
-        return datumOd;
+    public List<MesecDTO> getListaMeseca() {
+        return listaMeseca;
     }
-
-    public LocalDate getDatumDo() {
-        return datumDo;
-    }
-
-    public double getCena() {
-        return cena;
-    }
-
 
     public CenovnikSJediniceDTO() {
     }

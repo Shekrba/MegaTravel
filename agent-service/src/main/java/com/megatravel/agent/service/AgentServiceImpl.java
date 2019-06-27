@@ -7,6 +7,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.megatravel.agent.model.*;
 import com.megatravel.agent.repository.*;
 import com.megatravel.agent.utils.ObjectMapperUtils;
+import com.megatravel.agent.xml.dto.SJedinicaXMLDTO;
 import com.megatravel.agent.xml.dto.SmestajXMLDTO;
 import com.megatravel.agent.xml.dto.UserCredentialsXMLDTO;
 import com.megatravel.agent.xml.dto.UslugaXMLDTO;
@@ -47,6 +48,9 @@ public class AgentServiceImpl implements AgentService {
 
 	@Autowired
 	AccomodationRepository accomodationRepository;
+
+	@Autowired
+	SJedinicaRepository sJedinicaRepository;
 
 	@Override
 	public String firstLogin(UserCredentialsXMLDTO credentials) throws SOAPFaultException,SOAPException {
@@ -122,6 +126,105 @@ public class AgentServiceImpl implements AgentService {
 		}
 		String faultString = "Bad username";
 		String faultCodeValue = "401";
+		QName faultCode = new QName("http://service.agent.megatravel.com/", faultCodeValue);
+		SOAPFault soapFault = null;
+		try {
+			soapFault = SOAPFactory.newInstance(SOAPConstants.SOAP_1_1_PROTOCOL).createFault(faultString, faultCode);
+			throw new javax.xml.ws.soap.SOAPFaultException(soapFault);
+		} catch (SOAPException e1) {
+			throw e1;
+		}
+	}
+
+	@Override
+	public boolean editAccommodation(SmestajXMLDTO accommodation) throws SOAPFaultException, SOAPException {
+		User u=userRepository.fetchAccommodations(accommodation.getUsername());
+		if(u!=null){
+			Smestaj s=smestajRepository.getOne(accommodation.getId());
+			s.getUslugaList().clear();
+			//postavi usluge i sacuvaj ga
+			if(accommodation.getUslugaList()!=null) {
+				for (UslugaXMLDTO uXML : accommodation.getUslugaList()) {
+					Usluga usluga = uslugaRepository.getOne(uXML.getId());
+					usluga.getSmestaj().add(s);
+					s.getUslugaList().add(usluga);
+					uslugaRepository.save(usluga);
+				}
+			}
+
+			//postavi AccomodationType i sacuvaj ga
+			if(accommodation.getAccomodationType()!=null) {
+				AccomodationType accomodationType = accomodationRepository.getOne(accommodation.getAccomodationType().getId());
+				accomodationType.getSmestajList().add(s);
+				s.setAccomodationType(accomodationType);
+			}
+			/*
+				Dodaj izracunavanje kategorije - pitaj Mandica
+			 */
+
+			smestajRepository.save(s);
+
+
+			return true;
+		}
+		String faultString = "Bad username";
+		String faultCodeValue = "401";
+		QName faultCode = new QName("http://service.agent.megatravel.com/", faultCodeValue);
+		SOAPFault soapFault = null;
+		try {
+			soapFault = SOAPFactory.newInstance(SOAPConstants.SOAP_1_1_PROTOCOL).createFault(faultString, faultCode);
+			throw new javax.xml.ws.soap.SOAPFaultException(soapFault);
+		} catch (SOAPException e1) {
+			throw e1;
+		}
+	}
+
+	@Override
+	public SJedinicaXMLDTO addAccommodationUnit(SJedinicaXMLDTO accommodationUnit) throws SOAPFaultException, SOAPException {
+		Smestaj s=smestajRepository.findById(accommodationUnit.getSmestajID()).orElse(null);
+		//proveri da li je validan user poslao zahtev
+		if(!s.getAgent().getUsername().equals(accommodationUnit.getUsername())){
+			s=null;
+		}
+		if(s!=null){
+			SJedinica sj=new SJedinica(accommodationUnit);
+			sJedinicaRepository.save(sj);
+			sj.setSmestaj(s);
+			s.getSJedinica().add(sj);
+			smestajRepository.save(s);
+
+
+			SJedinicaXMLDTO ret=accommodationUnit;
+			ret.setId(sj.getId());
+			return ret;
+		}
+		String faultString = "Unprocessable Entity";
+		String faultCodeValue = "422";
+		QName faultCode = new QName("http://service.agent.megatravel.com/", faultCodeValue);
+		SOAPFault soapFault = null;
+		try {
+			soapFault = SOAPFactory.newInstance(SOAPConstants.SOAP_1_1_PROTOCOL).createFault(faultString, faultCode);
+			throw new javax.xml.ws.soap.SOAPFaultException(soapFault);
+		} catch (SOAPException e1) {
+			throw e1;
+		}
+	}
+
+
+	@Override
+	public boolean editAccommodationUnit(SJedinicaXMLDTO accommodationUnit) throws SOAPFaultException, SOAPException {
+		SJedinica sj=sJedinicaRepository.findById(accommodationUnit.getId()).orElse(null);
+		if(accommodationUnit.getUsername().equals(sj.getSmestaj().getAgent().getUsername())){
+			sj.setBroj(accommodationUnit.getBroj());
+			sj.setBrojKreveta(accommodationUnit.getBrojKreveta());
+			sj.setCena(accommodationUnit.getCena());
+			sj.setDostupnost(accommodationUnit.getDostupnost());
+			sJedinicaRepository.save(sj);
+
+			return true;
+		}
+		String faultString = "Unprocessable Entity";
+		String faultCodeValue = "422";
 		QName faultCode = new QName("http://service.agent.megatravel.com/", faultCodeValue);
 		SOAPFault soapFault = null;
 		try {

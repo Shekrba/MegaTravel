@@ -5,6 +5,7 @@ package com.megatravel.agent.service;
 
 
 
+import com.megatravel.agent.xml.dto.SJedinicaXMLDTO;
 import com.megatravel.agent.xml.dto.SmestajXMLDTO;
 import com.megatravel.agent.xml.dto.UserCredentialsXMLDTO;
 
@@ -26,5 +27,22 @@ public interface AgentService {
 
 	@WebMethod(action = "addAccommodation")
 	@WebResult(name = "Accommodation")
-	public SmestajXMLDTO addAccommodation(@WebParam(name = "AccommodationRequest") SmestajXMLDTO accommodation) throws SOAPFaultException, SOAPException;
+	public SmestajXMLDTO addAccommodation(@WebParam(name = "Accommodation") SmestajXMLDTO accommodation) throws SOAPFaultException, SOAPException;
+
+
+	@WebMethod(action = "editAccommodation")
+	@WebResult(name = "ResultIsSuccessful")
+	public boolean editAccommodation(@WebParam(name = "Accommodation") SmestajXMLDTO accommodation) throws SOAPFaultException, SOAPException;
+
+
+	@WebMethod(action = "addAccommodationUnit")
+	@WebResult(name = "AccommodationUnit")
+	public SJedinicaXMLDTO addAccommodationUnit(@WebParam(name = "AccommodationUnit") SJedinicaXMLDTO accommodationUnit) throws SOAPFaultException, SOAPException;
+
+
+	@WebMethod(action = "editAccommodationUnit")
+	@WebResult(name = "ResultIsSuccessful")
+	public boolean editAccommodationUnit(@WebParam(name = "AccommodationUnit") SJedinicaXMLDTO accommodationUnit) throws SOAPFaultException, SOAPException;
+
+
 }

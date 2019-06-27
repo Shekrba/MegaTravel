@@ -4,7 +4,9 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.megatravel.agent.xml.dto.AccomodationTypeXMLDTO;
 
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 public class AccomodationType {
@@ -17,7 +19,7 @@ public class AccomodationType {
     private String naziv;
 
     @OneToMany(mappedBy = "accomodationType")
-    private List<Smestaj> smestajList;
+    private Set<Smestaj> smestajList = new HashSet<>();
 
     public AccomodationType() {}
 
@@ -39,12 +41,12 @@ public class AccomodationType {
     }
 
 
-    public List<Smestaj> getSmestajList() {
+    public Set<Smestaj> getSmestajList() {
         return smestajList;
     }
 
     @JsonIgnore
-    public void setSmestajList(List<Smestaj> smestajList) {
+    public void setSmestajList(Set<Smestaj> smestajList) {
         this.smestajList = smestajList;
     }
 

@@ -15,7 +15,9 @@ import org.springframework.security.core.userdetails.UserDetails;
 import javax.persistence.*;
 import java.sql.Timestamp;
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 
 @Entity
@@ -58,7 +60,7 @@ public class User implements UserDetails {
     private List<Authority> authorities;
 
     @OneToMany(mappedBy = "agent")
-    private List<Smestaj> smestaji;
+    private Set<Smestaj> smestaji = new HashSet<>();
 
 
     public User() {
@@ -66,11 +68,11 @@ public class User implements UserDetails {
     }
 
 
-    public List<Smestaj> getSmestaji() {
+    public Set<Smestaj> getSmestaji() {
         return smestaji;
     }
 
-    public void setSmestaji(List<Smestaj> smestaji) {
+    public void setSmestaji(Set<Smestaj> smestaji) {
         this.smestaji = smestaji;
     }
 

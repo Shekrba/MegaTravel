@@ -105,5 +105,4 @@ INSERT INTO poruka(id, datum_slanja, naslov, posaljilac, primalac, sadrzaj, stat
 
 
 
-
 */

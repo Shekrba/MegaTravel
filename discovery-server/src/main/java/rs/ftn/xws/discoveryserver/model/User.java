@@ -7,6 +7,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import javax.persistence.*;
 import java.sql.Timestamp;
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -55,6 +56,11 @@ public class User implements UserDetails {
     @OneToMany(mappedBy = "korisnik")
     protected Set<Rezervacija> rezervacija;
 
+    @OneToMany(mappedBy = "primalac")
+    private Set<Poruka> received = new HashSet<>();
+    @OneToMany(mappedBy = "posiljalac")
+    private Set<Poruka> sent = new HashSet<>();
+
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinTable(name = "user_authority",
             joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
@@ -62,10 +68,26 @@ public class User implements UserDetails {
     private List<Authority> authorities;
 
     @OneToMany(mappedBy = "agent")
-    private List<Smestaj> smestaji;
+    private Set<Smestaj> smestaji=new HashSet<>();
 
     public User() {
 
+    }
+
+    public Set<Poruka> getReceived() {
+        return received;
+    }
+
+    public void setReceived(Set<Poruka> received) {
+        this.received = received;
+    }
+
+    public Set<Poruka> getSent() {
+        return sent;
+    }
+
+    public void setSent(Set<Poruka> sent) {
+        this.sent = sent;
     }
 
     public void setEnabled(boolean enabled) {
@@ -92,6 +114,14 @@ public class User implements UserDetails {
 
     public void setLastPasswordResetDate(Timestamp lastPasswordResetDate) {
         this.lastPasswordResetDate = lastPasswordResetDate;
+    }
+
+    public Set<Smestaj> getSmestaji() {
+        return smestaji;
+    }
+
+    public void setSmestaji(Set<Smestaj> smestaji) {
+        this.smestaji = smestaji;
     }
 
     public Long getId() {

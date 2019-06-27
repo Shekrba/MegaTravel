@@ -41,8 +41,33 @@ public class SJedinica {
     @Column(name = "broj", unique = false, nullable = false)
     private int broj;
 
+    public SJedinica(){
 
+    }
 
+    public Boolean getDostupnost() {
+        return dostupnost;
+    }
+
+    public void setDostupnost(Boolean dostupnost) {
+        this.dostupnost = dostupnost;
+    }
+
+    public Smestaj getSmestaj() {
+        return smestaj;
+    }
+
+    public void setSmestaj(Smestaj smestaj) {
+        this.smestaj = smestaj;
+    }
+
+    public int getBroj() {
+        return broj;
+    }
+
+    public void setBroj(int broj) {
+        this.broj = broj;
+    }
 
     public double getCena() {
         return cena;
@@ -64,14 +89,7 @@ public class SJedinica {
     }
 
 
-    public boolean isDostupnost() {
-        return dostupnost;
-    }
 
-
-    public void setDostupnost(boolean value) {
-        this.dostupnost = value;
-    }
 
 
     public Long getId() {

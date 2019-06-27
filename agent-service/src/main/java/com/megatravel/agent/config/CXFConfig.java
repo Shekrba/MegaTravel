@@ -35,7 +35,8 @@ public class CXFConfig {
     public Endpoint endpoint() {
         EndpointImpl ep = new EndpointImpl(springBus(), agentService);
         ep.getFeatures().add(new LoggingFeature());
-        ep.publish("/api");
+        //ep.getProperties().put("schema-validation-enabled",true);
+        ep.publish("/");
         return ep;
     }
 
