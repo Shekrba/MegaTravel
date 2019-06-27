@@ -40,7 +40,7 @@ public class Adresa {
     @GeneratedValue(strategy = GenerationType.AUTO)
     protected Long id;
 
-    @OneToOne(mappedBy="adresa",fetch=FetchType.EAGER, cascade=CascadeType.ALL, optional=true)
+    @OneToOne(mappedBy="adresa",fetch=FetchType.EAGER, optional=true)
     protected Smestaj smestaj;
 
    public double getLatitude() {

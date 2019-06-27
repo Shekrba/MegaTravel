@@ -15,8 +15,9 @@ import com.megatravel.agent.xml.dto.UslugaXMLDTO;
 import javax.persistence.*;
 import javax.xml.bind.annotation.*;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
-
+import java.util.Set;
 
 
 @Entity
@@ -41,14 +42,14 @@ public class Usluga {
 
     @ManyToMany(mappedBy = "uslugaList")
     @JsonIgnore
-    private List<Smestaj> smestajList = new ArrayList<>();
+    private Set<Smestaj> smestajList = new HashSet<>();
 
 
-    public List<Smestaj> getSmestaj() {
+    public Set<Smestaj> getSmestaj() {
         return smestajList;
     }
 
-    public void setSmestaj(List<Smestaj> smestaj) {
+    public void setSmestaj(Set<Smestaj> smestaj) {
         this.smestajList = smestaj;
     }
 
@@ -97,6 +98,6 @@ public class Usluga {
         this.cena=uXML.getCena();
         this.id=uXML.getId();
         this.naziv=uXML.getNaziv();
-        this.smestajList=new ArrayList<>();
+        this.smestajList=new HashSet<>();
     }
 }

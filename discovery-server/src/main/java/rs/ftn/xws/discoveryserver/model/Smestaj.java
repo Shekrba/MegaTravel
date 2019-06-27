@@ -15,7 +15,9 @@ import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlSchemaType;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 
 @Entity
@@ -24,13 +26,13 @@ public class Smestaj {
     @Column(name = "naziv", unique = false, nullable = false)
     private String naziv;
 
-    @OneToMany(mappedBy = "smestaj")
-    private List<SJedinica> sJedinica;
+    @OneToMany(mappedBy = "smestaj", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    private Set<SJedinica> sJedinica = new HashSet<>();
 
-    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.EAGER)
     private AccomodationType accomodationType;
 
-    @OneToOne(fetch=FetchType.LAZY, cascade=CascadeType.ALL, optional=true)
+    @OneToOne(fetch=FetchType.EAGER, cascade=CascadeType.ALL, optional=true)
     private Adresa adresa;
 
     @Column(name = "opis", unique = false, nullable = true)
@@ -43,7 +45,7 @@ public class Smestaj {
             inverseJoinColumns = @JoinColumn(name = "service_id")
     )
     @JsonIgnore
-    private List<Usluga> uslugaList = new ArrayList<>();
+    private Set<Usluga> uslugaList = new HashSet<>();
 
     @Column(name = "periodOtkaza", unique = false, nullable = false)
     private int periodOtkaza;
@@ -55,11 +57,6 @@ public class Smestaj {
     @ManyToOne(fetch = FetchType.EAGER)
     private Category category;
 
-    @OneToMany(
-            mappedBy = "smestaj",
-            fetch = FetchType.LAZY,
-            cascade = CascadeType.ALL
-    )
 
     @ManyToOne(fetch = FetchType.LAZY)
     private User agent;
@@ -73,31 +70,21 @@ public class Smestaj {
         this.naziv = naziv;
     }
 
-    public List<SJedinica> getsJedinica() {
+    public Set<SJedinica> getsJedinica() {
         return sJedinica;
     }
 
-    public void setsJedinica(List<SJedinica> sJedinica) {
+    public void setsJedinica(Set<SJedinica> sJedinica) {
         this.sJedinica = sJedinica;
     }
 
-    public List<Usluga> getUsluge() {
+    public Set<Usluga> getUsluge() {
         return getUslugaList();
     }
 
     @JsonIgnore
-    public void setUsluge(List<Usluga> usluge) {
+    public void setUsluge(Set<Usluga> usluge) {
         this.setUslugaList(usluge);
-    }
-
-
-
-
-    public List<SJedinica> getSJedinica() {
-        if (getsJedinica() == null) {
-            setsJedinica(new ArrayList<SJedinica>());
-        }
-        return this.getsJedinica();
     }
 
 
@@ -162,12 +149,12 @@ public class Smestaj {
         this.accomodationType = accomodationType;
     }
 
-    public List<Usluga> getUslugaList() {
+    public Set<Usluga> getUslugaList() {
         return uslugaList;
     }
 
     @JsonIgnore
-    public void setUslugaList(List<Usluga> uslugaList) {
+    public void setUslugaList(Set<Usluga> uslugaList) {
         this.uslugaList = uslugaList;
     }
 

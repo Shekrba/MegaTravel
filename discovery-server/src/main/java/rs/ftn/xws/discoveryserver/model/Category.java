@@ -4,7 +4,9 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 
 @Entity
@@ -21,8 +23,8 @@ public class Category {
     @Column(name="vrednost", nullable = false)
     private int vrednost;
 
-    @OneToMany(mappedBy = "category", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private List<Smestaj> smestajList = new ArrayList<>();
+    @OneToMany(mappedBy = "category", fetch = FetchType.LAZY)
+    private Set<Smestaj> smestajList = new HashSet<>();
 
     @ManyToMany
     @JoinTable(
@@ -53,12 +55,12 @@ public class Category {
     }
 
 
-    public List<Smestaj> getSmestajList() {
+    public Set<Smestaj> getSmestajList() {
         return smestajList;
     }
 
     @JsonIgnore
-    public void setSmestajList(List<Smestaj> smestajList) {
+    public void setSmestajList(Set<Smestaj> smestajList) {
         this.smestajList = smestajList;
     }
 
