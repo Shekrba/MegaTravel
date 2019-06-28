@@ -1,0 +1,42 @@
+<div class="container">
+	<div class="row mt-5">
+      <div class="col-md-6 col-md-offset-3  ml-auto mr-auto mt-5">
+        <div class="well well-sm">
+          <fieldset>
+            
+            <div class="col-md-11 control-label">
+              <legend class="text-center">New Message</legend>
+            </div>
+            
+            <div class="form-group">
+              <label class="col-md-11 control-label">From:</label>
+              <div class="col-md-11">
+                <input type="text" readonly value="{{authService.currentUserValue.username}}" class="form-control">
+              </div>
+            </div>
+    
+            <div class="form-group">
+              <label class="col-md-11 control-label">To:</label>
+              <div class="col-md-11">
+                <input type="text" readonly value="agent" class="form-control">
+              </div>
+            </div>
+    
+            <!-- Message body -->
+            <div class="form-group">
+              <label class="col-md-11 control-label">Your message:</label>
+              <div class="col-md-11">
+                <textarea class="form-control" [(ngModel)]="message.text" placeholder="Please enter your message here..." rows="5"></textarea>
+              </div>
+            </div>
+    
+            <div class="form-group">
+              <div class="col-md-11 text-right">
+                <button type="submit" (click)="newMessage()" class="btn btn-primary btn-lg">Submit</button>
+              </div>
+            </div>
+          </fieldset>
+        </div>
+      </div>
+	</div>
+</div>

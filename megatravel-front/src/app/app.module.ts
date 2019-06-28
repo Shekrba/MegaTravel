@@ -17,6 +17,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ToastrModule } from 'ngx-toastr';
 import { ReservationComponent } from './reservation/reservation.component';
 import { ManageReservationsComponent } from './manage-reservations/manage-reservations.component';
+import { NewMessageComponent } from './new-message/new-message.component';
+import { MessagesComponent } from './messages/messages.component';
 
 @NgModule({
   declarations: [
@@ -30,6 +32,8 @@ import { ManageReservationsComponent } from './manage-reservations/manage-reserv
     RatingsComponent,
     ReservationComponent,
     ManageReservationsComponent,
+    NewMessageComponent,
+    MessagesComponent,
   ],
   imports: [
     BrowserModule,

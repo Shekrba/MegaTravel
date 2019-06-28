@@ -1,5 +1,6 @@
 package com.megatravel.agent.config;
 
+import com.megatravel.agent.service.LoginServiceImpl;
 import com.megatravel.agent.service.interceptors.AppInboundInterceptor;
 import com.megatravel.agent.service.interceptors.AppOutboundInterceptor;
 import com.megatravel.agent.service.AgentServiceImpl;
@@ -22,6 +23,9 @@ public class CXFConfig {
     }*/
     @Autowired
     AgentServiceImpl agentService;
+
+    @Autowired
+    LoginServiceImpl loginService;
 	
     @Bean(name= Bus.DEFAULT_BUS_ID)
     public SpringBus springBus() {
@@ -37,6 +41,15 @@ public class CXFConfig {
         ep.getFeatures().add(new LoggingFeature());
         //ep.getProperties().put("schema-validation-enabled",true);
         ep.publish("/");
+        return ep;
+    }
+
+    @Bean
+    public Endpoint endpointLogin() {
+        EndpointImpl ep = new EndpointImpl(springBus(), loginService);
+        ep.getFeatures().add(new LoggingFeature());
+        //ep.getProperties().put("schema-validation-enabled",true);
+        ep.publish("/login");
         return ep;
     }
 

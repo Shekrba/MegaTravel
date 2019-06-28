@@ -157,4 +157,21 @@ export class HotelServiceService {
     return this.http.delete(this.ALL_RESERVATIONS_URL+"/"+id,{responseType: 'text'});
   }
 
+  newMessage(body): Observable<any>{
+    return this.http.post(this.ALL_RESERVATIONS_URL+"/message",body,{
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json'
+      }),
+      responseType: 'text'
+    });
+  }
+
+  getInboxMessages(id): Observable<any>{
+    return this.http.get(this.ALL_RESERVATIONS_URL+"/message/inbox/"+id);
+  }
+
+  getSentMessages(id): Observable<any>{
+    return this.http.get(this.ALL_RESERVATIONS_URL+"/message/sent/"+id);
+  }
+
 }

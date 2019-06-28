@@ -20,10 +20,6 @@ import javax.xml.ws.soap.SOAPFaultException;
 @WebService(serviceName = "AgentService")
 public interface AgentService {
 
-	@WebMethod(action = "firstLogin")
-	@WebResult(name = "Success")
-	public String firstLogin(@WebParam(name = "LoginRequest") UserCredentialsXMLDTO credentials) throws SOAPFaultException, SOAPException;
-
 
 	@WebMethod(action = "addAccommodation")
 	@WebResult(name = "Accommodation")
