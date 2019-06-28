@@ -13,9 +13,9 @@ import { LoginService } from '../../services/login.service';
 export class AccomodationImagesComponent implements OnInit {
 
   idAccomodation : number;
-  images : Array<any> = [];
+  sources : Array<any> = [];
   src : string = '';
-
+  images : Array<any> = [];
 
   constructor(
       private route : ActivatedRoute,
@@ -26,14 +26,16 @@ export class AccomodationImagesComponent implements OnInit {
     this.idAccomodation = parseInt(this.route.snapshot.paramMap.get("id"));
     this.accomodationService.getImages(this.idAccomodation).subscribe(
      data => {
-      this.images = data;
-      this.images.forEach(el => el = `data:image/jpeg;base64,${el}`);
-      this.src = this.images[0];
+      this.sources = data;
+      let imgs = [];
+      this.sources.forEach(el => imgs.push(`data:image/jpeg;base64,${el}`));
+      this.images = imgs;
      }
     );
   }
 
   ngOnInit() {
+    
   }
 
 }
