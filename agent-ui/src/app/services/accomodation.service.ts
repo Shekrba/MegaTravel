@@ -9,6 +9,7 @@ import { AccomodationUnit } from '../model/AccomodationUnit';
 import { Occupancy } from '../model/Occupancy';
 import { Message } from '../model/Message';
 import { Picture } from '../model/Picture';
+import { Cenovnik } from '../model/Cenovnik';
 
 
 const httpOptions = {
@@ -105,6 +106,10 @@ export class AccomodationService {
 
   getImages( id:number ) : Observable<any> {
     return this.http.get(`${ROOT_URL}/images/${id}`);  
+  }
+
+  setCenovnik(id:number, body: Cenovnik) : Observable<any> {
+    return this.http.post(`${ROOT_URL}/pricelist/${id}`,body);
   }
 
 

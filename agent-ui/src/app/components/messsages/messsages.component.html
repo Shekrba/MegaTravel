@@ -7,7 +7,7 @@
   <div  class="messageContainer">
     <div id="user"><p id="userName">{{message.posaljilac}}</p></div>
     <div id="header">
-      <p id="headerPar">{{message.naslov}}<p>
+      <p id="headerPar">{{message.naslov}} &nbsp;&nbsp; &nbsp;&nbsp;<span id="message">{{message.sadrzaj}}</span> <p>
     </div>
     <div id="operations">
       <button style="float: right; text-align: center;" (click)="reply(message.id)" type="button" class="btn btn-link">Reply</button> 

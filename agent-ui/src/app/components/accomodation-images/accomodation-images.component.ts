@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from "@angular/router";
 
 import { AccomodationService } from '../../services/accomodation.service';
 import { LoginService } from '../../services/login.service';
+import { Accomodation } from '../../model/Accomodation';
 
 
 @Component({
@@ -16,6 +17,8 @@ export class AccomodationImagesComponent implements OnInit {
   sources : Array<any> = [];
   src : string = '';
   images : Array<any> = [];
+  accomodation : Accomodation = new Accomodation();
+  
 
   constructor(
       private route : ActivatedRoute,
@@ -32,10 +35,19 @@ export class AccomodationImagesComponent implements OnInit {
       this.images = imgs;
      }
     );
+    this.accomodationService.getAccomodation(this.idAccomodation).subscribe(
+      data => this.accomodation = data
+    );
+
   }
 
   ngOnInit() {
     
   }
 
+  back() : void {
+    this.loginService.setShowMenu(true);
+    this.router.navigate(['/accomodations']);
+  }
+  
 }

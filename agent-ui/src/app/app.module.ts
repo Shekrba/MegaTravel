@@ -22,6 +22,7 @@ import { MesssagesComponent } from './components/messsages/messsages.component';
 import { MessageComponent } from './components/message/message.component';
 import { OccupancyComponent } from './components/occupancy/occupancy.component';
 import { AccomodationImagesComponent } from './components/accomodation-images/accomodation-images.component';
+import { CenovnikComponent } from './components/cenovnik/cenovnik.component';
 
 @NgModule({
   declarations: [
@@ -38,7 +39,8 @@ import { AccomodationImagesComponent } from './components/accomodation-images/ac
     MesssagesComponent,
     MessageComponent,
     OccupancyComponent,
-    AccomodationImagesComponent
+    AccomodationImagesComponent,
+    CenovnikComponent
   ],
   imports: [
     BrowserModule,

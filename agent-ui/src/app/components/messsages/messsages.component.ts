@@ -26,12 +26,16 @@ export class MesssagesComponent implements OnInit {
   }
 
   ngOnInit() {
+    
+
   }
 
   reply(id: number) : void {
     this.loginService.setShowMenu(false);
     this.router.navigate(['/message', id]);
   }
+
+  
 
   
 
