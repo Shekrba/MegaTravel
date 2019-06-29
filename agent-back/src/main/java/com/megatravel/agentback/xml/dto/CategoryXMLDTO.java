@@ -2,6 +2,8 @@
 package com.megatravel.agentback.xml.dto;
 
 import javax.xml.bind.annotation.*;
+import java.util.ArrayList;
+import java.util.List;
 
 
 /**
@@ -16,6 +18,7 @@ import javax.xml.bind.annotation.*;
  *       &lt;sequence>
  *         &lt;element name="naziv" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *         &lt;element name="vrednost" type="{http://www.w3.org/2001/XMLSchema}int"/>
+ *         &lt;element name="usluge" type="{http://www.w3.org/2001/XMLSchema}long" maxOccurs="unbounded" minOccurs="0"/>
  *       &lt;/sequence>
  *       &lt;attribute name="id" use="required" type="{http://www.w3.org/2001/XMLSchema}anySimpleType" />
  *     &lt;/restriction>
@@ -28,12 +31,15 @@ import javax.xml.bind.annotation.*;
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "categoryXMLDTO", propOrder = {
     "naziv",
-    "vrednost"
+    "vrednost",
+    "usluge"
 })
 public class CategoryXMLDTO {
 
     protected String naziv;
     protected int vrednost;
+    @XmlElement(nillable = true)
+    protected List<Long> usluge;
     @XmlAttribute(name = "id", required = true)
     @XmlSchemaType(name = "anySimpleType")
     protected String id;
@@ -76,6 +82,35 @@ public class CategoryXMLDTO {
      */
     public void setVrednost(int value) {
         this.vrednost = value;
+    }
+
+    /**
+     * Gets the value of the usluge property.
+     * 
+     * <p>
+     * This accessor method returns a reference to the live list,
+     * not a snapshot. Therefore any modification you make to the
+     * returned list will be present inside the JAXB object.
+     * This is why there is not a <CODE>set</CODE> method for the usluge property.
+     * 
+     * <p>
+     * For example, to add a new item, do as follows:
+     * <pre>
+     *    getUsluge().add(newItem);
+     * </pre>
+     * 
+     * 
+     * <p>
+     * Objects of the following type(s) are allowed in the list
+     * {@link Long }
+     * 
+     * 
+     */
+    public List<Long> getUsluge() {
+        if (usluge == null) {
+            usluge = new ArrayList<Long>();
+        }
+        return this.usluge;
     }
 
     /**

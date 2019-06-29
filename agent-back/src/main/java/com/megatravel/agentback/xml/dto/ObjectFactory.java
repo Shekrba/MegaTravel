@@ -10,7 +10,7 @@ import javax.xml.namespace.QName;
 /**
  * This object contains factory methods for each 
  * Java content interface and Java element interface 
- * generated in the client4 package. 
+ * generated in the client2 package. 
  * <p>An ObjectFactory allows you to programatically 
  * construct new instances of the Java representation 
  * for XML content. The Java representation of XML 
@@ -26,6 +26,7 @@ public class ObjectFactory {
 
     private final static QName _SyncUslugeResponse_QNAME = new QName("http://service.agent.megatravel.com/", "syncUslugeResponse");
     private final static QName _PollingPorukeResponse_QNAME = new QName("http://service.agent.megatravel.com/", "pollingPorukeResponse");
+    private final static QName _SyncCategoriesResponse_QNAME = new QName("http://service.agent.megatravel.com/", "syncCategoriesResponse");
     private final static QName _SendPoruka_QNAME = new QName("http://service.agent.megatravel.com/", "sendPoruka");
     private final static QName _CategoryXMLDTO_QNAME = new QName("http://service.agent.megatravel.com/", "CategoryXMLDTO");
     private final static QName _SendPorukaResponse_QNAME = new QName("http://service.agent.megatravel.com/", "sendPorukaResponse");
@@ -48,6 +49,7 @@ public class ObjectFactory {
     private final static QName _AddAccommodationUnit_QNAME = new QName("http://service.agent.megatravel.com/", "addAccommodationUnit");
     private final static QName _AdresaXMLDTO_QNAME = new QName("http://service.agent.megatravel.com/", "AdresaXMLDTO");
     private final static QName _AddAccommodationUnitResponse_QNAME = new QName("http://service.agent.megatravel.com/", "addAccommodationUnitResponse");
+    private final static QName _SyncCategories_QNAME = new QName("http://service.agent.megatravel.com/", "syncCategories");
     private final static QName _SyncUsluge_QNAME = new QName("http://service.agent.megatravel.com/", "syncUsluge");
     private final static QName _MakeReservation_QNAME = new QName("http://service.agent.megatravel.com/", "makeReservation");
     private final static QName _AccomodationTypeXMLDTO_QNAME = new QName("http://service.agent.megatravel.com/", "AccomodationTypeXMLDTO");
@@ -79,10 +81,6 @@ public class ObjectFactory {
         return new FirstLogin();
     }
 
-    /**
-     * Create an instance of {@link SOAPException }
-     *
-     */
 
 
     /**
@@ -144,6 +142,14 @@ public class ObjectFactory {
      */
     public SendPoruka createSendPoruka() {
         return new SendPoruka();
+    }
+
+    /**
+     * Create an instance of {@link SyncCategoriesResponse }
+     * 
+     */
+    public SyncCategoriesResponse createSyncCategoriesResponse() {
+        return new SyncCategoriesResponse();
     }
 
     /**
@@ -331,6 +337,14 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link SyncCategories }
+     * 
+     */
+    public SyncCategories createSyncCategories() {
+        return new SyncCategories();
+    }
+
+    /**
      * Create an instance of {@link AdresaXMLDTO }
      * 
      */
@@ -354,6 +368,15 @@ public class ObjectFactory {
     @XmlElementDecl(namespace = "http://service.agent.megatravel.com/", name = "pollingPorukeResponse")
     public JAXBElement<PollingPorukeResponse> createPollingPorukeResponse(PollingPorukeResponse value) {
         return new JAXBElement<PollingPorukeResponse>(_PollingPorukeResponse_QNAME, PollingPorukeResponse.class, null, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link SyncCategoriesResponse }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://service.agent.megatravel.com/", name = "syncCategoriesResponse")
+    public JAXBElement<SyncCategoriesResponse> createSyncCategoriesResponse(SyncCategoriesResponse value) {
+        return new JAXBElement<SyncCategoriesResponse>(_SyncCategoriesResponse_QNAME, SyncCategoriesResponse.class, null, value);
     }
 
     /**
@@ -552,6 +575,15 @@ public class ObjectFactory {
     @XmlElementDecl(namespace = "http://service.agent.megatravel.com/", name = "addAccommodationUnitResponse")
     public JAXBElement<AddAccommodationUnitResponse> createAddAccommodationUnitResponse(AddAccommodationUnitResponse value) {
         return new JAXBElement<AddAccommodationUnitResponse>(_AddAccommodationUnitResponse_QNAME, AddAccommodationUnitResponse.class, null, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link SyncCategories }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://service.agent.megatravel.com/", name = "syncCategories")
+    public JAXBElement<SyncCategories> createSyncCategories(SyncCategories value) {
+        return new JAXBElement<SyncCategories>(_SyncCategories_QNAME, SyncCategories.class, null, value);
     }
 
     /**

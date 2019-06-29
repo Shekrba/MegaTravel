@@ -48,6 +48,10 @@ public interface AgentService {
 	@WebResult(name = "Usluge")
 	public List<UslugaXMLDTO> syncUsluge() throws SOAPFaultException, SOAPException;
 
+	@WebMethod(action = "syncUsluge")
+	@WebResult(name = "Categories")
+	public List<CategoryXMLDTO> syncCategories() throws SOAPFaultException, SOAPException;
+
 
 	@WebMethod(action = "pollingPoruke")
 	@WebResult(name = "Poruke")
