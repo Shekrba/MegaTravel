@@ -77,5 +77,5 @@ public class SJedinicaXMLDTO {
 
     private int broj;
 
-    private String username;
+
 }
