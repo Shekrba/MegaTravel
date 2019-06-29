@@ -43,9 +43,12 @@ public class RezervacijaServiceImpl implements  RezervacijaService {
 
         SJedinica check = sJedinicaRepository.findIfTaken(rezervacija.getFrom(),rezervacija.getTo(),rezervacija.getSjedinicaId());
 
+
         if(check != null){
             return null;
         }
+
+        System.out.println("USAOOOOOOOOO");
 
         Rezervacija rez = new Rezervacija();
 

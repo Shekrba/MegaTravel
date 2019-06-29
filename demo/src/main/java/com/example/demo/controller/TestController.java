@@ -32,10 +32,11 @@ public class TestController {
         sXML.setPeriodOtkaza(100);
         sXML.setUsername("agent");
         AddAccommodationResponse ret=null;
+
         try{
             ret=agentClient.addSmestaj(sXML);
         } catch (SoapFaultClientException e) {
-            e.printStackTrace();
+            ResponseEntity responseEntity=new ResponseEntity(HttpStatus.valueOf(e.getFaultCode().getLocalPart()));
         }
         return new ResponseEntity(ret, HttpStatus.OK);
     }
