@@ -74,10 +74,6 @@ export class HotelsComponent implements OnInit {
   }
 
   public filterHotels(){
-
-    console.log((new Date(this.filter.dateFrom)));
-    console.log(this.minDate);
-
     if((new Date(this.filter.dateFrom)) < this.minDate && this.filter.dateFrom != null){      
       this.toastr.error("From Date can't be lower than Today");
       return;

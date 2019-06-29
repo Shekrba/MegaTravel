@@ -143,7 +143,7 @@ public class AdminServiceImpl implements  AdminService{
         newUser.setPrezime(agent.getPrezime());
         newUser.setEmail(agent.getEmail());
         newUser.setUsername(agent.getUsername());
-        newUser.setPassword(passwordEncoder.encode(agent.getPassword()));
+        newUser.setPassword(passwordEncoder.encode("12345"));
         Authority authority = authorityRepository.findOneByName("ROLE_AGENT");
         List<Authority> authorities = new ArrayList<>();
         authorities.add(authority);

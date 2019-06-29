@@ -56,5 +56,11 @@ public class AuthenticationController {
 
 	}
 
+	@RequestMapping(value = "/register", method = RequestMethod.POST)
+	public UserDTO register(@RequestBody UserDTO userDTO)
+	{
+		return loginService.register(userDTO);
+	}
+
 
 }

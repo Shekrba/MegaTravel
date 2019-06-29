@@ -16,6 +16,7 @@ export class HotelServiceService {
   private GOOGLE_CLOUD = "https://us-central1-megatravel-244015.cloudfunctions.net"
   private ALL_RESERVATIONS_URL = "http://localhost:8762/reservation-service/api/reservations"
   private USERNAME_URL = "http://localhost:8762/search-service/api/user"
+  private REGISTER_URL = "http://localhost:8762/login-service/auth/register"
 
   from : string = null;
   to: string = null;
@@ -75,6 +76,16 @@ export class HotelServiceService {
         'Content-Type': 'application/json',
       }),
       responseType : 'text'
+    });
+  }
+
+  register(user): Observable<any>{
+    console.log(user);
+    
+    return this.http.post(this.REGISTER_URL,user,{
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json'
+      })
     });
   }
 
