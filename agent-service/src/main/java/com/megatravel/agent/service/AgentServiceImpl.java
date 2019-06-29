@@ -63,6 +63,9 @@ public class AgentServiceImpl implements AgentService {
 	@Autowired
 	PorukaRepository porukaRepository;
 
+	@Autowired
+	CategoryRepository categoryRepository;
+
 
 	@Override
 	public SmestajXMLDTO addAccommodation(SmestajXMLDTO accommodation) throws SOAPFaultException, SOAPException {
@@ -227,7 +230,40 @@ public class AgentServiceImpl implements AgentService {
 
 	@Override
 	public List<UslugaXMLDTO> syncUsluge() throws SOAPFaultException, SOAPException {
-		List<UslugaXMLDTO> ret=ObjectMapperUtils.mapAll(uslugaRepository.findAll(),UslugaXMLDTO.class);
+		List<Usluga> usluge=uslugaRepository.findAll();
+		List<UslugaXMLDTO> ret=new ArrayList<UslugaXMLDTO>();
+		for(Usluga u : usluge){
+			ArrayList<Long> kategorije=new ArrayList<>();
+			for(Category c : u.getCategoryList()){
+				kategorije.add(c.getId());
+			}
+			UslugaXMLDTO uDTO=new UslugaXMLDTO();
+			uDTO.setCena(u.getCena());
+			uDTO.setId(u.getId());
+			uDTO.setNaziv(u.getNaziv());
+			uDTO.setOpis(u.getOpis());
+			uDTO.setCategories(kategorije);
+			ret.add(uDTO);
+		}
+		return ret;
+	}
+
+	@Override
+	public List<CategoryXMLDTO> syncCategories() throws SOAPFaultException, SOAPException {
+		List<Category> categories=categoryRepository.findAll();
+		List<CategoryXMLDTO> ret=new ArrayList<CategoryXMLDTO>();
+		for(Category c : categories){
+			ArrayList<Long> usluge=new ArrayList<>();
+			for(Usluga u : c.getUslugaList()){
+				usluge.add(u.getId());
+			}
+			CategoryXMLDTO cDTO=new CategoryXMLDTO();
+			cDTO.setId(c.getId());
+			cDTO.setNaziv(c.getNaziv());
+			cDTO.setVrednost(c.getVrednost());
+			cDTO.setUsluge(usluge);
+			ret.add(cDTO);
+		}
 		return ret;
 	}
 

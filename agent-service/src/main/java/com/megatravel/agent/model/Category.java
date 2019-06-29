@@ -27,11 +27,24 @@ public class Category {
     private Set<Smestaj> smestajList = new HashSet<>();
 
 
+    @ManyToMany
+    @JoinTable(
+            name = "category_service",
+            joinColumns = @JoinColumn(name = "category_id"),
+            inverseJoinColumns = @JoinColumn(name = "service_id"))
+    private List<Usluga> uslugaList = new ArrayList<>();
 
     public Category() {
 
     }
 
+    public List<Usluga> getUslugaList() {
+        return uslugaList;
+    }
+
+    public void setUslugaList(List<Usluga> uslugaList) {
+        this.uslugaList = uslugaList;
+    }
 
     public Long getId() {
         return id;

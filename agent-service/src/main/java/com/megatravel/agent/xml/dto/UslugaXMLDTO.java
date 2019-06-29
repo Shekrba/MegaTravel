@@ -5,6 +5,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.xml.bind.annotation.*;
+import java.util.List;
 
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlRootElement(name = "UslugaXMLDTO")
@@ -22,5 +23,7 @@ public class UslugaXMLDTO {
     @XmlAttribute(name = "id", required = true)
     @XmlSchemaType(name = "anySimpleType")
     private Long id;
+
+    List<Long> categories;
 
 }

@@ -45,6 +45,30 @@ public class Usluga {
     private Set<Smestaj> smestajList = new HashSet<>();
 
 
+
+    @ManyToMany(mappedBy = "uslugaList")
+    private List<Category> categoryList = new ArrayList<>();
+
+    public Usluga(){
+
+    }
+
+    public Set<Smestaj> getSmestajList() {
+        return smestajList;
+    }
+
+    public void setSmestajList(Set<Smestaj> smestajList) {
+        this.smestajList = smestajList;
+    }
+
+    public List<Category> getCategoryList() {
+        return categoryList;
+    }
+
+    public void setCategoryList(List<Category> categoryList) {
+        this.categoryList = categoryList;
+    }
+
     public Set<Smestaj> getSmestaj() {
         return smestajList;
     }
