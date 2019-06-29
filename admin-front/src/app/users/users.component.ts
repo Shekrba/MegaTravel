@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Data } from '@angular/router';
 import { AdminServiceService } from '../admin-service.service';
+import { AuthenticationService } from '../_services/authentication.service';
 
 @Component({
   selector: 'app-users',
@@ -15,7 +16,7 @@ export class UsersComponent implements OnInit {
     status : null
   }]
 
-  constructor(private adminService: AdminServiceService) { }
+  constructor(private adminService: AdminServiceService, private authService:AuthenticationService) { }
 
   ngOnInit() {
     this.getAllUsers();

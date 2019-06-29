@@ -22,7 +22,7 @@ const routes: Routes = [
   { path: 'types', component: TypesComponent , canActivate:[AuthGuard]},
   { path: 'categorization', component: CategorizationComponent , canActivate:[AuthGuard]},
   { path: 'admin', component: AdminComponent , canActivate:[AuthGuard]},
-  { path: 'login', component: LoginComponent },
+  { path: 'login', component: LoginComponent},
   { path: '**', redirectTo: 'login' }
 ];
 

@@ -1,6 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { AuthenticationService } from './_services/authentication.service';
 import { Router } from '@angular/router';
+import { AdminServiceService } from './admin-service.service';
 
 @Component({
   selector: 'app-root',
@@ -12,8 +13,10 @@ export class AppComponent {
 
   constructor(
     private router: Router,
-    private authenticationService: AuthenticationService
-  ) { }
+    private authenticationService: AuthenticationService,
+    private adminService:AdminServiceService
+  ) { 
+  }
 
   logout() {
     this.authenticationService.logout();
