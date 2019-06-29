@@ -68,7 +68,7 @@ public class AgentServiceImpl implements AgentService {
 	public SmestajXMLDTO addAccommodation(SmestajXMLDTO accommodation) throws SOAPFaultException, SOAPException {
 		Message message=PhaseInterceptorChain.getCurrentMessage();
 		HttpServletRequest request=(HttpServletRequest)message.get(AbstractHTTPDestination.HTTP_REQUEST);
-		String username=request.getHeader("Username:");
+		String username=request.getHeader("Username");
 		User u=userRepository.findByUsername(username);
 		if(u!=null){
 			Smestaj s=new Smestaj(accommodation);
@@ -120,7 +120,7 @@ public class AgentServiceImpl implements AgentService {
 	public boolean editAccommodation(SmestajXMLDTO accommodation) throws SOAPFaultException, SOAPException {
 		Message message=PhaseInterceptorChain.getCurrentMessage();
 		HttpServletRequest request=(HttpServletRequest)message.get(AbstractHTTPDestination.HTTP_REQUEST);
-		String username=request.getHeader("Username:");
+		String username=request.getHeader("Username");
 		User u=userRepository.findByUsername(username);
 		if(u!=null){
 			Smestaj s=smestajRepository.getOne(accommodation.getId());
@@ -168,7 +168,7 @@ public class AgentServiceImpl implements AgentService {
 		//proveri da li je validan user poslao zahtev
 		Message message=PhaseInterceptorChain.getCurrentMessage();
 		HttpServletRequest request=(HttpServletRequest)message.get(AbstractHTTPDestination.HTTP_REQUEST);
-		String username=request.getHeader("Username:");
+		String username=request.getHeader("Username");
 		if(!s.getAgent().getUsername().equals(username)){
 			s=null;
 		}
@@ -200,8 +200,9 @@ public class AgentServiceImpl implements AgentService {
 	@Override
 	public boolean editAccommodationUnit(SJedinicaXMLDTO accommodationUnit) throws SOAPFaultException, SOAPException {
 		Message message=PhaseInterceptorChain.getCurrentMessage();
+		System.out.println(message.toString());
 		HttpServletRequest request=(HttpServletRequest)message.get(AbstractHTTPDestination.HTTP_REQUEST);
-		String username=request.getHeader("Username:");
+		String username=request.getHeader("Username");
 		SJedinica sj=sJedinicaRepository.findById(accommodationUnit.getId()).orElse(null);
 		if(username.equals(sj.getSmestaj().getAgent().getUsername())){
 			sj.setBroj(accommodationUnit.getBroj());
@@ -246,7 +247,7 @@ public class AgentServiceImpl implements AgentService {
 	public boolean sendPoruka(PorukaXMLDTO poruka) throws SOAPFaultException, SOAPException {
 		Message message=PhaseInterceptorChain.getCurrentMessage();
 		HttpServletRequest request=(HttpServletRequest)message.get(AbstractHTTPDestination.HTTP_REQUEST);
-		String username=request.getHeader("Username:");
+		String username=request.getHeader("Username");
 		User primalac = userRepository.findByUsername(poruka.getPrimalac());
 		User posiljalac = userRepository.findByUsername(username);
 		if(primalac!=null){
@@ -274,7 +275,8 @@ public class AgentServiceImpl implements AgentService {
 	public RezervacijaMakeXMLDTO makeReservation(RezervacijaMakeXMLDTO reservation) throws SOAPFaultException, SOAPException {
 		Message message=PhaseInterceptorChain.getCurrentMessage();
 		HttpServletRequest request=(HttpServletRequest)message.get(AbstractHTTPDestination.HTTP_REQUEST);
-		String username=request.getHeader("Username:");
+		String username=request.getHeader("Username");
+		System.out.println(username);
 		User u = userRepository.findByUsername(username);
 
 		//send request for reservation to reservation-service
@@ -289,7 +291,8 @@ public class AgentServiceImpl implements AgentService {
 		makeRes.setKorisnikId(u.getId());
 		makeRes.setSjedinicaId(reservation.getSjedinicaId());
 		makeRes.setTo(reservation.getTo());
-		List<UslugaDTO> uslugeDTO=ObjectMapperUtils.mapAll(reservation.getServices(), UslugaDTO.class);
+		//List<UslugaDTO> uslugeDTO=ObjectMapperUtils.mapAll(reservation.getServices(), UslugaDTO.class);
+		List<UslugaDTO> uslugeDTO=new ArrayList<>();
 		makeRes.setServices(uslugeDTO);
 		try {
 			json = om.writeValueAsString(makeRes);
@@ -301,7 +304,8 @@ public class AgentServiceImpl implements AgentService {
 		ResponseEntity<String> response = restTemplate.exchange(
 				"http://localhost:8762/reservation-service/api/reservations", HttpMethod.POST, entity, String.class);
 
-		if(response.getBody().equals("Reservation made")){
+		if(true){
+			System.out.println(response.getBody());
 			return reservation;
 		}
 
