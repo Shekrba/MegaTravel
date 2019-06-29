@@ -48,10 +48,12 @@ export class MessagesComponent implements OnInit {
   }
 
   public inboxButton(){
+    this.getInboxMessages();
     this.tab = 'inbox';
   }
 
   public sentButton(){
+    this.getSentMessages();
     this.tab = 'sent';
   }
 

@@ -4,6 +4,7 @@ import { HotelServiceService } from '../_services/hotel.service';
 import { ActivatedRoute, Router, Data } from '@angular/router'
 import { HotelsComponent } from '../hotels/hotels.component';
 import { AuthenticationService } from '../_services/authentication.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-hotel-profile',
@@ -25,9 +26,14 @@ export class HotelProfileComponent implements OnInit {
 
   komentari : Data = []
 
-  constructor(private hotelService: HotelServiceService, private ar: ActivatedRoute, private router: Router, private authService: AuthenticationService) { }
+  minDate = new Date();
+
+  constructor(private hotelService: HotelServiceService, private toastr: ToastrService, private ar: ActivatedRoute, private router: Router, private authService: AuthenticationService) { }
 
   ngOnInit() {
+    
+    this.minDate.setHours(0,0,0,0);
+    
     this.getOneHotel();
 
     this.from = this.hotelService.from;
@@ -56,6 +62,16 @@ export class HotelProfileComponent implements OnInit {
   }
 
   public applyButton(){
+
+    if((new Date(this.from)) < this.minDate && this.from != null){
+      this.toastr.error("From Date can't be lower than Today");
+      return;
+    }
+
+    if(new Date(this.to)<new Date(this.from)){
+      this.toastr.error("To Date can't be lower than From Date");
+      return;
+    }
 
     let id;
 

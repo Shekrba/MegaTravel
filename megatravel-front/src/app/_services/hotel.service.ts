@@ -21,6 +21,10 @@ export class HotelServiceService {
   to: string = null;
   hotelId = null;
   roomId = null;
+  agent={
+    id:null,
+    username:null
+  }
 
   constructor(private http: HttpClient) { }
 

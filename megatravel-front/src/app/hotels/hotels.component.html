@@ -6,7 +6,7 @@
                     <h5>City:</h5>
                 </div>
                 <div class="col-lg-2 col-md-3 col-sm-12 p-0 ml-5">
-                    <h5>Number of beds:</h5>
+                    <h5>Number of gests:</h5>
                 </div>
                 <div class="col-lg-2 col-md-3 col-sm-12 p-0 ml-5">
                     <h5>From date:</h5>
@@ -37,7 +37,7 @@
                      </select>
                  </div>
                  <div class="col-lg-2 col-md-3 col-sm-12 p-0 ml-5">
-                    <input type="date" class="form-control" [(ngModel)]="filter.dateFrom">
+                    <input *ngIf="minDate" type="date" class="form-control" [(ngModel)]="filter.dateFrom">
                  </div>
                  <div class="col-lg-2 col-md-3 col-sm-12 p-0 ml-5">
                     <input type="date"  class="form-control" [(ngModel)]="filter.dateTo">

@@ -3,6 +3,8 @@ import { Hotel } from '../_model/hotel';
 import { HotelServiceService } from '../_services/hotel.service';
 import { Filter } from '../_model/filter';
 import { Data } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
+import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 
 @Component({
   selector: 'app-hotels',
@@ -22,13 +24,17 @@ export class HotelsComponent implements OnInit {
     usluge: []
   };
 
+  minDate = new Date();
+
   types:[]
 
   services: string[] = [];
 
-  constructor(private hotelService: HotelServiceService) { }
+  constructor(private hotelService: HotelServiceService, private toastr: ToastrService) { }
 
   ngOnInit() {
+    this.minDate.setHours(0,0,0,0);
+
     this.getAllHotels();
     this.getAllServices();
     this.getAllTypes();
@@ -68,6 +74,20 @@ export class HotelsComponent implements OnInit {
   }
 
   public filterHotels(){
+
+    console.log((new Date(this.filter.dateFrom)));
+    console.log(this.minDate);
+
+    if((new Date(this.filter.dateFrom)) < this.minDate && this.filter.dateFrom != null){      
+      this.toastr.error("From Date can't be lower than Today");
+      return;
+    }
+
+    if(new Date(this.filter.dateTo)<new Date(this.filter.dateFrom)){
+      this.toastr.error("To Date can't be lower than From Date");
+      return;
+    }
+
     this.hotelService.filterHotels(this.filter).subscribe(
       res => {
         this.hotels = res;
@@ -95,5 +115,4 @@ export class HotelsComponent implements OnInit {
     console.log(this.filter.usluge);
   }
 
-  
 }

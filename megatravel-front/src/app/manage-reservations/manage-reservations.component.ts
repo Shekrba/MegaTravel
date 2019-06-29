@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { HotelServiceService } from '../_services/hotel.service';
 import { ToastrService } from 'ngx-toastr';
 import { AuthenticationService } from '../_services/authentication.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-manage-reservations',
@@ -12,7 +13,7 @@ export class ManageReservationsComponent implements OnInit {
 
   reservations = [];
 
-  constructor(private hotelService : HotelServiceService, private toastr: ToastrService, private authService: AuthenticationService) { }
+  constructor(private hotelService : HotelServiceService,private router: Router ,private toastr: ToastrService, private authService: AuthenticationService) { }
 
   ngOnInit() {
     this.getUserReservations();
@@ -44,6 +45,12 @@ export class ManageReservationsComponent implements OnInit {
         alert("An error has occured while getting reservations");
       }
     );
+  }
+
+  public newMessage(r){
+    this.hotelService.agent.id = r.agent_id;
+    this.hotelService.agent.username = r.agentUserName;
+    this.router.navigate(['/newmessage']);
   }
 
 }

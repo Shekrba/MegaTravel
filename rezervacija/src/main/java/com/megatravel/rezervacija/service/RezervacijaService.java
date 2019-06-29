@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface RezervacijaService {
 
-    public String addRezervacija(MakeResDTO rezervacija);
+    public Long addRezervacija(MakeResDTO rezervacija);
     public String deleteRezervacija(Long id);
     public List<Rezervacija> getRezervacije();
     public Rezervacija getRezervacija(Long id);

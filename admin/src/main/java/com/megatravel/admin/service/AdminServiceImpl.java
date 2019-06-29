@@ -3,16 +3,18 @@ package com.megatravel.admin.service;
 import com.megatravel.admin.dto.*;
 import com.megatravel.admin.model.*;
 import com.megatravel.admin.repository.*;
-import com.netflix.discovery.converters.Auto;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestTemplate;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Service
 public class AdminServiceImpl implements  AdminService{
+
+    private PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
     @Autowired
     UslugaRepository uslugaRepository;
@@ -76,10 +78,12 @@ public class AdminServiceImpl implements  AdminService{
     public AdminDTO addAdmin(AdminDTO adminDTO) {
         User user = new User();
         user.setPrezime(adminDTO.getPrezime());
+        user.setEnabled(true);
         user.setIme(adminDTO.getIme());
         user.setUsername(adminDTO.getUsername());
+        user.setPassword(passwordEncoder.encode(adminDTO.getPassword()));
         user.setStatus(UserStatus.ACTIVE);
-        Authority authority = authorityRepository.findOneByName("ROLE_AGENT");
+        Authority authority = authorityRepository.findOneByName("ROLE_ADMIN");
         List<Authority> authorities = new ArrayList<>();
         authorities.add(authority);
         user.setAuthorities(authorities);
@@ -134,9 +138,12 @@ public class AdminServiceImpl implements  AdminService{
         newUser.setAdresa(agent.getAdresa());
         newUser.setStatus(UserStatus.ACTIVE);
         newUser.setIme(agent.getIme());
+        newUser.setEnabled(true);
         newUser.setPosMatBroj(agent.getPosMatBroj());
         newUser.setPrezime(agent.getPrezime());
         newUser.setEmail(agent.getEmail());
+        newUser.setUsername(agent.getUsername());
+        newUser.setPassword(passwordEncoder.encode(agent.getPassword()));
         Authority authority = authorityRepository.findOneByName("ROLE_AGENT");
         List<Authority> authorities = new ArrayList<>();
         authorities.add(authority);

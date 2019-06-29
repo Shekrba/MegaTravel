@@ -37,14 +37,14 @@ public class RezervacijaServiceImpl implements  RezervacijaService {
 
     @Transactional(readOnly = false, propagation = Propagation.REQUIRES_NEW)
     @Override
-    public String addRezervacija(MakeResDTO rezervacija){
+    public Long addRezervacija(MakeResDTO rezervacija){
 
         SJedinica sjedinica = sJedinicaRepository.findOneById(rezervacija.getSjedinicaId());
 
         SJedinica check = sJedinicaRepository.findIfTaken(rezervacija.getFrom(),rezervacija.getTo(),rezervacija.getSjedinicaId());
 
         if(check != null){
-            return "Room was booked in the meantime";
+            return null;
         }
 
         Rezervacija rez = new Rezervacija();
@@ -70,7 +70,7 @@ public class RezervacijaServiceImpl implements  RezervacijaService {
 
         sJedinicaRepository.save(sjedinica);
 
-        return "Reservation made";
+        return rez.getId();
     }
 
     @Override
@@ -100,6 +100,8 @@ public class RezervacijaServiceImpl implements  RezervacijaService {
             rDTO.setId(r.getId());
             rDTO.setCost(r.getUCena());
             rDTO.setSmestaj_id(r.getSJedinica().getSmestaj().getId());
+            rDTO.setAgentUserName(r.getSJedinica().getSmestaj().getAgent().getUsername());
+            rDTO.setAgent_id(r.getSJedinica().getSmestaj().getAgent().getId());
 
             reservationDTOS.add(rDTO);
         }

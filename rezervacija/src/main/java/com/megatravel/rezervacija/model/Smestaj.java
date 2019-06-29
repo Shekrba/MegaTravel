@@ -88,7 +88,13 @@ public class Smestaj {
     }
 
 
+    public User getAgent() {
+        return agent;
+    }
 
+    public void setAgent(User agent) {
+        this.agent = agent;
+    }
 
     public List<SJedinica> getSJedinica() {
         if (getsJedinica() == null) {

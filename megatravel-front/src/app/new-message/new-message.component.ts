@@ -14,7 +14,7 @@ export class NewMessageComponent implements OnInit {
 
   message = {
     from:this.authService.currentUserValue.id,
-    to:3,
+    to:this.hotelService.agent.id,
     text:null
   }
 

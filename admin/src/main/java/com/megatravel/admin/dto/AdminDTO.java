@@ -9,9 +9,17 @@ public class AdminDTO {
     private String prezime;
     private String username;
     private UserStatus status;
+    private String password;
 
     public AdminDTO() {}
 
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
 
     public Long getId() {
         return id;

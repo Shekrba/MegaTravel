@@ -18,10 +18,15 @@ public class RezervacijaController {
     private RezervacijaService rezervacijaService;
 
     @RequestMapping(method = RequestMethod.POST)
-    public ResponseEntity<String> addRezervacija(@RequestBody MakeResDTO rezervacija){
+    public ResponseEntity<Long> addRezervacija(@RequestBody MakeResDTO rezervacija){
         try {
-            String message = rezervacijaService.addRezervacija(rezervacija);
-            return new ResponseEntity<String>(message,HttpStatus.OK);
+            Long ret = rezervacijaService.addRezervacija(rezervacija);
+
+            if(ret == null){
+                return new ResponseEntity<Long>(ret,HttpStatus.UPGRADE_REQUIRED);
+            }
+
+            return new ResponseEntity<Long>(ret,HttpStatus.OK);
         }catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }

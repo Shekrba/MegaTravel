@@ -16,6 +16,6 @@ public interface SJedinicaRepository extends JpaRepository<SJedinica, Long> {
     @Lock(LockModeType.PESSIMISTIC_WRITE)
     SJedinica findOneById(Long id);
 
-    @Query("SELECT DISTINCT sj FROM SJedinica sj LEFT OUTER JOIN sj.rezervacije r WHERE sj.id=?3 AND (r.od >=?1 AND r.od <= ?2) OR (r._do >=?1 AND r._do <= ?2)")
+    @Query("SELECT DISTINCT sj FROM SJedinica sj LEFT OUTER JOIN sj.rezervacije r WHERE sj.id=?3 AND ((r.od >=?1 AND r.od <= ?2) OR (r._do >=?1 AND r._do <= ?2))")
     SJedinica findIfTaken(Date dateFrom, Date dateTo, Long id);
 }

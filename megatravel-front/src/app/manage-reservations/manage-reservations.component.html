@@ -14,7 +14,7 @@
         <td>{{r.to.split("T")[0]}}</td>
         <td>{{r.cost}}$</td>
         <td>
-          <button routerLink="/newmessage" class="btn btn-warning">Message</button>
+          <button (click)="newMessage(r)" class="btn btn-warning">Message</button>
         </td>
         <td>
           <button (click)="cancelReservation(r)" *ngIf="r.canCancel==true" class="btn btn-dark">Cancel</button>
