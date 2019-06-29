@@ -122,6 +122,8 @@
             <artifactId>cxf-rt-features-logging</artifactId>
             <version>3.3.2</version>
         </dependency>
+
+
     </dependencies>
 
     <dependencyManagement>

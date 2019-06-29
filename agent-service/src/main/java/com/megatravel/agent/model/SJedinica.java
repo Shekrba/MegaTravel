@@ -41,8 +41,21 @@ public class SJedinica {
     @Column(name = "broj", unique = false, nullable = false)
     private int broj;
 
+    @Version
+    private Long version;
+
     public SJedinica(){
 
+    }
+
+
+
+    public Long getVersion() {
+        return version;
+    }
+
+    public void setVersion(Long version) {
+        this.version = version;
     }
 
     public Boolean getDostupnost() {

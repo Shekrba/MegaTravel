@@ -16,11 +16,8 @@ import javax.xml.ws.Endpoint;
 
 @Configuration
 public class CXFConfig {
-/*
-	@Bean
-	public ServletRegistrationBean dispatcherServlet() {
-        return new ServletRegistrationBean(new CXFServlet(), "/api/*");
-    }*/
+
+
     @Autowired
     AgentServiceImpl agentService;
 
