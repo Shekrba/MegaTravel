@@ -1,0 +1,66 @@
+<div class="set">
+    <button type="button" (click)="back()" class="btn btn-link">Back</button>
+  <div class="mainContainer">
+      
+    <h3 id="header">Cenovnik</h3>
+      <form>
+          <div class="row">
+            <div class="col">
+            <div class="form-group">
+              <label for="place">Januar: </label>
+              <input name="januar" [(ngModel)]="meseci[0].cena" min="0" type="number" class="form-control" id="januar">
+            </div> 
+            <div class="form-group">
+              <label for="place">Februar: </label>
+              <input name="februar" [(ngModel)]="meseci[1].cena" min="0" type="number" class="form-control" id="februar">
+            </div> 
+            <div class="form-group">
+              <label for="place">Mart: </label>
+              <input name="mart" [(ngModel)]="meseci[2].cena" min="0" type="number" class="form-control" id="mart">
+            </div> 
+            <div class="form-group">
+              <label for="place">April: </label>
+              <input name="april" [(ngModel)]="meseci[3].cena" min="0" type="number" class="form-control" id="april">
+            </div> 
+            <div class="form-group">
+              <label for="place">Maj: </label>
+              <input name="maj" [(ngModel)]="meseci[4].cena" min="0" type="number" class="form-control" id="maj">
+            </div> 
+            <div class="form-group">
+              <label for="place">Jun: </label>
+              <input name="jun" [(ngModel)]="meseci[5].cena" min="0" type="number" class="form-control" id="jun">
+            </div> 
+            </div>
+            <div class="col">
+               <div class="form-group">
+                  <label for="place">Jul: </label>
+                  <input name="jul" [(ngModel)]="meseci[6].cena" min="0" type="number" class="form-control" id="jul">
+                </div> 
+                <div class="form-group">
+                  <label for="place">Avgust: </label>
+                  <input name="avgust" [(ngModel)]="meseci[7].cena" min="0" type="number" class="form-control" id="avgust">
+                </div> 
+                <div class="form-group">
+                  <label for="place">Septembar: </label>
+                  <input name="septembar" [(ngModel)]="meseci[8].cena" min="0" type="number" class="form-control" id="septembar">
+                </div> 
+                <div class="form-group">
+                  <label for="place">Oktobar: </label>
+                  <input name="oktobar" [(ngModel)]="meseci[9].cena" min="0" type="number" class="form-control" id="oktobar">
+                </div> 
+                <div class="form-group">
+                  <label for="place">Novembar: </label>
+                  <input name="novembar" [(ngModel)]="meseci[10].cena" min="0" type="number" class="form-control" id="novembar">
+                </div> 
+                <div class="form-group">
+                  <label for="place">Decembar: </label>
+                  <input name="decembar" [(ngModel)]="meseci[11].cena" min="0" type="number" class="form-control" id="decembar">
+                </div> 
+            </div>
+          </div>
+          <button (click)="save()" type="button" style="margin: 20px;" class="btn btn-dark">Finish</button>
+        </form>
+  </div>
+</div>
+
+

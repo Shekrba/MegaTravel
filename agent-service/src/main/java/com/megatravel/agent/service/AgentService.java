@@ -5,17 +5,20 @@ package com.megatravel.agent.service;
 
 
 
-import com.megatravel.agent.xml.dto.SJedinicaXMLDTO;
-import com.megatravel.agent.xml.dto.SmestajXMLDTO;
-import com.megatravel.agent.xml.dto.UserCredentialsXMLDTO;
+import com.megatravel.agent.model.Rezervacija;
+import com.megatravel.agent.xml.dto.*;
 
 
 import javax.jws.WebMethod;
 import javax.jws.WebParam;
 import javax.jws.WebResult;
 import javax.jws.WebService;
+
+
 import javax.xml.soap.SOAPException;
+
 import javax.xml.ws.soap.SOAPFaultException;
+import java.util.List;
 
 @WebService(serviceName = "AgentService")
 public interface AgentService {
@@ -40,5 +43,24 @@ public interface AgentService {
 	@WebResult(name = "ResultIsSuccessful")
 	public boolean editAccommodationUnit(@WebParam(name = "AccommodationUnit") SJedinicaXMLDTO accommodationUnit) throws SOAPFaultException, SOAPException;
 
+
+	@WebMethod(action = "syncUsluge")
+	@WebResult(name = "Usluge")
+	public List<UslugaXMLDTO> syncUsluge() throws SOAPFaultException, SOAPException;
+
+
+	@WebMethod(action = "pollingPoruke")
+	@WebResult(name = "Poruke")
+	public List<PorukaXMLDTO> pollingPoruke() throws SOAPFaultException, SOAPException;
+
+
+	@WebMethod(action = "sendPoruka")
+	@WebResult(name = "Successful")
+	public boolean sendPoruka(@WebParam(name="Poruka") PorukaXMLDTO poruka) throws SOAPFaultException, SOAPException;
+
+
+	@WebMethod(action = "makeReservation")
+	@WebResult(name = "Reservation")
+	public RezervacijaMakeXMLDTO makeReservation(@WebParam(name="Reservation") RezervacijaMakeXMLDTO reservation) throws SOAPFaultException, SOAPException;
 
 }

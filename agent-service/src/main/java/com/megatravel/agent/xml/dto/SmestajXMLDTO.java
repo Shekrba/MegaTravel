@@ -38,7 +38,6 @@ public class SmestajXMLDTO {
     @XmlJavaTypeAdapter(type=Long.class, value= WSLongAdapter.class)
     private Long id;
 
-    private String username;
 
     @XmlElement(name = "category", required = true)
     private CategoryXMLDTO category;

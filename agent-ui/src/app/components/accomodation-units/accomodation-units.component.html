@@ -7,7 +7,7 @@
           <th><input id="inputFilter" name="filterBroj"  [(ngModel)]="filterBroj" type="number" min="0" (input)="filter()"  placeholder="Numer of people:"></th>
           <th><input id="inputFilter" name="filterBrojKreveta" [(ngModel)]="filterBrojKreveta" type="number" min="0" (input)="filter()"  placeholder="Number of beds: "></th>
           <th><input id="inputFilter" name="filterCena" [(ngModel)]="filterCena" type="number" min="0" (input)="filter()"  placeholder="Price"></th>
-          <th style="text-align: center;" ><button (click)="newAccomodationUnit()" type="button" class="btn btn-primary">New Room</button></th> 
+          <th colspan="2" style="text-align: center;" ><button (click)="newAccomodationUnit()" type="button" class="btn btn-primary">New Room</button></th> 
         </tr>
       </thead>
       <tbody>
@@ -20,6 +20,9 @@
             <button (click)="edit(accomodationUnit.id)" style="margin-right: 10px;" class="btn"><i class="fa fa-edit"></i></button>
             <button style="background-color: teal;" class="btn btn-info" (click)="reservations(accomodationUnit.id)" >Reservations</button>
             <button (click)="occupancy(accomodationUnit.id)" style="margin-left: 10px;" class="btn"><i class="fa fa-bell"></i></button>
+          </td>
+          <td>
+              <button style="background-color: rgb(26, 0, 128);" class="btn btn-info" (click)="cenovnik(accomodationUnit.id)" >Cenovnik</button>
           </td>
         </tr>
       </tbody>

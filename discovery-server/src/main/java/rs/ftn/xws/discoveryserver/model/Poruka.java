@@ -22,9 +22,13 @@ public class Poruka {
         @GeneratedValue(strategy = GenerationType.IDENTITY)
         private Long id;
 
+
+
        public Poruka(){
 
        }
+
+
 
     public String getSadrzaj() {
         return sadrzaj;

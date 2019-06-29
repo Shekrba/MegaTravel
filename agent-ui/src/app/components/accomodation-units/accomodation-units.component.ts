@@ -82,5 +82,9 @@ export class AccomodationUnitsComponent implements OnInit {
 
   }
 
+  cenovnik(id: number) : void {
+    this.router.navigate(['/cenovnik',this.idAccomodation,id]);
+  }
+
 
 }
