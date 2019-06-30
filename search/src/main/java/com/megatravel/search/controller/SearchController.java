@@ -6,7 +6,9 @@ import com.megatravel.search.service.SearchService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.List;
 
 @RestController
@@ -113,6 +115,18 @@ public class SearchController {
             sjDTO.setVersion(sj.getVersion());
 
             sDTO.getSjedinice().add(sjDTO);
+        }
+
+        for (Image img: s.getSlike()){
+            byte[] encodeBase64 = Base64.getEncoder().encode(img.getData());
+            String base64Encoded = null;
+            try {
+                base64Encoded = new String(encodeBase64, "UTF-8");
+            } catch (UnsupportedEncodingException e) {
+                e.printStackTrace();
+            }
+
+            sDTO.getSlike().add(base64Encoded);
         }
     }
 }

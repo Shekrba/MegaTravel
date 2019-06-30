@@ -119,12 +119,12 @@
           <div class="carousel-inner">
             <div class="carousel-item active">
               <div class="item">
-                <img src="{{hotel.slike[0]}}" class="card-img-top" alt="Los Angeles">
+                <img src="data:image/jpeg;base64,{{hotel.slike[0]}}" class="card-img-top" alt="Los Angeles">
               </div>
             </div>
             <div *ngFor="let slika of hotel.slike | slice:1" class="carousel-item">
               <div class="item">
-                <img src="{{slika}}" class="card-img-top" alt="Chicago">
+                <img src="data:image/jpeg;base64,{{slika}}" class="card-img-top" alt="Chicago">
               </div>
             </div>
           </div>
