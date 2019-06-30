@@ -43,6 +43,8 @@ public class User implements UserDetails {
     @Column(name = "email", unique = true, nullable = false)
     private String email;
 
+    @Column(name = "token")
+    private String token;
 
     @Column(name = "enabled")
     private boolean enabled;
@@ -142,6 +144,14 @@ public class User implements UserDetails {
         this.enabled = enabled;
     }
 
+
+    public void setToken(String token) {
+        this.token = token;
+    }
+
+    public String getToken() {
+        return token;
+    }
 
     @Override
     public boolean isEnabled() {

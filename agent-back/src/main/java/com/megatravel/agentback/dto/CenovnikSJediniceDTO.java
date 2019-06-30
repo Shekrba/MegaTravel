@@ -1,6 +1,5 @@
 package com.megatravel.agentback.dto;
 
-import java.time.LocalDate;
 import java.util.List;
 
 public class CenovnikSJediniceDTO {

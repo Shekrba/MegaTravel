@@ -1,28 +1,57 @@
 package com.megatravel.agentback.dto;
 
-import java.time.LocalDate;
+
+import java.util.Date;
 
 public class ZauzetostDTO {
 
-    private LocalDate odDatum;
-    private LocalDate doDatum;
+    private Date odDatum;
+    private Date doDatum;
+    private String idGlBaza;
+    private int cena;
+
+    public int getCena() {
+        return cena;
+    }
+
+    public void setCena(int cena) {
+        this.cena = cena;
+    }
+
+    public Long getSjedId() {
+        return sjedId;
+    }
+
+    public void setSjedId(Long sjedId) {
+        this.sjedId = sjedId;
+    }
+
+    private Long sjedId;
+
+    public String getIdGlBaza() {
+        return idGlBaza;
+    }
+
+    public void setIdGlBaza(String idGlBaza) {
+        this.idGlBaza = idGlBaza;
+    }
 
     public ZauzetostDTO() {}
 
 
-    public LocalDate getOdDatum() {
+    public Date getOdDatum() {
         return odDatum;
     }
 
-    public void setOdDatum(LocalDate odDatum) {
+    public void setOdDatum(Date odDatum) {
         this.odDatum = odDatum;
     }
 
-    public LocalDate getDoDatum() {
+    public Date getDoDatum() {
         return doDatum;
     }
 
-    public void setDoDatum(LocalDate doDatum) {
+    public void setDoDatum(Date doDatum) {
         this.doDatum = doDatum;
     }
 }

@@ -76,6 +76,8 @@ public class SJedinica {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     protected Long id;
 
+    protected Long idGlBaza;
+
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     protected Smestaj smestaj;
 
@@ -91,6 +93,14 @@ public class SJedinica {
     @OneToMany
     protected List<Cenovnik> listaCena;
 
+
+    public void setIdGlBaza(Long idGlBaza) {
+        this.idGlBaza = idGlBaza;
+    }
+
+    public Long getIdGlBaza() {
+        return idGlBaza;
+    }
 
     @JsonIgnore
     public void setListaCena(List<Cenovnik> listaCena) {

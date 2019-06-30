@@ -2,7 +2,7 @@ package com.megatravel.agentback.dto;
 
 import com.megatravel.agentback.model.StatusPoruke;
 
-import java.time.LocalDate;
+import java.util.Date;
 
 public class PorukaDTO {
 
@@ -11,9 +11,18 @@ public class PorukaDTO {
     private String primalac;
     private String naslov;
     private String sadrzaj;
-    private LocalDate datumSlanja;
+    private Date datumSlanja;
     private StatusPoruke statusPoruke;
     private Long idOdgovora;
+    private Long idGlBaza;
+
+    public void setIdGlBaza(Long idGlBaza) {
+        this.idGlBaza = idGlBaza;
+    }
+
+    public Long getIdGlBaza() {
+        return idGlBaza;
+    }
 
     public void setId(Long id) {
         this.id = id;
@@ -43,7 +52,7 @@ public class PorukaDTO {
         this.sadrzaj = sadrzaj;
     }
 
-    public void setDatumSlanja(LocalDate datumSlanja) {
+    public void setDatumSlanja(Date datumSlanja) {
         this.datumSlanja = datumSlanja;
     }
 
@@ -67,7 +76,7 @@ public class PorukaDTO {
         return sadrzaj;
     }
 
-    public LocalDate getDatumSlanja() {
+    public Date getDatumSlanja() {
         return datumSlanja;
     }
 

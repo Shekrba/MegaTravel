@@ -7,6 +7,24 @@ public class SJedinicaDTO {
     private double cena;
     private Boolean dostupnost;
     private String naziv;
+    private Long idGlBaza;
+    private Long idSmestaj;
+
+    public Long getIdSmestaj() {
+        return idSmestaj;
+    }
+
+    public void setIdSmestaj(Long idSmestaj) {
+        this.idSmestaj = idSmestaj;
+    }
+
+    public void setIdGlBaza(Long idGlBaza) {
+        this.idGlBaza = idGlBaza;
+    }
+
+    public Long getIdGlBaza() {
+        return idGlBaza;
+    }
 
     public void setNaziv(String naziv) {
         this.naziv = naziv;
