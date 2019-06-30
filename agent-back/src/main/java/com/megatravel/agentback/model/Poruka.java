@@ -1,7 +1,7 @@
 package com.megatravel.agentback.model;
 
 import javax.persistence.*;
-import java.time.LocalDate;
+import java.util.Date;
 
 @Entity
 public class Poruka {
@@ -10,6 +10,8 @@ public class Poruka {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     protected Long id;
 
+    protected Long idGlBaza;
+
     @Column(name = "naslov", unique = false, nullable = false)
     protected String naslov;
 
@@ -17,7 +19,7 @@ public class Poruka {
     protected String primalac;
 
     @Column(name = "datumSlanja", unique = false, nullable = false)
-    protected LocalDate datumSlanja;
+    protected Date datumSlanja;
 
     @Column(name = "posaljilac", unique = false, nullable = false)
     protected String posaljilac;
@@ -35,6 +37,14 @@ public class Poruka {
     public Poruka() {
     }
 
+    public void setIdGlBaza(Long idGlBaza) {
+        this.idGlBaza = idGlBaza;
+    }
+
+    public Long getIdGlBaza() {
+        return idGlBaza;
+    }
+
     public void setPrimalac(String primalac) {
         this.primalac = primalac;
     }
@@ -43,7 +53,7 @@ public class Poruka {
         return primalac;
     }
 
-    public Poruka(LocalDate datumSlanja, String posaljilac, String sadrzaj, StatusPoruke statusPoruke, Long idOdgovor) {
+    public Poruka(Date datumSlanja, String posaljilac, String sadrzaj, StatusPoruke statusPoruke, Long idOdgovor) {
         this.datumSlanja = datumSlanja;
         this.posaljilac = posaljilac;
         this.sadrzaj = sadrzaj;
@@ -63,7 +73,7 @@ public class Poruka {
         this.id = id;
     }
 
-    public void setDatumSlanja(LocalDate datumSlanja) {
+    public void setDatumSlanja(Date datumSlanja) {
         this.datumSlanja = datumSlanja;
     }
 
@@ -87,7 +97,7 @@ public class Poruka {
         return id;
     }
 
-    public LocalDate getDatumSlanja() {
+    public Date getDatumSlanja() {
         return datumSlanja;
     }
 

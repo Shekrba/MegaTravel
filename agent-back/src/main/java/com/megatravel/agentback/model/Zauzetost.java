@@ -3,7 +3,7 @@ package com.megatravel.agentback.model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
-import java.time.LocalDate;
+import java.util.Date;
 
 @Entity
 public class Zauzetost {
@@ -13,10 +13,10 @@ public class Zauzetost {
     protected Long id;
 
     @Column(name = "datumOd", unique = false, nullable = false)
-    protected LocalDate datumOd;
+    protected Date datumOd;
 
     @Column(name = "datumDo", unique = false, nullable = false)
-    protected LocalDate datumDo;
+    protected Date datumDo;
 
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     protected SJedinica sJedinica;
@@ -25,11 +25,11 @@ public class Zauzetost {
         this.id = id;
     }
 
-    public void setDatumOd(LocalDate datumOd) {
+    public void setDatumOd(Date datumOd) {
         this.datumOd = datumOd;
     }
 
-    public void setDatumDo(LocalDate datumDo) {
+    public void setDatumDo(Date datumDo) {
         this.datumDo = datumDo;
     }
 
@@ -42,11 +42,11 @@ public class Zauzetost {
         return id;
     }
 
-    public LocalDate getDatumOd() {
+    public Date getDatumOd() {
         return datumOd;
     }
 
-    public LocalDate getDatumDo() {
+    public Date getDatumDo() {
         return datumDo;
     }
 
@@ -54,7 +54,7 @@ public class Zauzetost {
         return sJedinica;
     }
 
-    public Zauzetost(LocalDate datumOd, LocalDate datumDo, SJedinica sJedinica) {
+    public Zauzetost(Date datumOd, Date datumDo, SJedinica sJedinica) {
         this.datumOd = datumOd;
         this.datumDo = datumDo;
         this.sJedinica = sJedinica;

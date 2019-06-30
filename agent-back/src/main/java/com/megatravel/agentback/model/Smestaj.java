@@ -119,11 +119,21 @@ public class Smestaj {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     protected Long id;
 
+    protected Long idGlBaza;
+
     @ManyToOne(fetch = FetchType.EAGER)
     private Category category;
 
     @ManyToOne(fetch = FetchType.LAZY)
     private User agent;
+
+    public void setIdGlBaza(Long idGlBaza) {
+        this.idGlBaza = idGlBaza;
+    }
+
+    public Long getIdGlBaza() {
+        return idGlBaza;
+    }
 
     public Category getCategory() {
         return category;

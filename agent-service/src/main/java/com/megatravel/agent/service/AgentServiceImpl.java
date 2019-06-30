@@ -15,8 +15,11 @@ import org.apache.cxf.phase.PhaseInterceptorChain;
 import org.apache.cxf.transport.http.AbstractHTTPDestination;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.*;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -29,8 +32,10 @@ import javax.xml.soap.SOAPFault;
 
 import javax.xml.ws.handler.MessageContext;
 import javax.xml.ws.soap.SOAPFaultException;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 
 
@@ -68,6 +73,9 @@ public class AgentServiceImpl implements AgentService {
 
 	@Autowired
 	RezervacijaRepository rezervacijaRepository;
+
+	@Autowired
+    ImageRepository imageRepository;
 
 	@Override
 	public SmestajXMLDTO addAccommodation(SmestajXMLDTO accommodation) throws SOAPFaultException, SOAPException {
@@ -210,13 +218,16 @@ public class AgentServiceImpl implements AgentService {
 		String username=request.getHeader("Username");
 		SJedinica sj=sJedinicaRepository.findById(accommodationUnit.getId()).orElse(null);
 		if(username.equals(sj.getSmestaj().getAgent().getUsername())){
-			sj.setBroj(accommodationUnit.getBroj());
-			sj.setBrojKreveta(accommodationUnit.getBrojKreveta());
-			sj.setCena(accommodationUnit.getCena());
-			sj.setDostupnost(accommodationUnit.getDostupnost());
-			sJedinicaRepository.save(sj);
+		    SJedinica check=sJedinicaRepository.findIfEditable(new Date(),accommodationUnit.getId());
+		    if(check==null) {
+                sj.setBroj(accommodationUnit.getBroj());
+                sj.setBrojKreveta(accommodationUnit.getBrojKreveta());
+                sj.setCena(accommodationUnit.getCena());
+                sj.setDostupnost(accommodationUnit.getDostupnost());
+                sJedinicaRepository.save(sj);
 
-			return true;
+                return true;
+            }
 		}
 		String faultString = "Unprocessable Entity";
 		String faultCodeValue = "422";
@@ -371,6 +382,38 @@ public class AgentServiceImpl implements AgentService {
 		}
 		return ret;
 	}
+
+    @Override
+    public boolean addImages(ImageXMLDTO images) throws SOAPFaultException, SOAPException {
+        try{
+            for(byte[] bytes : images.getSlike()){
+                Image i = new Image();
+                uploadImages(images.getSmestajID(),bytes);
+            }
+            return true;
+        }catch (Exception e){
+            return false;
+        }
+    }
+
+    @Override
+    public boolean changePassword(UserCredentialsXMLDTO credentials) throws SOAPFaultException, SOAPException {
+        User u=userRepository.findByUsername(credentials.getUsername());
+        PasswordEncoder passwordEncoder=new BCryptPasswordEncoder();
+        u.setPassword(passwordEncoder.encode(credentials.getPassword()));
+        userRepository.save(u);
+	    return true;
+    }
+
+    public boolean uploadImages(Long idSmestaj, byte[] slika) throws IOException {
+        Smestaj smestaj = smestajRepository.findById(idSmestaj).orElse(null);
+
+        Image image = new Image();
+        image.setSmestaj(smestaj);
+        image.setData(slika);
+        imageRepository.save(image);
+        return true;
+    }
 
 
 }

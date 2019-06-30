@@ -5,6 +5,7 @@ import com.megatravel.agentback.client.AgentClient;
 import com.megatravel.agentback.dto.*;
 import com.megatravel.agentback.model.*;
 import com.megatravel.agentback.service.AgentService;
+import com.megatravel.agentback.xml.dto.*;
 import com.megatravel.agentback.xml.dto.RezervacijaMakeXMLDTO;
 import generated.GetTestResponse;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,9 +17,9 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 
 @RestController
@@ -33,6 +34,7 @@ public class AgentController {
     @Autowired
     AgentClient client;
 
+
     @RequestMapping(value = "/accomodations",method = RequestMethod.GET)
     public List<SmestajDTO> getSmestaje()
     {
@@ -40,126 +42,157 @@ public class AgentController {
         List<Smestaj> list = agentService.getSmestaje();
         List<SmestajDTO> listDTO = new ArrayList<>();
 
-        for (Smestaj s: list) {
+        for (Smestaj s : list) {
             SmestajDTO sDTO = new SmestajDTO();
-            smestajToDto(s,sDTO);
+            smestajToDto(s, sDTO);
             listDTO.add(sDTO);
         }
 
         return listDTO;
     }
 
-    @RequestMapping(value = "/hoteli/{id}",method = RequestMethod.GET)
-    public SmestajDTO getSmestaj(@PathVariable("id")Long id){
+    @RequestMapping(value = "/hoteli/{id}", method = RequestMethod.GET)
+    public SmestajDTO getSmestaj(@PathVariable("id") Long id) {
 
         Smestaj smestaj = agentService.getSmestaj(id);
         SmestajDTO smestajDTO = new SmestajDTO();
 
-        smestajToDto(smestaj,smestajDTO);
+        smestajToDto(smestaj, smestajDTO);
 
         return smestajDTO;
     }
 
-    @RequestMapping(value = "/smestajAdd",method = RequestMethod.POST)
-    public ResponseEntity<Smestaj> addSJedinica(@RequestBody SmestajDTO smestaj){
+    @RequestMapping(value = "/smestajAdd", method = RequestMethod.POST)
+    public ResponseEntity<Smestaj> addSJedinica(@RequestBody SmestajDTO smestaj) {
+
+        SmestajXMLDTO x = new SmestajXMLDTO();
+        x.setNaziv(smestaj.getNaziv());
+        x.setOpis(smestaj.getOpis());
+        x.setPeriodOtkaza(smestaj.getPeriodOtkaza());
+
+        AdresaXMLDTO adr = new AdresaXMLDTO();
+        adr.setBroj(smestaj.getBroj());
+        adr.setBrojStana(smestaj.getBroj());
+        adr.setMesto(smestaj.getMesto());
+        adr.setUlica(smestaj.getUlica());
+        adr.setPosBroj(smestaj.getPosBroj());
+        adr.setLatitude(smestaj.getLatitude());
+        adr.setLongitude(smestaj.getLongitude());
+
+        x.setAdresa(adr);
 
         Smestaj addedSmestaj = null;
 
         try {
+            AddAccommodationResponse r = client.addSmestaj(x);
+            smestaj.setIdGlBaza(Long.parseLong(r.getAccommodation().getId()));
             addedSmestaj = agentService.addSmestaj(smestaj);
+            return new ResponseEntity<Smestaj>(addedSmestaj, HttpStatus.OK);
         } catch (Exception e) {
-            e.printStackTrace();
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
 
-        return new ResponseEntity<Smestaj>(addedSmestaj,HttpStatus.OK);
     }
 
     @PostMapping(value = "/upload/{id}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<?> uploadFile(@RequestParam("images") MultipartFile[] files, @PathVariable("id") Long id) throws IOException {
         System.out.println(id);
-        agentService.uploadImages(id,files);
+        agentService.uploadImages(id, files);
 
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @RequestMapping(value="images/{id}", method = RequestMethod.GET)
-    List<String> getImages(@PathVariable("id") Long id) throws UnsupportedEncodingException
-    {
+    @RequestMapping(value = "images/{id}", method = RequestMethod.GET)
+    List<String> getImages(@PathVariable("id") Long id) throws UnsupportedEncodingException {
         List<String> images = agentService.getImages(id);
         return images;
     }
 
-    @RequestMapping(value = "/smestajUpdate",method = RequestMethod.PUT)
-    public Smestaj updateSmestaj(@RequestBody SmestajDTO smestaj){
+    @RequestMapping(value = "/smestajUpdate", method = RequestMethod.PUT)
+    public ResponseEntity<Smestaj> updateSmestaj(@RequestBody SmestajDTO smestaj) {
+
+        SmestajXMLDTO x = new SmestajXMLDTO();
+        x.setNaziv(smestaj.getNaziv());
+        x.setOpis(smestaj.getOpis());
+        x.setPeriodOtkaza(smestaj.getPeriodOtkaza());
+
+        AdresaXMLDTO adr = new AdresaXMLDTO();
+        adr.setBroj(smestaj.getBroj());
+        adr.setBrojStana(smestaj.getBroj());
+        adr.setMesto(smestaj.getMesto());
+        adr.setUlica(smestaj.getUlica());
+        adr.setPosBroj(smestaj.getPosBroj());
+        adr.setLatitude(smestaj.getLatitude());
+        adr.setLongitude(smestaj.getLongitude());
+
+        x.setAdresa(adr);
 
         Smestaj updatedSmestaj = null;
 
         try {
+            EditAccommodationResponse r = client.editSmestaj(x);
             updatedSmestaj = agentService.updateSmestaj(smestaj);
+            return new ResponseEntity<Smestaj>(updatedSmestaj, HttpStatus.OK);
         } catch (Exception e) {
-            e.printStackTrace();
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
 
-        return updatedSmestaj;
     }
 
-    @RequestMapping(value = "/smestajDelete/{id}",method = RequestMethod.DELETE)
-    public ResponseEntity<List<Smestaj>> deleteSmestaj(@PathVariable("id")Long id){
-        List<Smestaj> smestajs = agentService.getSmestaje();
-        List<Smestaj> smestaji = agentService.deleteSmestaj(id);
-        if(smestaji.size() == smestajs.size())
-            return new ResponseEntity<>(HttpStatus.METHOD_NOT_ALLOWED);
-        else
-            return  new ResponseEntity<List<Smestaj>>(smestaji, HttpStatus.OK);
-    }
 
     @RequestMapping(value = "/types", method = RequestMethod.GET)
-    public List<AccomodationType>  getTypes()
-    {
+    public List<AccomodationType> getTypes() {
         return agentService.getAccTypes();
     }
 
 
     @RequestMapping(value = "/services", method = RequestMethod.GET)
-    public List<UslugaDTO> getServices()
-    {
+    public List<UslugaDTO> getServices() {
         return agentService.allServices();
     }
 
 
-    @RequestMapping(value = "/accomodationUnits/{id}",method = RequestMethod.GET)
-    public List<SJedinicaDTO> getSveSJedinice(@PathVariable("id")Long id)
-    {
+    @RequestMapping(value = "/accomodationUnits/{id}", method = RequestMethod.GET)
+    public List<SJedinicaDTO> getSveSJedinice(@PathVariable("id") Long id) {
         List<SJedinica> list = agentService.getSveSJedinice(id);
         List<SJedinicaDTO> listDTO = new ArrayList<>();
 
-        for (SJedinica s: list) {
+        for (SJedinica s : list) {
             SJedinicaDTO sDTO = new SJedinicaDTO();
-            sJedinicaToDto(s,sDTO);
+            sJedinicaToDto(s, sDTO);
             listDTO.add(sDTO);
         }
 
         return listDTO;
     }
 
-    @RequestMapping(value = "/accomodationUnit/{id}",method = RequestMethod.GET)
-    public SJedinicaDTO getSJedinica(@PathVariable("id")Long id){
+    @RequestMapping(value = "/accomodationUnit/{id}", method = RequestMethod.GET)
+    public SJedinicaDTO getSJedinica(@PathVariable("id") Long id) {
 
         SJedinica sJedinica = agentService.getSJedinica(id);
         SJedinicaDTO sJedinicaDTO = new SJedinicaDTO();
 
-        sJedinicaToDto(sJedinica,sJedinicaDTO);
+        sJedinicaToDto(sJedinica, sJedinicaDTO);
 
         return sJedinicaDTO;
     }
 
-    @RequestMapping(value = "/accomodationUnit/{smestajId}",method = RequestMethod.POST)
-    public ResponseEntity<SJedinica> addSJedinica(@PathVariable("smestajId")Long smestajId, @RequestBody SJedinicaDTO sJedinica){
+    @RequestMapping(value = "/accomodationUnit/{smestajId}", method = RequestMethod.POST)
+    public ResponseEntity<SJedinica> addSJedinica(@PathVariable("smestajId") Long smestajId, @RequestBody SJedinicaDTO sJedinica) {
+
+
+        SJedinicaXMLDTO xdto = new SJedinicaXMLDTO();
+        xdto.setBroj(sJedinica.getBroj());
+        xdto.setBrojKreveta(sJedinica.getBroj());
+        xdto.setCena(sJedinica.getCena());
+        xdto.setDostupnost(sJedinica.getDostupnost());
+        xdto.setSmestajID(smestajId.toString());
 
         SJedinica addedSJedinica = null;
 
         try {
+            AddAccommodationUnitResponse r = client.addSJedinica(xdto);
+            sJedinica.setIdGlBaza(Long.parseLong(r.getAccommodationUnit().getId()));
             addedSJedinica = agentService.addSJedinica(sJedinica, smestajId);
             return new ResponseEntity<SJedinica>(addedSJedinica, HttpStatus.OK);
         } catch (Exception e) {
@@ -169,34 +202,53 @@ public class AgentController {
 
     }
 
-    @RequestMapping(value = "/accomodationUnit/{id}",method = RequestMethod.PUT)
-    public SJedinica updateSJedinica(@PathVariable("id")Long id, @RequestBody SJedinicaDTO sJedinica){
+    @RequestMapping(value = "/accomodationUnit/{id}", method = RequestMethod.PUT)
+    public ResponseEntity<SJedinica> updateSJedinica(@PathVariable("id") Long id, @RequestBody SJedinicaDTO sJedinica) {
+
+        SJedinicaXMLDTO xdto = new SJedinicaXMLDTO();
+        xdto.setBroj(sJedinica.getBroj());
+        xdto.setBrojKreveta(sJedinica.getBroj());
+        xdto.setCena(sJedinica.getCena());
+        xdto.setDostupnost(sJedinica.getDostupnost());
+        xdto.setSmestajID(sJedinica.getIdSmestaj().toString());
 
         SJedinica updatedSJedinica = null;
 
         try {
+            EditAccommodationUnitResponse r = client.editSJedinica(xdto);
             updatedSJedinica = agentService.updateSJedinica(sJedinica);
+            return new ResponseEntity<SJedinica>(updatedSJedinica, HttpStatus.OK);
         } catch (Exception e) {
-            e.printStackTrace();
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
 
-        return updatedSJedinica;
     }
 
 
+
     @RequestMapping(value = "/occupancy/{id}",method = RequestMethod.POST)
-    public Rezervacija zauzmiSJedinica(@PathVariable("id")Long id, @RequestBody ZauzetostDTO zauzetostDTO){
+    public ResponseEntity<Rezervacija> zauzmiSJedinica(@PathVariable("id")Long id, @RequestBody ZauzetostDTO zauzetostDTO){
+
+        RezervacijaMakeXMLDTO re = new RezervacijaMakeXMLDTO();
+        re.getFrom().toGregorianCalendar().setTime(zauzetostDTO.getOdDatum());
+        re.getTo().toGregorianCalendar().setTime(zauzetostDTO.getDoDatum());
+        re.setCost(zauzetostDTO.getCena());
+        re.setSjedinicaId(id);
+        String g = zauzetostDTO.getDoDatum().toString();
+
+
 
         Rezervacija r = null;
-        LocalDate odDatum = zauzetostDTO.getOdDatum();
-        LocalDate doDatum = zauzetostDTO.getDoDatum();
+
         try {
-            r = agentService.zauzmiSJedinicu(id, odDatum, doDatum);
+            MakeReservationResponse res = client.napraviRezervaciju(re);
+            zauzetostDTO.setIdGlBaza(res.getReservation().getId());
+            r = agentService.zauzmiSJedinicu(id, zauzetostDTO.getOdDatum(), zauzetostDTO.getDoDatum());
+            return  new ResponseEntity<Rezervacija>(r, HttpStatus.OK);
         } catch (Exception e) {
-            e.printStackTrace();
+            return  new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
 
-        return r;
     }
 
     @RequestMapping(value = "/reservations/{id}",method = RequestMethod.GET)
@@ -233,14 +285,26 @@ public class AgentController {
     @RequestMapping(value = "/messages",method = RequestMethod.GET)
     public List<PorukaDTO> getSvePoruke()
     {
-        List<Poruka> list = agentService.getSvePoruke();
+        //List<Poruka> list = agentService.getSvePoruke();
+
+        PollingPorukeResponse po = client.pokupiPoruke();
+
+        List<PorukaXMLDTO> poruke = po.getPoruke();
+
         List<PorukaDTO> listDTO = new ArrayList<>();
 
-        for (Poruka p: list) {
-            PorukaDTO pDTO = new PorukaDTO();
-            porukaToDto(p,pDTO);
-            listDTO.add(pDTO);
+        for(int i=0; i<poruke.size(); i++) {
+            PorukaXMLDTO p = poruke.get(i);
+            PorukaDTO dto = new PorukaDTO();
+            dto.setIdGlBaza(Long.parseLong(p.getId()));
+            dto.setPrimalac(p.getPrimalac());
+            dto.setPosaljilac(p.getPosiljalac());
+            dto.setSadrzaj(p.getSadrzaj());
+            dto.setDatumSlanja(new Date());
+
+            listDTO.add(dto);
         }
+
 
         return listDTO;
     }
@@ -264,10 +328,17 @@ public class AgentController {
     @RequestMapping(value = "/answerMessage/{messageId}",method = RequestMethod.POST)
     public ResponseEntity<Poruka> addSJedinica(@PathVariable("messageId")Long messageId, @RequestBody PorukaDTO poruka){
 
+        PorukaXMLDTO xDTO = new PorukaXMLDTO();
+        xDTO.setPosiljalac(poruka.getPosaljilac());
+        xDTO.setPrimalac(poruka.getPrimalac());
+        xDTO.setSadrzaj(poruka.getSadrzaj());
+
         Poruka addedPoruka = null;
 
+
         try {
-            addedPoruka = agentService.addOdgovor(poruka, messageId);
+            SendPorukaResponse sr = client.posaljiPoruku(xDTO);
+            //addedPoruka = agentService.addOdgovor(poruka, messageId);
             return new ResponseEntity<Poruka>(addedPoruka, HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
@@ -312,15 +383,10 @@ public class AgentController {
         rDTO.setDatumRez(r.getDatumRez());
         rDTO.setOd(r.getOd());
         rDTO.set_do(r.get_do());
+        rDTO.setIdGlBaza(r.getIdGlBaza());
 
     }
 
-
-    @RequestMapping(value = "/", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    public GetTestResponse returnCountryResponse()
-    {
-        return client.test("test");
-    }
 
 
 
@@ -335,7 +401,7 @@ public class AgentController {
         sDTO.setLatitude(s.getAdresa().getLatitude());
         sDTO.setLongitude(s.getAdresa().getLongitude());
         sDTO.setPosBroj(s.getAdresa().getPosBroj());
-
+        sDTO.setIdGlBaza(s.getIdGlBaza());
 
 
         for (Usluga usluga: s.getUslugaList()) {
@@ -344,7 +410,7 @@ public class AgentController {
             uslugaDTO.setNaziv(usluga.getNaziv());
             uslugaDTO.setCena(usluga.getCena());
             uslugaDTO.setOpis(usluga.getOpis());
-
+            uslugaDTO.setIdGlBaza(usluga.getIdGlBaza());
             sDTO.getUsluge().add(uslugaDTO);
             sDTO.getAdditionalServices().add(usluga.getId());
         }
@@ -356,6 +422,7 @@ public class AgentController {
             sjDTO.setBroj(sj.getBroj());
             sjDTO.setBrojKreveta(sj.getBrojKreveta());
             sjDTO.setCena(sj.getCena());
+            sjDTO.setIdGlBaza(sj.getIdGlBaza());
 
             sDTO.getSjedinice().add(sjDTO);
         }
@@ -371,7 +438,7 @@ public class AgentController {
         sDTO.setBrojKreveta(s.getBrojKreveta());
         sDTO.setCena(s.getCena());
         sDTO.setNaziv(s.getNaziv());
-
+        sDTO.setIdGlBaza(s.getIdGlBaza());
     }
 
     public void porukaToDto(Poruka p, PorukaDTO pDTO) {
@@ -384,6 +451,6 @@ public class AgentController {
         pDTO.setPosaljilac(p.getPosaljilac());
         pDTO.setPrimalac("Agent");
         pDTO.setNaslov(p.getNaslov());
-
+        pDTO.setIdGlBaza(p.getIdGlBaza());
     }
 }
