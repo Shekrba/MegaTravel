@@ -23,6 +23,7 @@ import { MessageComponent } from './components/message/message.component';
 import { OccupancyComponent } from './components/occupancy/occupancy.component';
 import { AccomodationImagesComponent } from './components/accomodation-images/accomodation-images.component';
 import { CenovnikComponent } from './components/cenovnik/cenovnik.component';
+import { ConfirmPasswordComponent } from './components/confirm-password/confirm-password.component';
 
 @NgModule({
   declarations: [
@@ -40,7 +41,8 @@ import { CenovnikComponent } from './components/cenovnik/cenovnik.component';
     MessageComponent,
     OccupancyComponent,
     AccomodationImagesComponent,
-    CenovnikComponent
+    CenovnikComponent,
+    ConfirmPasswordComponent
   ],
   imports: [
     BrowserModule,

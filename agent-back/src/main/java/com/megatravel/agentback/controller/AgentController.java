@@ -97,6 +97,23 @@ public class AgentController {
     @PostMapping(value = "/upload/{id}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<?> uploadFile(@RequestParam("images") MultipartFile[] files, @PathVariable("id") Long id) throws IOException {
         System.out.println(id);
+
+
+        for(MultipartFile file : files){
+            byte[] bytes = file.getBytes();
+            ImageXMLDTO x = new ImageXMLDTO();
+            x.setSmestajID(id.toString());
+            x.getSlike().add(bytes.toString());
+            
+            try {
+                AddImagesResponse r = client.dodajSliku(x);
+                return new ResponseEntity<>(HttpStatus.OK);
+            } catch (Exception e) {
+                return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            }
+
+        }
+
         agentService.uploadImages(id, files);
 
         return new ResponseEntity<>(HttpStatus.OK);

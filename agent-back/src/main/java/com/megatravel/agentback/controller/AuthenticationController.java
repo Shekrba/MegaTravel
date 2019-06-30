@@ -4,10 +4,7 @@ import com.megatravel.agentback.client.AgentClient;
 import com.megatravel.agentback.dto.UserDTO;
 import com.megatravel.agentback.dto.UslugaDTO;
 import com.megatravel.agentback.model.*;
-import com.megatravel.agentback.repository.CategoryRepository;
-import com.megatravel.agentback.repository.RezervacijaRepository;
-import com.megatravel.agentback.repository.SJedinicaRepository;
-import com.megatravel.agentback.repository.UslugaRepository;
+import com.megatravel.agentback.repository.*;
 import com.megatravel.agentback.security.TokenUtils;
 import com.megatravel.agentback.security.auth.JwtAuthenticationRequest;
 import com.megatravel.agentback.service.CustomUserDetailsService;
@@ -24,6 +21,8 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -66,7 +65,11 @@ public class AuthenticationController {
 	@Autowired
 	private SJedinicaRepository sJedinicaRepository;
 
+	@Autowired
+	UserRepository userRepository;
 
+	@Autowired
+	PasswordEncoder passwordEncoder;
 
 
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
@@ -119,9 +122,41 @@ public class AuthenticationController {
 				categoryRepository.save(ca);
 			}
 
+			for (int i = 0; i < listaUsluga.size(); i++) {
+				UslugaXMLDTO u = listaUsluga.get(i);
+				Usluga us = uslugaRepository.findUslugaSaIdGlBaze(Long.parseLong(u.getId()));
+				for(int j = 0; j < listaKategorija.size(); j++) {
+					if(u.getCategories().contains(Long.parseLong(listaKategorija.get(j).getId()))) {
+						Category c = categoryRepository.findCathegorySaIdGlBaze(Long.parseLong(listaKategorija.get(j).getId()));
+						u.getCategories().add(c.getId());
+					}
+				}
+
+				uslugaRepository.save(us);
+			}
+
+			for (int i = 0; i < listaKategorija.size(); i++) {
+				CategoryXMLDTO c = listaKategorija.get(i);
+				Category ca = categoryRepository.findCathegorySaIdGlBaze(Long.parseLong(c.getId()));
+				for(int j = 0; j < listaUsluga.size(); j++) {
+					if(c.getUsluge().contains(Long.parseLong(listaUsluga.get(j).getId()))) {
+						Usluga u = uslugaRepository.findUslugaSaIdGlBaze(Long.parseLong(listaUsluga.get(j).getId()));
+						c.getUsluge().add(u.getId());
+					}
+				}
+
+				categoryRepository.save(ca);
+			}
+
 
 
 		userDTO.setFirstLogin(true);
+			String jwt = tokenUtils.generateToken(authenticationRequest.getUsername());
+			int expiresIn = tokenUtils.getExpiredIn();
+
+			userDTO.setExpiresIn(expiresIn);
+			userDTO.setToken(jwt);
+			userDTO.setUsername(authenticationRequest.getUsername());
 		return new ResponseEntity(userDTO, HttpStatus.OK);
 	}
 
@@ -224,6 +259,7 @@ public class AuthenticationController {
 		userDTO.setPrezime(user.getPrezime());
 		userDTO.setUsername(user.getUsername());
 		userDTO.setToken(jwt);
+		userDTO.setFirstLogin(false);
 
 
 		// Vrati token kao odgovor na uspesno autentifikaciju
@@ -263,5 +299,14 @@ public class AuthenticationController {
 	static class PasswordChanger {
 		public String oldPassword;
 		public String newPassword;
+	}
+
+	@RequestMapping(value = "/confirmPassword", method = RequestMethod.POST)
+	public ResponseEntity<?> changePassword(@RequestBody UserDTO user) {
+		User u=new User();
+		u.setUsername(user.getUsername());
+		u.setPassword(passwordEncoder.encode(user.getPassword()));
+		userRepository.save(u);
+		return new ResponseEntity(HttpStatus.OK);
 	}
 }

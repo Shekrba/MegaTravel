@@ -2,6 +2,7 @@ package com.megatravel.agentback.client;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.megatravel.agentback.model.Category;
+import com.megatravel.agentback.model.Image;
 import com.megatravel.agentback.model.User;
 import com.megatravel.agentback.repository.UserRepository;
 import com.megatravel.agentback.xml.dto.*;
@@ -455,7 +456,90 @@ public class AgentClient extends  WebServiceGatewaySupport{
         return  response.getValue();
     }
 
-    
+
+    public AddImagesResponse dodajSliku(ImageXMLDTO image) throws SoapFaultClientException{
+
+        String s = SecurityContextHolder.getContext().getAuthentication().getName();
+        User u = userRepository.findByUsername(s);
+        token = u.getToken();
+
+        AddImages request = new AddImages();
+        request.setImages(image);
+
+
+        ObjectFactory objectFactory = new ObjectFactory();
+        JAXBElement<AddImages> jerequest=objectFactory.createAddImages(request);
+        JAXBElement<AddImagesResponse> response=null;
+
+        System.setProperty("sun.net.http.allowRestrictedHeaders", "true");
+
+        try {
+            response = (JAXBElement<AddImagesResponse>) getWebServiceTemplate()
+                    .marshalSendAndReceive("http://localhost:8762/agent-service/api", jerequest,
+                            new WebServiceMessageCallback() {
+                                public void doWithMessage(WebServiceMessage message) {
+                                    TransportContext context = TransportContextHolder.getTransportContext();
+                                    HttpUrlConnection connection = (HttpUrlConnection) context.getConnection();
+
+                                    try {
+                                        connection.addRequestHeader("SOAPAction","addImages");
+                                        connection.addRequestHeader("Authorization","Bearer "+token);
+                                    } catch (IOException e) {
+                                        e.printStackTrace();
+                                    }
+                                    //postMethod.addHeader("Authorization", "Bearer ");
+                                }
+                            });
+        }catch (SoapFaultClientException e){
+            throw e;
+        }
+
+
+
+        return  response.getValue();
+    }
+
+    public ChangePasswordResponse promeniSifru(UserCredentialsXMLDTO credentials) throws SoapFaultClientException{
+
+        String s = SecurityContextHolder.getContext().getAuthentication().getName();
+        User u = userRepository.findByUsername(s);
+        token = u.getToken();
+
+        ChangePassword request = new ChangePassword();
+        request.setUserCredentials(credentials);
+
+
+        ObjectFactory objectFactory = new ObjectFactory();
+        JAXBElement<ChangePassword> jerequest=objectFactory.createChangePassword(request);
+        JAXBElement<ChangePasswordResponse> response=null;
+
+        System.setProperty("sun.net.http.allowRestrictedHeaders", "true");
+
+        try {
+            response = (JAXBElement<ChangePasswordResponse>) getWebServiceTemplate()
+                    .marshalSendAndReceive("http://localhost:8762/agent-service/api", jerequest,
+                            new WebServiceMessageCallback() {
+                                public void doWithMessage(WebServiceMessage message) {
+                                    TransportContext context = TransportContextHolder.getTransportContext();
+                                    HttpUrlConnection connection = (HttpUrlConnection) context.getConnection();
+
+                                    try {
+                                        connection.addRequestHeader("SOAPAction","changePassword");
+                                        connection.addRequestHeader("Authorization","Bearer "+token);
+                                    } catch (IOException e) {
+                                        e.printStackTrace();
+                                    }
+                                    //postMethod.addHeader("Authorization", "Bearer ");
+                                }
+                            });
+        }catch (SoapFaultClientException e){
+            throw e;
+        }
+
+
+
+        return  response.getValue();
+    }
 
     public FirstLoginResponse login(UserCredentialsXMLDTO credentials) throws SoapFaultClientException {
 

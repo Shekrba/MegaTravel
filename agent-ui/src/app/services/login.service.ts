@@ -56,4 +56,8 @@ export class LoginService {
     this.currentUserSubject.next(null);
   }
 
+  confirmPassword(user : User) : Observable<any> {
+    return this.http.post(`${this.LOGIN_URL}/confirmPassword`,user);
+  }
+
 }

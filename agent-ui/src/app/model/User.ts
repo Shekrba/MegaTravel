@@ -5,4 +5,6 @@ export interface User {
     prezime: string;
     token?: string;
     expiresIn?:number;
+    firstLogin ?: boolean;
+    password ?: string;
 }
