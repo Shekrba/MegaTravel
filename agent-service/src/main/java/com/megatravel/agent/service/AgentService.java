@@ -67,4 +67,9 @@ public interface AgentService {
 	@WebResult(name = "Reservation")
 	public RezervacijaMakeXMLDTO makeReservation(@WebParam(name="Reservation") RezervacijaMakeXMLDTO reservation) throws SOAPFaultException, SOAPException;
 
+
+	@WebMethod(action = "syncReservations")
+	@WebResult(name = "Reservations")
+	public List<RezervacijaXMLDTO> syncReservations() throws SOAPFaultException, SOAPException;
+
 }

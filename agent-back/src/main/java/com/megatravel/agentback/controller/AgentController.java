@@ -6,6 +6,7 @@ import com.megatravel.agentback.dto.*;
 import com.megatravel.agentback.model.*;
 import com.megatravel.agentback.service.AgentService;
 import com.megatravel.agentback.xml.dto.*;
+import com.megatravel.agentback.xml.dto.RezervacijaMakeXMLDTO;
 import generated.GetTestResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -33,9 +34,11 @@ public class AgentController {
     @Autowired
     AgentClient client;
 
-    @RequestMapping(value = "/accomodations", method = RequestMethod.GET)
-    public List<SmestajDTO> getSmestaje() {
 
+    @RequestMapping(value = "/accomodations",method = RequestMethod.GET)
+    public List<SmestajDTO> getSmestaje()
+    {
+        RezervacijaMakeXMLDTO r=new RezervacijaMakeXMLDTO();
         List<Smestaj> list = agentService.getSmestaje();
         List<SmestajDTO> listDTO = new ArrayList<>();
 

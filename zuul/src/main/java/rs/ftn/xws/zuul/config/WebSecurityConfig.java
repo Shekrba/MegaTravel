@@ -73,11 +73,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 			.authorizeRequests()
 			.antMatchers("/login-service/auth/**").permitAll()
 			.antMatchers("/search-service/api/**").permitAll()
-				.antMatchers("/admin-service/api/admin/**").permitAll()
+				.antMatchers("/admin-service/api/admin/**").hasRole("ADMIN")
 				.antMatchers("/agent-service/api").hasRole("AGENT")
 				.antMatchers("/agent-service/api/login").permitAll()
-
-			// svaki zahtev mora biti autorizovan
+				.antMatchers("/reservation-service/api/**").hasRole("USER")
+				.antMatchers("/reservation-service/api/reservations").hasRole("AGENT")
+				// svaki zahtev mora biti autorizovan
 			.anyRequest().authenticated().and()
 			
 			// presretni svaki zahtev filterom
@@ -90,11 +91,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	@Override
 	public void configure(WebSecurity web) throws Exception {
 		// TokenAuthenticationFilter ce ignorisati sve ispod navedene putanje
-        web.ignoring().antMatchers(HttpMethod.POST, "/reservation-service/api/**","/login-service/auth/register","/login-service/auth/login","/search-service/api/**","/admin-service/api/admin/**","/agent-service/api/login");
+        web.ignoring().antMatchers(HttpMethod.POST, "/login-service/auth/register","/login-service/auth/login","/search-service/api/**","/agent-service/api/login");
 
-		web.ignoring().antMatchers(HttpMethod.GET,"/agent-service/api/**","/","/reservation-service/api/**","/search-service/api/**","/images/**","/webjars/**", "/*.html", "/favicon.ico", "/**/*.html", "/**/*.css", "/**/*.js","/admin-service/api/admin/**");
-
-		web.ignoring().antMatchers(HttpMethod.PUT, "/reservation-service/api/**");
+		web.ignoring().antMatchers(HttpMethod.GET,"/agent-service/api/**","/","/search-service/api/**","/images/**","/webjars/**", "/*.html", "/favicon.ico", "/**/*.html", "/**/*.css", "/**/*.js");
 	}
 
 	@Bean
