@@ -72,4 +72,12 @@ public interface AgentService {
 	@WebResult(name = "Reservations")
 	public List<RezervacijaXMLDTO> syncReservations() throws SOAPFaultException, SOAPException;
 
+	@WebMethod(action = "addImages")
+	@WebResult(name = "Successful")
+	public boolean addImages(@WebParam(name="Images") ImageXMLDTO images) throws SOAPFaultException, SOAPException;
+
+	@WebMethod(action = "changePassword")
+	@WebResult(name = "Successful")
+	public boolean changePassword(@WebParam(name="UserCredentials") UserCredentialsXMLDTO credentials) throws SOAPFaultException, SOAPException;
+
 }

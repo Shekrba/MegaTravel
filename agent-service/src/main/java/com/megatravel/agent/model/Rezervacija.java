@@ -45,9 +45,11 @@ public class Rezervacija {
     @Column(name = "canceled", unique = false, nullable = false,columnDefinition="boolean default false")
     protected boolean canceled = false;
 
+
+
     public Rezervacija(){
 
-    };
+    }
 
     public boolean isCanceled() {
         return canceled;

@@ -12,7 +12,8 @@ import com.megatravel.agent.xml.dto.SJedinicaXMLDTO;
 
 import javax.persistence.*;
 import javax.xml.bind.annotation.*;
-
+import java.util.HashSet;
+import java.util.Set;
 
 
 @Entity
@@ -41,6 +42,9 @@ public class SJedinica {
     @Column(name = "broj", unique = false, nullable = false)
     private int broj;
 
+    @OneToMany(mappedBy = "sJedinica")
+    protected Set<Rezervacija> rezervacije=new HashSet<>();
+
     @Version
     private Long version;
 
@@ -48,7 +52,13 @@ public class SJedinica {
 
     }
 
+    public Set<Rezervacija> getRezervacije() {
+        return rezervacije;
+    }
 
+    public void setRezervacije(Set<Rezervacija> rezervacije) {
+        this.rezervacije = rezervacije;
+    }
 
     public Long getVersion() {
         return version;
