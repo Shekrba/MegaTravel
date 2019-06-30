@@ -87,6 +87,7 @@ public class AgentController {
             addedSmestaj = agentService.addSmestaj(smestaj);
             return new ResponseEntity<Smestaj>(addedSmestaj, HttpStatus.OK);
         } catch (Exception e) {
+
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
 
@@ -191,16 +192,18 @@ public class AgentController {
         return sJedinicaDTO;
     }
 
+
     @RequestMapping(value = "/accomodationUnit/{smestajId}", method = RequestMethod.POST)
     public ResponseEntity<SJedinica> addSJedinica(@PathVariable("smestajId") Long smestajId, @RequestBody SJedinicaDTO sJedinica) {
 
+        Smestaj s=smestajRepository.findOneById(smestajId);
 
         SJedinicaXMLDTO xdto = new SJedinicaXMLDTO();
         xdto.setBroj(sJedinica.getBroj());
         xdto.setBrojKreveta(sJedinica.getBroj());
         xdto.setCena(sJedinica.getCena());
-        xdto.setDostupnost(sJedinica.getDostupnost());
-        xdto.setSmestajID(smestajId.toString());
+        xdto.setDostupnost(true);
+        xdto.setSmestajID(s.getIdGlBaza().toString());
 
         SJedinica addedSJedinica = null;
 
@@ -210,6 +213,7 @@ public class AgentController {
             addedSJedinica = agentService.addSJedinica(sJedinica, smestajId);
             return new ResponseEntity<SJedinica>(addedSJedinica, HttpStatus.OK);
         } catch (Exception e) {
+            e.printStackTrace();
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
 
@@ -450,7 +454,6 @@ public class AgentController {
         sDTO.setBroj(s.getBroj());
         sDTO.setBrojKreveta(s.getBrojKreveta());
         sDTO.setCena(s.getCena());
-        sDTO.setNaziv(s.getNaziv());
         sDTO.setIdGlBaza(s.getIdGlBaza());
     }
 

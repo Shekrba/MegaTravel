@@ -287,8 +287,8 @@ public class AgentServiceImpl implements AgentService {
 	public List<PorukaXMLDTO> pollingPoruke() throws SOAPFaultException, SOAPException {
 		Message message=PhaseInterceptorChain.getCurrentMessage();
 		HttpServletRequest request=(HttpServletRequest)message.get(AbstractHTTPDestination.HTTP_REQUEST);
-		String username=request.getHeader("Username:");
-		List<PorukaXMLDTO> ret=new ArrayList<>();
+		String username=request.getHeader("Username");
+		ArrayList<PorukaXMLDTO> ret=new ArrayList<>();
 		for(Poruka p : porukaRepository.findPorukeByUsername(username)){
 			ret.add(new PorukaXMLDTO(p));
 		}

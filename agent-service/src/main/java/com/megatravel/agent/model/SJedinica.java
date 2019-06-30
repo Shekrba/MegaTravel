@@ -28,8 +28,8 @@ public class SJedinica {
     private int brojKreveta;
 
 
-    @Column(name = "dostupnost", unique = false, nullable = false)
-    private Boolean dostupnost;
+    @Column(name = "dostupnost", unique = false, nullable = true)
+    private Boolean dostupnost=true;
 
 
     @Id

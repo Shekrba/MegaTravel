@@ -21,7 +21,7 @@ public class SJedinica {
     @Column(name = "brojKreveta", unique = false, nullable = false)
     protected int brojKreveta;
 
-    @Column(name = "dostupnost", unique = false, nullable = false)
+    @Column(name = "dostupnost", unique = false)
     protected Boolean dostupnost;
 
     @OneToMany(mappedBy = "sJedinica")

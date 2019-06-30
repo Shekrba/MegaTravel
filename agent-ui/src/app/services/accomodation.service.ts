@@ -93,7 +93,7 @@ export class AccomodationService {
   }
 
   getMessages(): Observable<any> {
-    return this.http.get(`${ROOT_URL}/unansweredMessages`);
+    return this.http.get(`${ROOT_URL}/messages`);
   }
 
   getMessage(id:number): Observable<any> {
