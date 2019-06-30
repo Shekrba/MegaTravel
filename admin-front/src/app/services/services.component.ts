@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { AdminServiceService } from '../admin-service.service';
 import { Data } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
+import { isNumber } from 'util';
 
 @Component({
   selector: 'app-services',
@@ -22,7 +24,7 @@ export class ServicesComponent implements OnInit {
     cena :null
   }
 
-  constructor(private adminService: AdminServiceService) { }
+  constructor(private adminService: AdminServiceService, private toastr: ToastrService) { }
 
   ngOnInit() {
     this.getAllServices();
@@ -53,6 +55,21 @@ export class ServicesComponent implements OnInit {
   }
 
   public addService(){
+
+    if(this.usl.naziv == null || this.usl.naziv == ""){
+      this.toastr.error("You have to input service name.");
+      return;
+    }
+
+    if(this.usl.cena == null || this.usl.cena == ""){
+      this.toastr.error("You have to input service price.");
+      return;
+    }
+
+    if (isNaN(this.usl.cena)) {
+      this.toastr.error("You have to input a number into service price.");
+      return;
+    }
 
     this.adminService.addService(this.usl).subscribe(
       res => {

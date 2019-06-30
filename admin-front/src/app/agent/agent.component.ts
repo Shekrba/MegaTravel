@@ -17,7 +17,8 @@ export class AgentComponent implements OnInit {
     prezime : null,
     adresa : null,
     email :null,
-    username: null
+    username: null,
+    id:null
   }
 
   constructor(private toastr: ToastrService, private adminService: AdminServiceService, private router: Router) {}
@@ -30,13 +31,56 @@ export class AgentComponent implements OnInit {
   }
 
   registerAgent(){
+
+    if(this.agent.username == null || this.agent.username == ""){
+      this.toastr.error("You have to input username.");
+      return;
+    }
+
+    if(this.agent.ime == null || this.agent.ime == ""){
+      this.toastr.error("You have to input first name.");
+      return;
+    }
+
+    if(this.agent.prezime == null || this.agent.prezime == ""){
+      this.toastr.error("You have to input last name.");
+      return;
+    }
+
+    if(this.agent.adresa == null || this.agent.adresa == ""){
+      this.toastr.error("You have to input address.");
+      return;
+    }
+
+    if(this.agent.posMatBroj == null || this.agent.posMatBroj == ""){
+      this.toastr.error("You have to input business registration number.");
+      return;
+    }
+
+    if(this.agent.email == null || this.agent.email == ""){
+      this.toastr.error("You have to input email.");
+      return;
+    }
+
+    if (isNaN(this.agent.posMatBroj)) {
+      this.toastr.error("You have to input a number into business registration number.");
+      return;
+    }
+
     this.adminService.registerAgent(this.agent).subscribe(
       res => {
-        this.router.navigate(['']);
-        this.showSuccess();
+        this.agent.id = res.id;
+
+        if(this.agent.id==null){
+          this.toastr.error("Username is already taken.");
+        }
+        else{
+          this.router.navigate(['']);
+          this.showSuccess();
+        }
       },
       err => {
-        alert("Could not register an agent.");
+        this.toastr.error("Username already exists.", "Registration");
       }
     );
   }

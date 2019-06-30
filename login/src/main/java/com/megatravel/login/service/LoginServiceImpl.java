@@ -45,6 +45,12 @@ public class LoginServiceImpl implements  LoginService{
 
     public UserDTO register(UserDTO userDTO){
         User user = new User();
+
+        if(userRepository.findByUsername(userDTO.getUsername()) != null){
+            userDTO.setId(null);
+            return userDTO;
+        }
+
         user.setPrezime(userDTO.getPrezime());
         user.setEnabled(true);
         user.setIme(userDTO.getIme());
@@ -59,6 +65,7 @@ public class LoginServiceImpl implements  LoginService{
 
         user = userRepository.save(user);
         userDTO.setId(user.getId());
+
         return userDTO;
     }
 }

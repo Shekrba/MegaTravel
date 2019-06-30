@@ -18,7 +18,7 @@ public interface AdminService {
     public User blockKorisnik(Long id);
     public User activateKorisnik(Long id);
     public User deleteKorisnik(Long id);
-    public User addAgent(AgentDTO agent);
+    public AgentDTO addAgent(AgentDTO agent);
     public List<UserDTO> getKorisnike();
 
     public Smestaj addAccomodation(SmestajDTO smestaj);
