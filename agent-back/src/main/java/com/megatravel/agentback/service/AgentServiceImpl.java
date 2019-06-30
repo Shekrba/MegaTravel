@@ -361,6 +361,8 @@ public class AgentServiceImpl implements AgentService {
     public boolean uploadImages(Long idSmestaj, MultipartFile[] files) throws IOException {
         Smestaj smestaj = smestajRepository.findOneById(idSmestaj);
 
+
+
         for(MultipartFile file : files){
             byte[] bytes = file.getBytes();
             Image image = new Image();
