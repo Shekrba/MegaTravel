@@ -31,6 +31,16 @@ public class Category {
             inverseJoinColumns = @JoinColumn(name = "service_id"))
     private List<Usluga> uslugaList = new ArrayList<>();
 
+    private Long idGlBaza;
+
+    public Long getIdGlBaza() {
+        return idGlBaza;
+    }
+
+    public void setIdGlBaza(Long idGlBaza) {
+        this.idGlBaza = idGlBaza;
+    }
+
     public Category() {
 
     }

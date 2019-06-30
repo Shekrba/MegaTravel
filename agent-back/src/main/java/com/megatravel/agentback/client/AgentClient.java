@@ -330,7 +330,7 @@ public class AgentClient extends  WebServiceGatewaySupport{
         return  response.getValue();
     }
 
-    public SyncUslugeResponse dopuniUsluge(UslugaXMLDTO usluga) throws SoapFaultClientException{
+    public SyncUslugeResponse dopuniUsluge() throws SoapFaultClientException{
 
         String s = SecurityContextHolder.getContext().getAuthentication().getName();
         User u = userRepository.findByUsername(s);
@@ -372,7 +372,7 @@ public class AgentClient extends  WebServiceGatewaySupport{
     }
 
 
-    public SyncCategoriesResponse dopuniKategorije(CategoryXMLDTO kategodija) throws SoapFaultClientException{
+    public SyncCategoriesResponse dopuniKategorije() throws SoapFaultClientException{
 
         String s = SecurityContextHolder.getContext().getAuthentication().getName();
         User u = userRepository.findByUsername(s);
@@ -397,6 +397,48 @@ public class AgentClient extends  WebServiceGatewaySupport{
 
                                     try {
                                         connection.addRequestHeader("SOAPAction","syncCategories");
+                                        connection.addRequestHeader("Authorization","Bearer "+token);
+                                    } catch (IOException e) {
+                                        e.printStackTrace();
+                                    }
+                                    //postMethod.addHeader("Authorization", "Bearer ");
+                                }
+                            });
+        }catch (SoapFaultClientException e){
+            throw e;
+        }
+
+
+
+        return  response.getValue();
+    }
+
+
+    public SyncReservationsResponse dopuniRezervacije() throws SoapFaultClientException{
+
+        String s = SecurityContextHolder.getContext().getAuthentication().getName();
+        User u = userRepository.findByUsername(s);
+        token = u.getToken();
+
+        SyncReservations request = new SyncReservations();
+
+
+        ObjectFactory objectFactory = new ObjectFactory();
+        JAXBElement<SyncReservations> jerequest=objectFactory.createSyncReservations(request);
+        JAXBElement<SyncReservationsResponse> response=null;
+
+        System.setProperty("sun.net.http.allowRestrictedHeaders", "true");
+
+        try {
+            response = (JAXBElement<SyncReservationsResponse>) getWebServiceTemplate()
+                    .marshalSendAndReceive("http://localhost:8762/agent-service/api", jerequest,
+                            new WebServiceMessageCallback() {
+                                public void doWithMessage(WebServiceMessage message) {
+                                    TransportContext context = TransportContextHolder.getTransportContext();
+                                    HttpUrlConnection connection = (HttpUrlConnection) context.getConnection();
+
+                                    try {
+                                        connection.addRequestHeader("SOAPAction","syncReservations");
                                         connection.addRequestHeader("Authorization","Bearer "+token);
                                     } catch (IOException e) {
                                         e.printStackTrace();

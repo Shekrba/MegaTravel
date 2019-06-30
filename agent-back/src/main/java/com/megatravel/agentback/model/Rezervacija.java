@@ -75,7 +75,7 @@ public class Rezervacija {
 
     @XmlElement(name = "UCena", namespace = "https://github.com/Shekrba/MegaTravel")
     @Column(name = "ukupnaCena", unique = false, nullable = false)
-    protected int uCena;
+    protected double uCena;
 
     //KORISTICEMO SAMO USER OD KORISNIKA TO NAM JE DOVOLJNO NA AGENTU
     @Column(name="korisnik", nullable = false)
@@ -147,11 +147,11 @@ public class Rezervacija {
         this._do = _do;
     }
 
-    public int getuCena() {
+    public double getuCena() {
         return uCena;
     }
 
-    public void setuCena(int uCena) {
+    public void setuCena(double uCena) {
         this.uCena = uCena;
     }
 

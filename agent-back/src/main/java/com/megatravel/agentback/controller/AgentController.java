@@ -209,7 +209,7 @@ public class AgentController {
 
         try {
             MakeReservationResponse res = client.napraviRezervaciju(re);
-
+            zauzetostDTO.setIdGlBaza(res.getReservation().getId());
             r = agentService.zauzmiSJedinicu(id, zauzetostDTO.getOdDatum(), zauzetostDTO.getDoDatum());
             return  new ResponseEntity<Rezervacija>(r, HttpStatus.OK);
         } catch (Exception e) {
@@ -288,13 +288,11 @@ public class AgentController {
         xDTO.setPrimalac(poruka.getPrimalac());
         xDTO.setSadrzaj(poruka.getSadrzaj());
 
-
         Poruka addedPoruka = null;
 
 
         try {
             SendPorukaResponse sr = client.posaljiPoruku(xDTO);
-
             addedPoruka = agentService.addOdgovor(poruka, messageId);
             return new ResponseEntity<Poruka>(addedPoruka, HttpStatus.OK);
         } catch (Exception e) {
