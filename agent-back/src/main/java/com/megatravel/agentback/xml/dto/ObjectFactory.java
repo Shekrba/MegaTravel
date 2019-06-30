@@ -27,9 +27,11 @@ public class ObjectFactory {
     private final static QName _SyncUslugeResponse_QNAME = new QName("http://service.agent.megatravel.com/", "syncUslugeResponse");
     private final static QName _PollingPorukeResponse_QNAME = new QName("http://service.agent.megatravel.com/", "pollingPorukeResponse");
     private final static QName _SyncCategoriesResponse_QNAME = new QName("http://service.agent.megatravel.com/", "syncCategoriesResponse");
+    private final static QName _RezervacijaXMLDTO_QNAME = new QName("http://service.agent.megatravel.com/", "RezervacijaXMLDTO");
     private final static QName _SendPoruka_QNAME = new QName("http://service.agent.megatravel.com/", "sendPoruka");
     private final static QName _CategoryXMLDTO_QNAME = new QName("http://service.agent.megatravel.com/", "CategoryXMLDTO");
     private final static QName _SendPorukaResponse_QNAME = new QName("http://service.agent.megatravel.com/", "sendPorukaResponse");
+    private final static QName _SyncReservationsResponse_QNAME = new QName("http://service.agent.megatravel.com/", "syncReservationsResponse");
     private final static QName _EditAccommodationUnitResponse_QNAME = new QName("http://service.agent.megatravel.com/", "editAccommodationUnitResponse");
     private final static QName _MakeReservationResponse_QNAME = new QName("http://service.agent.megatravel.com/", "makeReservationResponse");
     private final static QName _AddAccommodation_QNAME = new QName("http://service.agent.megatravel.com/", "addAccommodation");
@@ -52,6 +54,7 @@ public class ObjectFactory {
     private final static QName _SyncCategories_QNAME = new QName("http://service.agent.megatravel.com/", "syncCategories");
     private final static QName _SyncUsluge_QNAME = new QName("http://service.agent.megatravel.com/", "syncUsluge");
     private final static QName _MakeReservation_QNAME = new QName("http://service.agent.megatravel.com/", "makeReservation");
+    private final static QName _SyncReservations_QNAME = new QName("http://service.agent.megatravel.com/", "syncReservations");
     private final static QName _AccomodationTypeXMLDTO_QNAME = new QName("http://service.agent.megatravel.com/", "AccomodationTypeXMLDTO");
 
     private final static QName _UserCredentialsXMLDTO_QNAME = new QName("http://service.agent.megatravel.com/", "UserCredentialsXMLDTO");
@@ -134,6 +137,22 @@ public class ObjectFactory {
      */
     public SendPorukaResponse createSendPorukaResponse() {
         return new SendPorukaResponse();
+    }
+
+    /**
+     * Create an instance of {@link SyncReservationsResponse }
+     * 
+     */
+    public SyncReservationsResponse createSyncReservationsResponse() {
+        return new SyncReservationsResponse();
+    }
+
+    /**
+     * Create an instance of {@link RezervacijaXMLDTO }
+     * 
+     */
+    public RezervacijaXMLDTO createRezervacijaXMLDTO() {
+        return new RezervacijaXMLDTO();
     }
 
     /**
@@ -313,6 +332,14 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link SyncReservations }
+     * 
+     */
+    public SyncReservations createSyncReservations() {
+        return new SyncReservations();
+    }
+
+    /**
      * Create an instance of {@link AccomodationTypeXMLDTO }
      * 
      */
@@ -380,6 +407,15 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link RezervacijaXMLDTO }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://service.agent.megatravel.com/", name = "RezervacijaXMLDTO")
+    public JAXBElement<RezervacijaXMLDTO> createRezervacijaXMLDTO(RezervacijaXMLDTO value) {
+        return new JAXBElement<RezervacijaXMLDTO>(_RezervacijaXMLDTO_QNAME, RezervacijaXMLDTO.class, null, value);
+    }
+
+    /**
      * Create an instance of {@link JAXBElement }{@code <}{@link SendPoruka }{@code >}}
      * 
      */
@@ -404,6 +440,15 @@ public class ObjectFactory {
     @XmlElementDecl(namespace = "http://service.agent.megatravel.com/", name = "sendPorukaResponse")
     public JAXBElement<SendPorukaResponse> createSendPorukaResponse(SendPorukaResponse value) {
         return new JAXBElement<SendPorukaResponse>(_SendPorukaResponse_QNAME, SendPorukaResponse.class, null, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link SyncReservationsResponse }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://service.agent.megatravel.com/", name = "syncReservationsResponse")
+    public JAXBElement<SyncReservationsResponse> createSyncReservationsResponse(SyncReservationsResponse value) {
+        return new JAXBElement<SyncReservationsResponse>(_SyncReservationsResponse_QNAME, SyncReservationsResponse.class, null, value);
     }
 
     /**
@@ -602,6 +647,15 @@ public class ObjectFactory {
     @XmlElementDecl(namespace = "http://service.agent.megatravel.com/", name = "makeReservation")
     public JAXBElement<MakeReservation> createMakeReservation(MakeReservation value) {
         return new JAXBElement<MakeReservation>(_MakeReservation_QNAME, MakeReservation.class, null, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link SyncReservations }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://service.agent.megatravel.com/", name = "syncReservations")
+    public JAXBElement<SyncReservations> createSyncReservations(SyncReservations value) {
+        return new JAXBElement<SyncReservations>(_SyncReservations_QNAME, SyncReservations.class, null, value);
     }
 
     /**

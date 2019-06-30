@@ -23,6 +23,7 @@ import java.util.List;
  *         &lt;element name="sjedinicaId" type="{http://www.w3.org/2001/XMLSchema}long" minOccurs="0"/>
  *         &lt;element name="services" type="{http://service.agent.megatravel.com/}uslugaXMLDTO" maxOccurs="unbounded" minOccurs="0"/>
  *       &lt;/sequence>
+ *       &lt;attribute name="id" type="{http://www.w3.org/2001/XMLSchema}anySimpleType" />
  *     &lt;/restriction>
  *   &lt;/complexContent>
  * &lt;/complexType>
@@ -48,6 +49,9 @@ public class RezervacijaMakeXMLDTO {
     protected Long sjedinicaId;
     @XmlElement(nillable = true)
     protected List<UslugaXMLDTO> services;
+    @XmlAttribute(name = "id")
+    @XmlSchemaType(name = "anySimpleType")
+    protected String id;
 
     /**
      * Gets the value of the from property.
@@ -164,6 +168,30 @@ public class RezervacijaMakeXMLDTO {
             services = new ArrayList<UslugaXMLDTO>();
         }
         return this.services;
+    }
+
+    /**
+     * Gets the value of the id property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
+     */
+    public String getId() {
+        return id;
+    }
+
+    /**
+     * Sets the value of the id property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
+    public void setId(String value) {
+        this.id = value;
     }
 
 }

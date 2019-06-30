@@ -66,6 +66,8 @@ public class AgentServiceImpl implements AgentService {
 	@Autowired
 	CategoryRepository categoryRepository;
 
+	@Autowired
+	RezervacijaRepository rezervacijaRepository;
 
 	@Override
 	public SmestajXMLDTO addAccommodation(SmestajXMLDTO accommodation) throws SOAPFaultException, SOAPException {
@@ -312,7 +314,6 @@ public class AgentServiceImpl implements AgentService {
 		Message message=PhaseInterceptorChain.getCurrentMessage();
 		HttpServletRequest request=(HttpServletRequest)message.get(AbstractHTTPDestination.HTTP_REQUEST);
 		String username=request.getHeader("Username");
-		System.out.println(username);
 		User u = userRepository.findByUsername(username);
 
 		//send request for reservation to reservation-service
@@ -340,8 +341,8 @@ public class AgentServiceImpl implements AgentService {
 		ResponseEntity<String> response = restTemplate.exchange(
 				"http://localhost:8762/reservation-service/api/reservations", HttpMethod.POST, entity, String.class);
 
-		if(true){
-			System.out.println(response.getBody());
+		if(response.getStatusCode()!=HttpStatus.valueOf(426)){
+			reservation.setId(Long.parseLong(response.getBody()));
 			return reservation;
 		}
 
@@ -356,6 +357,19 @@ public class AgentServiceImpl implements AgentService {
 		} catch (SOAPException e1) {
 			throw e1;
 		}
+	}
+
+	@Override
+	public List<RezervacijaXMLDTO> syncReservations() throws SOAPFaultException, SOAPException {
+		Message message=PhaseInterceptorChain.getCurrentMessage();
+		HttpServletRequest request=(HttpServletRequest)message.get(AbstractHTTPDestination.HTTP_REQUEST);
+		String username=request.getHeader("Username");
+		List<RezervacijaXMLDTO> ret=new ArrayList<>();
+		for(Rezervacija r : rezervacijaRepository.getAllByUsername(username)){
+			RezervacijaXMLDTO rXML=new RezervacijaXMLDTO(r);
+			ret.add(rXML);
+		}
+		return ret;
 	}
 
 
