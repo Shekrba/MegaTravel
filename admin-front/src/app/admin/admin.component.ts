@@ -15,7 +15,8 @@ export class AdminComponent implements OnInit {
     prezime : null,
     username: null,
     password: null,
-    email :null
+    email :null,
+    id:null
   }
 
   constructor(private toastr: ToastrService, private adminService: AdminServiceService, private router: Router) { }
@@ -28,13 +29,47 @@ export class AdminComponent implements OnInit {
   }
 
   registerAdmin(){
+    
+    if(this.admin.username == null || this.admin.username == ""){
+      this.toastr.error("You have to input username.");
+      return;
+    }
+
+    if(this.admin.password == null || this.admin.password == ""){
+      this.toastr.error("You have to input password.");
+      return;
+    }
+
+    if(this.admin.ime == null || this.admin.ime == ""){
+      this.toastr.error("You have to input first name.");
+      return;
+    }
+
+    if(this.admin.prezime == null || this.admin.prezime == ""){
+      this.toastr.error("You have to input last name.");
+      return;
+    }
+
+    if(this.admin.email == null || this.admin.email == ""){
+      this.toastr.error("You have to input email.");
+      return;
+    }
+    
     this.adminService.registerAdmin(this.admin).subscribe(
       res => {
-        this.router.navigate(['']);
-        this.showSuccess();
+
+        this.admin.id = res.id;
+
+        if(this.admin.id==null){
+          this.toastr.error("Username is already taken.");
+        }
+        else{
+          this.router.navigate(['']);
+          this.showSuccess();
+        }
       },
       err => {
-        alert("Could not register an admin.");
+        this.toastr.error("Username already exists.", "Registration");
       }
     );
   }

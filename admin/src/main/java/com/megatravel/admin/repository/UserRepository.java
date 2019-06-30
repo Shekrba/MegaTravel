@@ -14,4 +14,6 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
     @Query("SELECT u FROM User u WHERE u.status <> 'REMOVED' AND u.enabled = 1")
     List<User> findAllNonRemoved();
+
+    User findByUsername(String username);
 }

@@ -98,7 +98,7 @@ public class AdminController {
     }
 
     @RequestMapping(value = "/agent", method = RequestMethod.POST)
-    public User addAgent(@RequestBody AgentDTO agent){
+    public AgentDTO addAgent(@RequestBody AgentDTO agent){
         return adminService.addAgent(agent);
     }
 

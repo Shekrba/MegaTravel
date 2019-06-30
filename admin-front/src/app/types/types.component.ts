@@ -38,6 +38,11 @@ export class TypesComponent implements OnInit {
 
   public addType(){
 
+    if(this.type.naziv == null || this.type.naziv == ""){
+      this.toastr.error("You have to input type name.");
+      return;
+    }
+
     this.adminService.addType(this.type).subscribe(
       res => {
         this.types.push(res);

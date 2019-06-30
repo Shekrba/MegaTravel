@@ -77,6 +77,12 @@ public class AdminServiceImpl implements  AdminService{
     @Override
     public AdminDTO addAdmin(AdminDTO adminDTO) {
         User user = new User();
+
+        if(userRepository.findByUsername(adminDTO.getUsername()) != null){
+            adminDTO.setId(null);
+            return adminDTO;
+        }
+
         user.setPrezime(adminDTO.getPrezime());
         user.setEnabled(true);
         user.setIme(adminDTO.getIme());
@@ -133,8 +139,14 @@ public class AdminServiceImpl implements  AdminService{
     }
 
     @Override
-    public User addAgent(AgentDTO agent){
+    public AgentDTO addAgent(AgentDTO agent){
         User newUser = new User();
+
+        if(userRepository.findByUsername(agent.getUsername()) != null){
+            agent.setId(null);
+            return agent;
+        }
+
         newUser.setAdresa(agent.getAdresa());
         newUser.setStatus(UserStatus.ACTIVE);
         newUser.setIme(agent.getIme());
@@ -149,7 +161,9 @@ public class AdminServiceImpl implements  AdminService{
         authorities.add(authority);
         newUser.setAuthorities(authorities);
 
-        return userRepository.save(newUser);
+        userRepository.save(newUser);
+        agent.setId(newUser.getId());
+        return agent;
     }
 
     @Override

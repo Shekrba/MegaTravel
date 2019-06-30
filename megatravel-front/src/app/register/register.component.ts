@@ -11,6 +11,7 @@ import { Router } from '@angular/router';
 export class RegisterComponent implements OnInit {
 
   user ={
+    id:null,
     ime:null,
     prezime:null,
     email:null,
@@ -26,13 +27,18 @@ export class RegisterComponent implements OnInit {
   public register(){
     this.hotelService.register(this.user).subscribe(
       res => {
-        console.log(res);
         
-        this.toastr.success("Registration successful.", "Registration");
-        this.router.navigate(['']);
+        this.user = res;
+
+        if(this.user.id==null){
+          this.toastr.warning("Username is already taken.");
+        }
+        else{
+          this.toastr.success("Registration successful.", "Registration");
+          this.router.navigate(['']);
+        }
       },
       err => {
-        console.log(err);
         
         this.toastr.error("Username already exists.", "Registration");
       }
