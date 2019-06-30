@@ -66,10 +66,21 @@ public class Smestaj {
     @ManyToOne(fetch = FetchType.EAGER)
     private User agent;
 
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "smestaj")
+    private List<Image> slike = new ArrayList<>();
+
     public Smestaj(){
 
     }
 
+
+    public List<Image> getSlike() {
+        return slike;
+    }
+
+    public void setSlike(List<Image> slike) {
+        this.slike = slike;
+    }
 
     public User getAgent() {
         return agent;
