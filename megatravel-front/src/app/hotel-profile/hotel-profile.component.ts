@@ -46,7 +46,10 @@ export class HotelProfileComponent implements OnInit {
     }
   }
 
-  public Book(hotelId,roomId){
+  public Book(hotelId,roomId,version){
+
+    console.log(version);
+    
 
     if(this.authService.currentUserValue == null){
       this.router.navigate(['/login']);
@@ -57,6 +60,7 @@ export class HotelProfileComponent implements OnInit {
     this.hotelService.roomId = roomId;
     this.hotelService.from = this.dateFrom;
     this.hotelService.to = this.dateTo;
+    this.hotelService.version = version;
 
     this.router.navigate(['/reservation']);  
   }

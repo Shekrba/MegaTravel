@@ -22,6 +22,7 @@ export class HotelServiceService {
   to: string = null;
   hotelId = null;
   roomId = null;
+  version = null;
   agent={
     id:null,
     username:null

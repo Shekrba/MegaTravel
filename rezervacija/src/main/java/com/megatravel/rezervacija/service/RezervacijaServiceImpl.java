@@ -41,6 +41,13 @@ public class RezervacijaServiceImpl implements  RezervacijaService {
 
         SJedinica sjedinica = sJedinicaRepository.findOneById(rezervacija.getSjedinicaId());
 
+        System.out.println(rezervacija.getVersion());
+        System.out.println(sjedinica.getVersion());
+
+        if(rezervacija.getVersion() != sjedinica.getVersion()){
+            return null;
+        }
+
         SJedinica check = sJedinicaRepository.findIfTaken(rezervacija.getFrom(),rezervacija.getTo(),rezervacija.getSjedinicaId());
 
 
@@ -48,7 +55,6 @@ public class RezervacijaServiceImpl implements  RezervacijaService {
             return null;
         }
 
-        System.out.println("USAOOOOOOOOO");
 
         Rezervacija rez = new Rezervacija();
 

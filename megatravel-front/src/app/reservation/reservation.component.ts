@@ -4,6 +4,7 @@ import { ActivatedRoute, Data } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { Router } from '@angular/router';
 import { AuthenticationService } from '../_services/authentication.service';
+import { version } from 'punycode';
 
 @Component({
   selector: 'app-reservation',
@@ -30,13 +31,7 @@ export class ReservationComponent implements OnInit {
     this.body.from = this.hotelService.from;
     this.body.to = this.hotelService.to;
     this.body.hotelId = this.hotelService.hotelId;
-    this.body.roomId = this.hotelService.roomId;
-
-    console.log(this.hotelService.from);
-    console.log(this.hotelService.to);
-    console.log(this.hotelService.hotelId);
-    console.log(this.hotelService.roomId);
-    
+    this.body.roomId = this.hotelService.roomId;    
 
     this.hotelService.formReservation(this.body).subscribe(
       res => {
@@ -71,8 +66,12 @@ export class ReservationComponent implements OnInit {
       cost : this.hotel.cost,
       korisnikId : this.authService.currentUserValue.id,
       sjedinicaId : this.body.roomId,
-      services : this.services
+      services : this.services,
+      version : this.hotelService.version
     }
+
+    console.log(this.hotelService.version);
+    
 
     this.hotelService.makeReservation(reservation).subscribe(
       res => {
@@ -87,6 +86,7 @@ export class ReservationComponent implements OnInit {
     this.hotelService.to = null;
     this.hotelService.hotelId = null;
     this.hotelService.roomId = null;
+    this.hotelService.version = null;
 
     this.router.navigate(['/']);  
   }

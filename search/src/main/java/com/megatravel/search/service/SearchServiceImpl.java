@@ -160,6 +160,7 @@ public class SearchServiceImpl implements SearchService{
                 sjDTO.setBroj(sj.getBroj());
                 sjDTO.setCena(sj.getCena());
                 sjDTO.setBrojKreveta(sj.getBrojKreveta());
+                sjDTO.setVersion(sj.getVersion());
                 ret.add(sjDTO);
             }
         }

@@ -122,7 +122,7 @@
                 {{sj.dostupnost}}
               </td>
               <td>
-                <button (click)="Book(hotel.id,sj.id)" *ngIf="sj.dostupnost && book == true" class="btn btn-success">Book</button>   
+                <button (click)="Book(hotel.id,sj.id,sj.version)" *ngIf="sj.dostupnost && book == true" class="btn btn-success">Book</button>   
               </td>
             </tr>
           </table>

@@ -109,6 +109,8 @@ public class SearchController {
             sjDTO.setBrojKreveta(sj.getBrojKreveta());
             sjDTO.setCena(sj.getCena());
             sjDTO.setDostupnost(sj.getDostupnost());
+            System.out.println(sj.getVersion());
+            sjDTO.setVersion(sj.getVersion());
 
             sDTO.getSjedinice().add(sjDTO);
         }
