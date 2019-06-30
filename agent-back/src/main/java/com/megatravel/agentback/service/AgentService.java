@@ -6,8 +6,8 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
-import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public interface AgentService {
@@ -20,14 +20,12 @@ public interface AgentService {
     public Smestaj updateSmestaj(SmestajDTO smestaj);
     public SJedinica addSJedinica(SJedinicaDTO sjed, Long smestajId);
     public SJedinica updateSJedinica(SJedinicaDTO sjed);
-    public ArrayList<SJedinica> deleteSJedinica(Long id, Long smestajId);
-    public List<Smestaj> deleteSmestaj(Long id);
 
     public List<UslugaDTO> allServices();
 
     public void setCategoryForAccomodation(Smestaj smestaj);
 
-    public Rezervacija zauzmiSJedinicu(Long sjedId, LocalDate odDatum, LocalDate doDatum);
+    public Rezervacija zauzmiSJedinicu(Long sjedId, Date odDatum, Date doDatum);
     public List<Rezervacija> getRezervacijeSJedinice(Long sjedId);
     public Rezervacija realizovanaRezervacija(Long id);
     public Rezervacija nerealizovanaRezervacija(Long id);

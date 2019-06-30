@@ -71,13 +71,21 @@ public class Usluga {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     protected Long id;
 
+    protected Long idGlBaza;
+
     @ManyToMany(mappedBy = "uslugaList")
     @JsonIgnore
     private List<Smestaj> smestajList = new ArrayList<>();
 
 
 
+    public void setIdGlBaza(Long idGlBaza) {
+        this.idGlBaza = idGlBaza;
+    }
 
+    public Long getIdGlBaza() {
+        return idGlBaza;
+    }
 
     /**
      * Gets the value of the naziv property.

@@ -12,7 +12,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 import javax.xml.bind.annotation.*;
-import java.time.LocalDate;
+import java.util.Date;
 
 
 /**
@@ -52,6 +52,8 @@ public class Rezervacija {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     protected Long id;
 
+    protected Long idGlBaza;
+
     @XmlElement(name = "SJedinica", required = true)
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     protected SJedinica sJedinica;
@@ -59,17 +61,17 @@ public class Rezervacija {
     @XmlElement(name = "DatumRez", namespace = "https://github.com/Shekrba/MegaTravel", required = true)
     @XmlSchemaType(name = "date")
     @Column(name = "datumRez", unique = false, nullable = false)
-    protected LocalDate datumRez;
+    protected Date datumRez;
 
     @XmlElement(name = "Od", namespace = "https://github.com/Shekrba/MegaTravel", required = true)
     @XmlSchemaType(name = "date")
     @Column(name = "od", unique = false, nullable = false)
-    protected LocalDate od;
+    protected Date od;
 
     @XmlElement(name = "Do", namespace = "https://github.com/Shekrba/MegaTravel", required = true)
     @XmlSchemaType(name = "date")
     @Column(name = "do", unique = false, nullable = false)
-    protected LocalDate _do;
+    protected Date _do;
 
     @XmlElement(name = "UCena", namespace = "https://github.com/Shekrba/MegaTravel")
     @Column(name = "ukupnaCena", unique = false, nullable = false)
@@ -93,21 +95,28 @@ public class Rezervacija {
         return statusRezervacije;
     }
 
-    public void setDatumRez(LocalDate datumRez) {
+    public void setDatumRez(Date datumRez) {
         this.datumRez = datumRez;
     }
 
-    public void setOd(LocalDate od) {
+    public void setOd(Date od) {
         this.od = od;
     }
 
+    public void setIdGlBaza(Long idGlBaza) {
+        this.idGlBaza = idGlBaza;
+    }
+
+    public Long getIdGlBaza() {
+        return idGlBaza;
+    }
 
 
-    public LocalDate getDatumRez() {
+    public Date getDatumRez() {
         return datumRez;
     }
 
-    public LocalDate getOd() {
+    public Date getOd() {
         return od;
     }
 
@@ -130,11 +139,11 @@ public class Rezervacija {
         this.sJedinica = sJedinica;
     }
 
-    public LocalDate get_do() {
+    public Date get_do() {
         return _do;
     }
 
-    public void set_do(LocalDate _do) {
+    public void set_do(Date _do) {
         this._do = _do;
     }
 

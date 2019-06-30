@@ -5,6 +5,16 @@ public class UslugaDTO {
     private String naziv;
     private double cena;
     private String opis;
+    private Long idGlBaza;
+
+    public void setIdGlBaza(Long idGlBaza) {
+        this.idGlBaza = idGlBaza;
+    }
+
+    public Long getIdGlBaza() {
+        return idGlBaza;
+    }
+
 
     public UslugaDTO() {}
 

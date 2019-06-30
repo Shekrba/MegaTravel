@@ -10,9 +10,9 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Base64;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -84,6 +84,7 @@ public class AgentServiceImpl implements AgentService {
         sJedinicaNew.setBroj(sjed.getBroj());
         sJedinicaNew.setBrojKreveta(sjed.getBrojKreveta());
         sJedinicaNew.setCena(sjed.getCena());
+        sJedinicaNew.setIdGlBaza(sjed.getIdGlBaza());
 
         Smestaj smestaj = smestajRepository.findOneById(smestajId);
 
@@ -121,25 +122,8 @@ public class AgentServiceImpl implements AgentService {
         return sjedinicaRepository.findOneById(id);
     }
 
-    @Override
-    public ArrayList<SJedinica> deleteSJedinica(Long id, Long smestajId) {
 
-        sjedinicaRepository.delete(getSJedinica(id));
 
-        return getSveSJedinice(smestajId);
-    }
-
-    @Override
-    public List<Smestaj> deleteSmestaj(Long id) {
-        Smestaj smestaj = getSmestaj(id);
-        if(smestaj.getSJedinica().size() > 0)
-        {
-            return getSmestaje();
-        }
-        smestajRepository.delete(getSmestaj(id));
-
-        return getSmestaje();
-    }
 
     @Override
     public List<UslugaDTO> allServices() {
@@ -166,6 +150,7 @@ public class AgentServiceImpl implements AgentService {
         adresa.setLongitude(smestaj.getLongitude());
         adresa.setPosBroj(smestaj.getPosBroj());
         smestajNew.setAdresa(adresa);
+        smestajNew.setIdGlBaza(smestaj.getIdGlBaza());
 
         smestajNew.setAgent(userRepository.findOneByUsername(SecurityContextHolder.getContext().getAuthentication().getName()));
 
@@ -190,6 +175,7 @@ public class AgentServiceImpl implements AgentService {
 
         smestajUpdate.setId(smestaj.getId());
         smestajUpdate.setNaziv(smestaj.getNaziv());
+        smestajUpdate.setIdGlBaza(smestaj.getIdGlBaza());
 
         Adresa adresa = new Adresa(smestaj.getMesto(), smestaj.getUlica(), smestaj.getBroj());
         adresa.setId(smestajUpdate.getAdresa().getId());
@@ -253,13 +239,13 @@ public class AgentServiceImpl implements AgentService {
     }
 
     @Override
-    public Rezervacija zauzmiSJedinicu(Long sjedId, LocalDate odDatum, LocalDate doDatum) {
+    public Rezervacija zauzmiSJedinicu(Long sjedId, Date odDatum, Date doDatum) {
 
         Rezervacija z = new Rezervacija();
         z.setsJedinica(sjedinicaRepository.findOneById(sjedId));
         z.setOd(odDatum);
         z.set_do(doDatum);
-        z.setDatumRez(LocalDate.now());
+        z.setDatumRez(new Date());
         z.setStatusRezervacije(StatusRezervacije.REZERVISANO);
         z.setKorisnik(SecurityContextHolder.getContext().getAuthentication().getName());
         z.setuCena(0);
@@ -320,11 +306,12 @@ public class AgentServiceImpl implements AgentService {
         Poruka p = new Poruka();
 
         p.setId(porukaDTO.getId());
-        p.setDatumSlanja(LocalDate.now());
+        p.setDatumSlanja(new Date());
         p.setSadrzaj(porukaDTO.getSadrzaj());
         p.setPosaljilac("Agent");
         p.setStatusPoruke(StatusPoruke.ODGOVOR);
         p.setIdOdgovor(null);
+        p.setIdGlBaza(porukaDTO.getIdGlBaza());
 
         Poruka p1 = porukaRepository.findOneById(idPitanja);
         p1.setStatusPoruke(StatusPoruke.ODGOVORENO);

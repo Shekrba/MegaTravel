@@ -2,31 +2,40 @@ package com.megatravel.agentback.dto;
 
 import com.megatravel.agentback.model.StatusRezervacije;
 
-import java.time.LocalDate;
+import java.util.Date;
 
 public class RezervacijaDTO {
 
     private Long id;
-    private LocalDate datumRez;
-    private LocalDate od;
-    private LocalDate _do;
+    private Date datumRez;
+    private Date od;
+    private Date _do;
     private int uCena;
     private StatusRezervacije statusRezervacije;
     private String korisnik;
+    private Long idGlBaza;
+
+    public void setIdGlBaza(Long idGlBaza) {
+        this.idGlBaza = idGlBaza;
+    }
+
+    public Long getIdGlBaza() {
+        return idGlBaza;
+    }
 
     public void setId(Long id) {
         this.id = id;
     }
 
-    public void setDatumRez(LocalDate datumRez) {
+    public void setDatumRez(Date datumRez) {
         this.datumRez = datumRez;
     }
 
-    public void setOd(LocalDate od) {
+    public void setOd(Date od) {
         this.od = od;
     }
 
-    public void set_do(LocalDate _do) {
+    public void set_do(Date _do) {
         this._do = _do;
     }
 
@@ -46,15 +55,15 @@ public class RezervacijaDTO {
         return id;
     }
 
-    public LocalDate getDatumRez() {
+    public Date getDatumRez() {
         return datumRez;
     }
 
-    public LocalDate getOd() {
+    public Date getOd() {
         return od;
     }
 
-    public LocalDate get_do() {
+    public Date get_do() {
         return _do;
     }
 

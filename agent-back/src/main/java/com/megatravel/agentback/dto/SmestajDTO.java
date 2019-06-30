@@ -15,12 +15,22 @@ public class SmestajDTO {
     private double latitude;
     private String posBroj;
 
+
     private int broj;
     private List<String> slike = new ArrayList<String>();
     private List<UslugaDTO> usluge = new ArrayList<UslugaDTO>();
     private List<SJedinicaDTO> sjedinice = new ArrayList<SJedinicaDTO>();
 
     private List<Long> additionalServices = new ArrayList<>();
+    private Long idGlBaza;
+
+    public void setIdGlBaza(Long idGlBaza) {
+        this.idGlBaza = idGlBaza;
+    }
+
+    public Long getIdGlBaza() {
+        return idGlBaza;
+    }
 
     public List<SJedinicaDTO> getSjedinice() {
         return sjedinice;

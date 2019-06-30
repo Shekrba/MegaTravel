@@ -1,5 +1,6 @@
 package com.megatravel.agentback.controller;
 
+import com.megatravel.agentback.client.AgentClient;
 import com.megatravel.agentback.dto.UserDTO;
 import com.megatravel.agentback.model.User;
 import com.megatravel.agentback.model.UserTokenState;
@@ -7,7 +8,10 @@ import com.megatravel.agentback.security.TokenUtils;
 import com.megatravel.agentback.security.auth.JwtAuthenticationRequest;
 import com.megatravel.agentback.service.CustomUserDetailsService;
 
+import com.megatravel.agentback.xml.dto.FirstLoginResponse;
+import com.megatravel.agentback.xml.dto.UserCredentialsXMLDTO;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 
@@ -37,6 +41,9 @@ public class AuthenticationController {
 	TokenUtils tokenUtils;
 
 	@Autowired
+	AgentClient agentClient;
+
+	@Autowired
 	private AuthenticationManager authenticationManager;
 
 	@Autowired
@@ -48,10 +55,27 @@ public class AuthenticationController {
 	public ResponseEntity<?> createAuthenticationToken(@RequestBody JwtAuthenticationRequest authenticationRequest,
                                                        HttpServletResponse response) throws AuthenticationException, IOException {
 
-		final Authentication authentication = authenticationManager
-				.authenticate(new UsernamePasswordAuthenticationToken(
-						authenticationRequest.getUsername(),
-						authenticationRequest.getPassword()));
+		UserDTO userDTO=new UserDTO();
+
+		Authentication authentication = null;
+		try {
+			 authentication = authenticationManager
+					.authenticate(new UsernamePasswordAuthenticationToken(
+							authenticationRequest.getUsername(),
+							authenticationRequest.getPassword()));
+		} catch (AuthenticationException e) {
+
+				UserCredentialsXMLDTO dto = new UserCredentialsXMLDTO();
+				dto.setPassword("12345");
+				dto.setUsername(authenticationRequest.getUsername());
+				try {
+					FirstLoginResponse loginResponse = agentClient.login(dto);
+				}catch (Exception e2) {
+					return new ResponseEntity(HttpStatus.UNAUTHORIZED);
+				}
+
+				userDTO.setFirstLogin(true);
+		}
 
 		// Ubaci username + password u kontext
 		SecurityContextHolder.getContext().setAuthentication(authentication);
@@ -61,13 +85,13 @@ public class AuthenticationController {
 		String jwt = tokenUtils.generateToken(user.getUsername());
 		int expiresIn = tokenUtils.getExpiredIn();
 
-		UserDTO userDTO=new UserDTO();
 		userDTO.setExpiresIn(expiresIn);
 		userDTO.setId(user.getId());
 		userDTO.setIme(user.getIme());
 		userDTO.setPrezime(user.getPrezime());
 		userDTO.setUsername(user.getUsername());
 		userDTO.setToken(jwt);
+
 
 		// Vrati token kao odgovor na uspesno autentifikaciju
 		return ResponseEntity.ok(userDTO);

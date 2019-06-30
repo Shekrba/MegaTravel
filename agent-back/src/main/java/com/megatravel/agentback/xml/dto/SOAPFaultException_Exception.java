@@ -13,7 +13,7 @@ import javax.xml.ws.WebFault;
 @WebFault(name = "SOAPFaultException", targetNamespace = "http://service.agent.megatravel.com/")
 public class SOAPFaultException_Exception extends Exception {
     
-    private client2.SOAPFaultException soapFaultException;
+    private SOAPFaultException soapFaultException;
 
     public SOAPFaultException_Exception() {
         super();
@@ -27,17 +27,17 @@ public class SOAPFaultException_Exception extends Exception {
         super(message, cause);
     }
 
-    public SOAPFaultException_Exception(String message, client2.SOAPFaultException soapFaultException) {
+    public SOAPFaultException_Exception(String message, SOAPFaultException soapFaultException) {
         super(message);
         this.soapFaultException = soapFaultException;
     }
 
-    public SOAPFaultException_Exception(String message, client2.SOAPFaultException soapFaultException, Throwable cause) {
+    public SOAPFaultException_Exception(String message, SOAPFaultException soapFaultException, Throwable cause) {
         super(message, cause);
         this.soapFaultException = soapFaultException;
     }
 
-    public client2.SOAPFaultException getFaultInfo() {
+    public SOAPFaultException getFaultInfo() {
         return this.soapFaultException;
     }
 }
