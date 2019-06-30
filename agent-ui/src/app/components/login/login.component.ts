@@ -4,6 +4,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { LoginService } from '../../services/login.service';
 import { first } from 'rxjs/operators';
 
+import { User } from '../../model/User';
+
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -53,10 +55,16 @@ export class LoginComponent implements OnInit {
     this.authenticationService.login(this.f.username.value, this.f.password.value)
       .pipe(first())
       .subscribe(
-        data => {
-          this.authenticationService.setShowMenu(true);
-          this.router.navigate(['/accomodations']);
-          
+        (data: User) => {
+          if(data.firstLogin)
+          {
+            this.router.navigate(['/confirm',data.username]);
+          }
+          else
+          {
+            this.authenticationService.setShowMenu(true);
+            this.router.navigate(['/accomodations']);
+          }
         },
         error => {
           this.error = error;

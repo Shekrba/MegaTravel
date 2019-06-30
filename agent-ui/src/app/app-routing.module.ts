@@ -15,6 +15,7 @@ import { MessageComponent } from './components/message/message.component';
 import { OccupancyComponent } from './components/occupancy/occupancy.component';
 import { AccomodationImagesComponent } from './components/accomodation-images/accomodation-images.component';
 import { CenovnikComponent } from './components/cenovnik/cenovnik.component';
+import { ConfirmPasswordComponent } from './components/confirm-password/confirm-password.component';
 
 
 const routes : Routes = [
@@ -32,8 +33,8 @@ const routes : Routes = [
   { path: 'message/:id', component: MessageComponent,canActivate:[AuthGuard] },
   { path: 'occupancy/:idAccomodation/:idUnit', component: OccupancyComponent, canActivate:[AuthGuard] },
   { path: 'images/:id', component: AccomodationImagesComponent },
-  { path: 'cenovnik/:idAccomodation/:idUnit', component: CenovnikComponent }
-
+  { path: 'cenovnik/:idAccomodation/:idUnit', component: CenovnikComponent },
+  { path: 'confirm/:username', component: ConfirmPasswordComponent }
 
 ];
 
