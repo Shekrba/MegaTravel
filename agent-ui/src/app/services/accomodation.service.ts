@@ -112,6 +112,8 @@ export class AccomodationService {
     return this.http.post(`${ROOT_URL}/pricelist/${id}`,body);
   }
 
+  
+
 
   
 }
