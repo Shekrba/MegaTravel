@@ -1,4 +1,4 @@
-package com.megatravel.agent.model;
+package rs.ftn.xws.discoveryserver.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -12,7 +12,7 @@ public class Image {
     private Long id;
 
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private Smestaj smestaj;
 
     @Lob

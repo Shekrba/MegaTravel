@@ -71,7 +71,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 			
 
 			.authorizeRequests()
-			.antMatchers("/**").hasRole("AGENT")
+			.antMatchers("/**").permitAll()
 			// svaki zahtev mora biti autorizovan
 			.anyRequest().authenticated().and()
 			

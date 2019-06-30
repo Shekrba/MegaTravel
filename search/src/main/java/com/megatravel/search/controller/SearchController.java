@@ -126,7 +126,7 @@ public class SearchController {
                 e.printStackTrace();
             }
 
-            sDTO.getSlike().add(base64Encoded);
+            sDTO.getSlike().add("data:image/jpeg;base64,"+base64Encoded);
         }
     }
 }

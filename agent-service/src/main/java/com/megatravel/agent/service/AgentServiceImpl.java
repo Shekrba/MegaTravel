@@ -77,6 +77,9 @@ public class AgentServiceImpl implements AgentService {
 	@Autowired
     ImageRepository imageRepository;
 
+	@Autowired
+	AccommodationTypeRepository accomodationTypeRepository;
+
 	@Override
 	public SmestajXMLDTO addAccommodation(SmestajXMLDTO accommodation) throws SOAPFaultException, SOAPException {
 		Message message=PhaseInterceptorChain.getCurrentMessage();
@@ -387,11 +390,11 @@ public class AgentServiceImpl implements AgentService {
     public boolean addImages(ImageXMLDTO images) throws SOAPFaultException, SOAPException {
         try{
             for(byte[] bytes : images.getSlike()){
-                Image i = new Image();
                 uploadImages(images.getSmestajID(),bytes);
             }
             return true;
         }catch (Exception e){
+        	e.printStackTrace();
             return false;
         }
     }
@@ -405,7 +408,19 @@ public class AgentServiceImpl implements AgentService {
 	    return true;
     }
 
-    public boolean uploadImages(Long idSmestaj, byte[] slika) throws IOException {
+	@Override
+	public List<AccomodationTypeXMLDTO> syncAccommodationType() throws SOAPFaultException, SOAPException {
+		ArrayList<AccomodationTypeXMLDTO> ret=new ArrayList<>();
+		for(AccomodationType at : accomodationTypeRepository.findAll()){
+			AccomodationTypeXMLDTO atXML=new AccomodationTypeXMLDTO();
+			atXML.setId(at.getId());
+			atXML.setNaziv(at.getNaziv());
+			ret.add(atXML);
+		}
+		return ret;
+	}
+
+	public boolean uploadImages(Long idSmestaj, byte[] slika) throws IOException {
         Smestaj smestaj = smestajRepository.findById(idSmestaj).orElse(null);
 
         Image image = new Image();

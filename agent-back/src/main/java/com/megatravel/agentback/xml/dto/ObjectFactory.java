@@ -26,6 +26,7 @@ public class ObjectFactory {
 
     private final static QName _SyncUslugeResponse_QNAME = new QName("http://service.agent.megatravel.com/", "syncUslugeResponse");
     private final static QName _UserCredentialsXMLDTO_QNAME = new QName("http://service.agent.megatravel.com/", "UserCredentialsXMLDTO");
+    private final static QName _SyncAccommodationTypeResponse_QNAME = new QName("http://service.agent.megatravel.com/", "syncAccommodationTypeResponse");
     private final static QName _PollingPorukeResponse_QNAME = new QName("http://service.agent.megatravel.com/", "pollingPorukeResponse");
     private final static QName _SyncCategoriesResponse_QNAME = new QName("http://service.agent.megatravel.com/", "syncCategoriesResponse");
     private final static QName _RezervacijaXMLDTO_QNAME = new QName("http://service.agent.megatravel.com/", "RezervacijaXMLDTO");
@@ -55,6 +56,7 @@ public class ObjectFactory {
     private final static QName _KomentarXMLDTO_QNAME = new QName("http://service.agent.megatravel.com/", "KomentarXMLDTO");
     private final static QName _PollingPoruke_QNAME = new QName("http://service.agent.megatravel.com/", "pollingPoruke");
     private final static QName _AddAccommodationUnit_QNAME = new QName("http://service.agent.megatravel.com/", "addAccommodationUnit");
+    private final static QName _SyncAccommodationType_QNAME = new QName("http://service.agent.megatravel.com/", "syncAccommodationType");
     private final static QName _AdresaXMLDTO_QNAME = new QName("http://service.agent.megatravel.com/", "AdresaXMLDTO");
     private final static QName _AddAccommodationUnitResponse_QNAME = new QName("http://service.agent.megatravel.com/", "addAccommodationUnitResponse");
     private final static QName _SyncCategories_QNAME = new QName("http://service.agent.megatravel.com/", "syncCategories");
@@ -62,6 +64,7 @@ public class ObjectFactory {
     private final static QName _MakeReservation_QNAME = new QName("http://service.agent.megatravel.com/", "makeReservation");
     private final static QName _SyncReservations_QNAME = new QName("http://service.agent.megatravel.com/", "syncReservations");
     private final static QName _AccomodationTypeXMLDTO_QNAME = new QName("http://service.agent.megatravel.com/", "AccomodationTypeXMLDTO");
+
     private final static QName _FirstLogin_QNAME = new QName("http://service.agent.megatravel.com/", "firstLogin");
     private final static QName _FirstLoginResponse_QNAME = new QName("http://service.agent.megatravel.com/", "firstLoginResponse");
 
@@ -87,7 +90,6 @@ public class ObjectFactory {
     public FirstLogin createFirstLogin() {
         return new FirstLogin();
     }
-
 
 
 
@@ -189,6 +191,14 @@ public class ObjectFactory {
      */
     public UserCredentialsXMLDTO createUserCredentialsXMLDTO() {
         return new UserCredentialsXMLDTO();
+    }
+
+    /**
+     * Create an instance of {@link SyncAccommodationTypeResponse }
+     * 
+     */
+    public SyncAccommodationTypeResponse createSyncAccommodationTypeResponse() {
+        return new SyncAccommodationTypeResponse();
     }
 
     /**
@@ -408,6 +418,14 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link SyncAccommodationType }
+     * 
+     */
+    public SyncAccommodationType createSyncAccommodationType() {
+        return new SyncAccommodationType();
+    }
+
+    /**
      * Create an instance of {@link AdresaXMLDTO }
      * 
      */
@@ -431,6 +449,15 @@ public class ObjectFactory {
     @XmlElementDecl(namespace = "http://service.agent.megatravel.com/", name = "UserCredentialsXMLDTO")
     public JAXBElement<UserCredentialsXMLDTO> createUserCredentialsXMLDTO(UserCredentialsXMLDTO value) {
         return new JAXBElement<UserCredentialsXMLDTO>(_UserCredentialsXMLDTO_QNAME, UserCredentialsXMLDTO.class, null, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link SyncAccommodationTypeResponse }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://service.agent.megatravel.com/", name = "syncAccommodationTypeResponse")
+    public JAXBElement<SyncAccommodationTypeResponse> createSyncAccommodationTypeResponse(SyncAccommodationTypeResponse value) {
+        return new JAXBElement<SyncAccommodationTypeResponse>(_SyncAccommodationTypeResponse_QNAME, SyncAccommodationTypeResponse.class, null, value);
     }
 
     /**
@@ -692,6 +719,15 @@ public class ObjectFactory {
     @XmlElementDecl(namespace = "http://service.agent.megatravel.com/", name = "addAccommodationUnit")
     public JAXBElement<AddAccommodationUnit> createAddAccommodationUnit(AddAccommodationUnit value) {
         return new JAXBElement<AddAccommodationUnit>(_AddAccommodationUnit_QNAME, AddAccommodationUnit.class, null, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link SyncAccommodationType }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://service.agent.megatravel.com/", name = "syncAccommodationType")
+    public JAXBElement<SyncAccommodationType> createSyncAccommodationType(SyncAccommodationType value) {
+        return new JAXBElement<SyncAccommodationType>(_SyncAccommodationType_QNAME, SyncAccommodationType.class, null, value);
     }
 
     /**

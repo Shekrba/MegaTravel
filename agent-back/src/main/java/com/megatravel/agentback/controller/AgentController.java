@@ -4,6 +4,7 @@ package com.megatravel.agentback.controller;
 import com.megatravel.agentback.client.AgentClient;
 import com.megatravel.agentback.dto.*;
 import com.megatravel.agentback.model.*;
+import com.megatravel.agentback.repository.SmestajRepository;
 import com.megatravel.agentback.service.AgentService;
 import com.megatravel.agentback.xml.dto.*;
 import com.megatravel.agentback.xml.dto.RezervacijaMakeXMLDTO;
@@ -17,10 +18,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 @RestController
 @CrossOrigin("http://localhost:4200")
@@ -94,26 +92,25 @@ public class AgentController {
 
     }
 
+    @Autowired
+    SmestajRepository smestajRepository;
+
+
     @PostMapping(value = "/upload/{id}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<?> uploadFile(@RequestParam("images") MultipartFile[] files, @PathVariable("id") Long id) throws IOException {
         System.out.println(id);
 
-
+        Smestaj smes=smestajRepository.findOneById(id);
+        ImageXMLDTO x = new ImageXMLDTO();
+        x.setSmestajID(smes.getIdGlBaza().toString());
         for(MultipartFile file : files){
-            byte[] bytes = file.getBytes();
-            ImageXMLDTO x = new ImageXMLDTO();
-            x.setSmestajID(id.toString());
-            x.getSlike().add(bytes.toString());
-            
-            try {
-                AddImagesResponse r = client.dodajSliku(x);
-                return new ResponseEntity<>(HttpStatus.OK);
-            } catch (Exception e) {
-                return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-            }
+            byte[] encodeBase64 = Base64.getEncoder().encode(file.getBytes());
+            String base64Encoded = new String(encodeBase64, "UTF-8");
+            x.getSlike().add(base64Encoded);
 
         }
 
+        AddImagesResponse r = client.dodajSliku(x);
         agentService.uploadImages(id, files);
 
         return new ResponseEntity<>(HttpStatus.OK);
@@ -427,7 +424,6 @@ public class AgentController {
             uslugaDTO.setNaziv(usluga.getNaziv());
             uslugaDTO.setCena(usluga.getCena());
             uslugaDTO.setOpis(usluga.getOpis());
-            uslugaDTO.setIdGlBaza(usluga.getIdGlBaza());
             sDTO.getUsluge().add(uslugaDTO);
             sDTO.getAdditionalServices().add(usluga.getId());
         }

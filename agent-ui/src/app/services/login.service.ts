@@ -10,7 +10,7 @@ import { User } from '../model/User';
 })
 export class LoginService {
 
-  private LOGIN_URL = "http://localhost:8082/auth/login"
+  private LOGIN_URL = "http://localhost:8082/auth"
 
   private showNavBar: BehaviorSubject<boolean>;
 
@@ -36,7 +36,7 @@ export class LoginService {
   }
 
   login(username: string, password: string) {
-    return this.http.post<any>(this.LOGIN_URL, { username, password })
+    return this.http.post<any>(`${this.LOGIN_URL}/login`, { username, password })
       .pipe(map(user => {
         // login successful if there's a jwt token in the response
         if (user && user.token) {

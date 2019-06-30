@@ -71,6 +71,9 @@ public class AuthenticationController {
 	@Autowired
 	PasswordEncoder passwordEncoder;
 
+	@Autowired
+	AccomodationTypeRepository accomodationTypeRepository;
+
 
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
 	public ResponseEntity<?> createAuthenticationToken(@RequestBody JwtAuthenticationRequest authenticationRequest,
@@ -87,68 +90,96 @@ public class AuthenticationController {
 		} catch (AuthenticationException e) {
 
 			UserCredentialsXMLDTO dto = new UserCredentialsXMLDTO();
-			dto.setPassword("12345");
+			dto.setPassword("123");
 			dto.setUsername(authenticationRequest.getUsername());
 			try {
 				FirstLoginResponse loginResponse = agentClient.login(dto);
 			} catch (Exception e2) {
+				e2.printStackTrace();
 				return new ResponseEntity(HttpStatus.UNAUTHORIZED);
 			}
 
-			SyncUslugeResponse usluge = agentClient.dopuniUsluge();
-			SyncCategoriesResponse kategorije = agentClient.dopuniKategorije();
+			SyncUslugeResponse usluge = agentClient.dopuniUsluge(authenticationRequest.getUsername());
+			SyncCategoriesResponse kategorije = agentClient.dopuniKategorije(authenticationRequest.getUsername());
+			SyncAccommodationTypeResponse ats=agentClient.dopuniAccomType(authenticationRequest.getUsername());
 
 			List<UslugaXMLDTO> listaUsluga = usluge.getUsluge();
 			List<CategoryXMLDTO> listaKategorija = kategorije.getCategories();
+			List<AccomodationTypeXMLDTO> listAT=ats.getAccommodationTypes();
 
 			for (int i = 0; i < listaUsluga.size(); i++) {
 				UslugaXMLDTO u = listaUsluga.get(i);
-				Usluga us = new Usluga();
-				us.setCena(u.getCena());
-				us.setNaziv(u.getNaziv());
-				us.setOpis(u.getOpis());
-				us.setIdGlBaza(Long.parseLong(u.getId()));
+				Usluga us = uslugaRepository.findById(Long.parseLong(u.getId())).orElse(null);
+				if(us==null){
+					Usluga usl=new Usluga();
+					usl.setCena(u.getCena());
+					usl.setNaziv(u.getNaziv());
+					usl.setOpis(u.getOpis());
 
-				uslugaRepository.save(us);
+					uslugaRepository.save(usl);
+				}else{
+					us.setCena(u.getCena());
+					us.setNaziv(u.getNaziv());
+					us.setOpis(u.getOpis());
+
+					uslugaRepository.save(us);
+				}
+
 			}
 
 			for (int i = 0; i < listaKategorija.size(); i++) {
 				CategoryXMLDTO c = listaKategorija.get(i);
-				Category ca = new Category();
-				ca.setNaziv(c.getNaziv());
-				ca.setVrednost(c.getVrednost());
-				ca.setIdGlBaza(Long.parseLong(c.getId()));
-
-				categoryRepository.save(ca);
+				Category ca = categoryRepository.findOneById(Long.parseLong(c.getId()));
+				if(ca==null){
+					Category cat=new Category();
+					cat.setNaziv(c.getNaziv());
+					cat.setVrednost(c.getVrednost());
+					categoryRepository.save(cat);
+				}else{
+					ca.setNaziv(c.getNaziv());
+					ca.setVrednost(c.getVrednost());
+					categoryRepository.save(ca);
+				}
 			}
+
+			for (int i = 0; i < listAT.size(); i++) {
+				AccomodationTypeXMLDTO at = listAT.get(i);
+				AccomodationType att = accomodationTypeRepository.findOneById(Long.parseLong(at.getId()));
+				if(att==null){
+					AccomodationType aat=new AccomodationType();
+					aat.setNaziv(at.getNaziv());
+					accomodationTypeRepository.save(aat);
+				}else{
+					att.setNaziv(at.getNaziv());
+					accomodationTypeRepository.save(att);
+				}
+			}
+
+
 
 			for (int i = 0; i < listaUsluga.size(); i++) {
 				UslugaXMLDTO u = listaUsluga.get(i);
-				Usluga us = uslugaRepository.findUslugaSaIdGlBaze(Long.parseLong(u.getId()));
+				Usluga us = uslugaRepository.findById(Long.parseLong(u.getId())).orElse(null);
 				for(int j = 0; j < listaKategorija.size(); j++) {
 					if(u.getCategories().contains(Long.parseLong(listaKategorija.get(j).getId()))) {
-						Category c = categoryRepository.findCathegorySaIdGlBaze(Long.parseLong(listaKategorija.get(j).getId()));
-						u.getCategories().add(c.getId());
+						Category c = categoryRepository.findById(Long.parseLong(listaKategorija.get(j).getId())).orElse(null);
+
+						us.getCategoryList().add(c);
+						c.getUslugaList().add(us);
+						categoryRepository.save(c);
 					}
 				}
 
-				uslugaRepository.save(us);
-			}
-
-			for (int i = 0; i < listaKategorija.size(); i++) {
-				CategoryXMLDTO c = listaKategorija.get(i);
-				Category ca = categoryRepository.findCathegorySaIdGlBaze(Long.parseLong(c.getId()));
-				for(int j = 0; j < listaUsluga.size(); j++) {
-					if(c.getUsluge().contains(Long.parseLong(listaUsluga.get(j).getId()))) {
-						Usluga u = uslugaRepository.findUslugaSaIdGlBaze(Long.parseLong(listaUsluga.get(j).getId()));
-						c.getUsluge().add(u.getId());
-					}
-				}
-
-				categoryRepository.save(ca);
+				//uslugaRepository.save(us);
 			}
 
 
+
+			authentication = authenticationManager
+					.authenticate(new UsernamePasswordAuthenticationToken(
+							authenticationRequest.getUsername(),
+							authenticationRequest.getPassword()));
+			SecurityContextHolder.getContext().setAuthentication(authentication);
 
 		userDTO.setFirstLogin(true);
 			String jwt = tokenUtils.generateToken(authenticationRequest.getUsername());
@@ -160,33 +191,62 @@ public class AuthenticationController {
 		return new ResponseEntity(userDTO, HttpStatus.OK);
 	}
 
-		SyncUslugeResponse usluge = agentClient.dopuniUsluge();
-		SyncCategoriesResponse kategorije = agentClient.dopuniKategorije();
-		SyncReservationsResponse rezervacije = agentClient.dopuniRezervacije();
+		SyncUslugeResponse usluge = agentClient.dopuniUsluge(authenticationRequest.getUsername());
+		SyncCategoriesResponse kategorije = agentClient.dopuniKategorije(authenticationRequest.getUsername());
+		SyncReservationsResponse rezervacije = agentClient.dopuniRezervacije(authenticationRequest.getUsername());
+		SyncAccommodationTypeResponse ats=agentClient.dopuniAccomType(authenticationRequest.getUsername());
 
 		List<UslugaXMLDTO> listaUsluga = usluge.getUsluge();
 		List<CategoryXMLDTO> listaKategorija = kategorije.getCategories();
 		List<RezervacijaXMLDTO> listaRezervacija = rezervacije.getReservations();
+		List<AccomodationTypeXMLDTO> listAT=ats.getAccommodationTypes();
 
 		for (int i = 0; i < listaUsluga.size(); i++) {
 			UslugaXMLDTO u = listaUsluga.get(i);
-			Usluga us = new Usluga();
-			us.setCena(u.getCena());
-			us.setNaziv(u.getNaziv());
-			us.setOpis(u.getOpis());
-			us.setIdGlBaza(Long.parseLong(u.getId()));
+			Usluga us = uslugaRepository.findById(Long.parseLong(u.getId())).orElse(null);
+			if(us==null){
+				Usluga usl=new Usluga();
+				usl.setCena(u.getCena());
+				usl.setNaziv(u.getNaziv());
+				usl.setOpis(u.getOpis());
 
-			uslugaRepository.save(us);
+				uslugaRepository.save(usl);
+			}else{
+				us.setCena(u.getCena());
+				us.setNaziv(u.getNaziv());
+				us.setOpis(u.getOpis());
+
+				uslugaRepository.save(us);
+			}
+
 		}
 
 		for (int i = 0; i < listaKategorija.size(); i++) {
 			CategoryXMLDTO c = listaKategorija.get(i);
-			Category ca = new Category();
-			ca.setNaziv(c.getNaziv());
-			ca.setVrednost(c.getVrednost());
-			ca.setIdGlBaza(Long.parseLong(c.getId()));
+			Category ca = categoryRepository.findOneById(Long.parseLong(c.getId()));
+			if(ca==null){
+				Category cat=new Category();
+				cat.setNaziv(c.getNaziv());
+				cat.setVrednost(c.getVrednost());
+				categoryRepository.save(cat);
+			}else{
+				ca.setNaziv(c.getNaziv());
+				ca.setVrednost(c.getVrednost());
+				categoryRepository.save(ca);
+			}
+		}
 
-			categoryRepository.save(ca);
+		for (int i = 0; i < listAT.size(); i++) {
+			AccomodationTypeXMLDTO at = listAT.get(i);
+			AccomodationType att = accomodationTypeRepository.findOneById(Long.parseLong(at.getId()));
+			if(att==null){
+				AccomodationType aat=new AccomodationType();
+				aat.setNaziv(at.getNaziv());
+				accomodationTypeRepository.save(aat);
+			}else{
+				att.setNaziv(at.getNaziv());
+				accomodationTypeRepository.save(att);
+			}
 		}
 
 		for(int i = 0; i < listaRezervacija.size(); i++) {
@@ -219,18 +279,21 @@ public class AuthenticationController {
 
 		for (int i = 0; i < listaUsluga.size(); i++) {
 			UslugaXMLDTO u = listaUsluga.get(i);
-			Usluga us = uslugaRepository.findUslugaSaIdGlBaze(Long.parseLong(u.getId()));
+			Usluga us = uslugaRepository.findById(Long.parseLong(u.getId())).orElse(null);
 			for(int j = 0; j < listaKategorija.size(); j++) {
 				if(u.getCategories().contains(Long.parseLong(listaKategorija.get(j).getId()))) {
-					Category c = categoryRepository.findCathegorySaIdGlBaze(Long.parseLong(listaKategorija.get(j).getId()));
-					u.getCategories().add(c.getId());
+					Category c = categoryRepository.findById(Long.parseLong(listaKategorija.get(j).getId())).orElse(null);
+
+					us.getCategoryList().add(c);
+					c.getUslugaList().add(us);
+					categoryRepository.save(c);
 				}
 			}
 
-			uslugaRepository.save(us);
+			//uslugaRepository.save(us);
 		}
 
-		for (int i = 0; i < listaKategorija.size(); i++) {
+		/*for (int i = 0; i < listaKategorija.size(); i++) {
 			CategoryXMLDTO c = listaKategorija.get(i);
 			Category ca = categoryRepository.findCathegorySaIdGlBaze(Long.parseLong(c.getId()));
 			for(int j = 0; j < listaUsluga.size(); j++) {
@@ -241,7 +304,7 @@ public class AuthenticationController {
 			}
 
 			categoryRepository.save(ca);
-		}
+		}*/
 
 
 
@@ -303,10 +366,8 @@ public class AuthenticationController {
 
 	@RequestMapping(value = "/confirmPassword", method = RequestMethod.POST)
 	public ResponseEntity<?> changePassword(@RequestBody UserDTO user) {
-		User u=new User();
-		u.setUsername(user.getUsername());
-		u.setPassword(passwordEncoder.encode(user.getPassword()));
-		userRepository.save(u);
+		userDetailsService.changePassword("123", user.getPassword());
+
 		return new ResponseEntity(HttpStatus.OK);
 	}
 }

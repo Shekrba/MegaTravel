@@ -27,22 +27,22 @@ public class Category {
     private Set<Smestaj> smestajList = new HashSet<>();
 
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "category_service",
             joinColumns = @JoinColumn(name = "category_id"),
             inverseJoinColumns = @JoinColumn(name = "service_id"))
-    private List<Usluga> uslugaList = new ArrayList<>();
+    private Set<Usluga> uslugaList = new HashSet<>();
 
     public Category() {
 
     }
 
-    public List<Usluga> getUslugaList() {
+    public Set<Usluga> getUslugaList() {
         return uslugaList;
     }
 
-    public void setUslugaList(List<Usluga> uslugaList) {
+    public void setUslugaList(HashSet<Usluga> uslugaList) {
         this.uslugaList = uslugaList;
     }
 

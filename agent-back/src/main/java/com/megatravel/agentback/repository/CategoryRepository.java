@@ -11,7 +11,6 @@ public interface CategoryRepository extends JpaRepository<Category,Long> {
 
     Category findOneById(Long id);
 
-    @Query("select c from Category c where c.idGlBaza=?1")
-    Category findCathegorySaIdGlBaze(Long id);
+
 
 }

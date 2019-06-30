@@ -48,7 +48,7 @@ public interface AgentService {
 	@WebResult(name = "Usluge")
 	public List<UslugaXMLDTO> syncUsluge() throws SOAPFaultException, SOAPException;
 
-	@WebMethod(action = "syncUsluge")
+	@WebMethod(action = "syncCategories")
 	@WebResult(name = "Categories")
 	public List<CategoryXMLDTO> syncCategories() throws SOAPFaultException, SOAPException;
 
@@ -80,4 +80,8 @@ public interface AgentService {
 	@WebResult(name = "Successful")
 	public boolean changePassword(@WebParam(name="UserCredentials") UserCredentialsXMLDTO credentials) throws SOAPFaultException, SOAPException;
 
+
+	@WebMethod(action = "syncAccommodationType")
+	@WebResult(name = "AccommodationTypes")
+	public List<AccomodationTypeXMLDTO> syncAccommodationType() throws SOAPFaultException, SOAPException;
 }

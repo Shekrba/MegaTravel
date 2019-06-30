@@ -13,14 +13,14 @@ public class Config {
         Jaxb2Marshaller marshaller = new Jaxb2Marshaller();
         // this package must match the package in the <generatePackage> specified in
         // pom.xml
-        marshaller.setContextPath("generated");
+        marshaller.setContextPath("com.megatravel.agentback.xml.dto");
         return marshaller;
     }
 
     @Bean
     public AgentClient countryClient(Jaxb2Marshaller marshaller) {
         AgentClient client = new AgentClient();
-        //client.setDefaultUri("http://localhost:8081/ws");
+        client.setDefaultUri("http://localhost:8762/agent-service/api");
         client.setMarshaller(marshaller);
         client.setUnmarshaller(marshaller);
         return client;

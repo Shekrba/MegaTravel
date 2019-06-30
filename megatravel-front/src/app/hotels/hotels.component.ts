@@ -5,6 +5,7 @@ import { Filter } from '../_model/filter';
 import { Data } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
+import {DomSanitizer} from '@angular/platform-browser';
 
 @Component({
   selector: 'app-hotels',
@@ -30,7 +31,7 @@ export class HotelsComponent implements OnInit {
 
   services: string[] = [];
 
-  constructor(private hotelService: HotelServiceService, private toastr: ToastrService) { }
+  constructor(public _DomSanitizer: DomSanitizer,private hotelService: HotelServiceService, private toastr: ToastrService) { }
 
   ngOnInit() {
     this.minDate.setHours(0,0,0,0);
@@ -55,6 +56,7 @@ export class HotelsComponent implements OnInit {
     this.hotelService.getAllHotels().subscribe(
       res => {
         this.hotels = res;
+        console.log(this.hotels[0].slike);
       },
       err => {
         alert("An error has occured while getting all hotels")

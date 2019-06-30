@@ -46,8 +46,8 @@ public class Usluga {
 
 
 
-    @ManyToMany(mappedBy = "uslugaList")
-    private List<Category> categoryList = new ArrayList<>();
+    @ManyToMany(mappedBy = "uslugaList",fetch = FetchType.EAGER)
+    private Set<Category> categoryList = new HashSet<>();
 
     public Usluga(){
 
@@ -61,11 +61,11 @@ public class Usluga {
         this.smestajList = smestajList;
     }
 
-    public List<Category> getCategoryList() {
+    public Set<Category> getCategoryList() {
         return categoryList;
     }
 
-    public void setCategoryList(List<Category> categoryList) {
+    public void setCategoryList(Set<Category> categoryList) {
         this.categoryList = categoryList;
     }
 

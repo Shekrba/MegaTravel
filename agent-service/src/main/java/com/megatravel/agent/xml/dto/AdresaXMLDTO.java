@@ -5,6 +5,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.xml.bind.annotation.*;
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlRootElement(name = "AdresaXMLDTO")
@@ -36,5 +37,6 @@ public class AdresaXMLDTO {
 
     @XmlAttribute(name = "id", required = true)
     @XmlSchemaType(name = "anySimpleType")
+    @XmlJavaTypeAdapter(type=Long.class, value= WSLongAdapter.class)
     private Long id;
 }

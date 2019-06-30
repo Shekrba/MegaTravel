@@ -4,7 +4,9 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 
 @Entity
@@ -24,22 +26,16 @@ public class Category {
     @OneToMany(mappedBy = "category", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<Smestaj> smestajList = new ArrayList<>();
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "category_service",
             joinColumns = @JoinColumn(name = "category_id"),
             inverseJoinColumns = @JoinColumn(name = "service_id"))
-    private List<Usluga> uslugaList = new ArrayList<>();
+    private Set<Usluga> uslugaList = new HashSet<>();
 
-    private Long idGlBaza;
 
-    public Long getIdGlBaza() {
-        return idGlBaza;
-    }
 
-    public void setIdGlBaza(Long idGlBaza) {
-        this.idGlBaza = idGlBaza;
-    }
+
 
     public Category() {
 
@@ -72,14 +68,14 @@ public class Category {
         this.smestajList = smestajList;
     }
 
-    public List<Usluga> getUslugaList() {
+    public Set<Usluga> getUslugaList() {
         return uslugaList;
     }
 
 
 
     @JsonIgnore
-    public void setUslugaList(List<Usluga> uslugaList) {
+    public void setUslugaList(Set<Usluga> uslugaList) {
         this.uslugaList = uslugaList;
     }
 

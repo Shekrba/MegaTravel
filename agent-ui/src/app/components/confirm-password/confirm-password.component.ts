@@ -33,18 +33,21 @@ export class ConfirmPasswordComponent implements OnInit {
   confirm() : void {
     const {
       password,
-       repeatPassword
+       repeatPassword,
+       username
     } = this;
 
     if(password === repeatPassword)
     {
-      let user: User;
+     
+      let user : User = new User();
       user.username = this.username;
       user.password = this.password;
+      console.log(user);
       this.loginservice.confirmPassword(user).subscribe(
         response => {
           this.loginservice.setShowMenu(true);
-          this.router.navigate(['/accomodations']);
+          this.cancel();
         }
       );
     }
@@ -56,6 +59,7 @@ export class ConfirmPasswordComponent implements OnInit {
   }
 
   cancel() : void {
+    this.loginservice.logout();
     this.router.navigate(['/login']);
   }
 

@@ -8,6 +8,5 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface UslugaRepository extends JpaRepository<Usluga,Long> {
 
-    @Query("select u from Usluga u where u.idGlBaza=?1")
-    Usluga findUslugaSaIdGlBaze(Long id);
+
 }

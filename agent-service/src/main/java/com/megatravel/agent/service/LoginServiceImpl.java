@@ -7,6 +7,8 @@ import com.megatravel.agent.model.User;
 import com.megatravel.agent.repository.AuthorityRepository;
 import com.megatravel.agent.repository.UserRepository;
 import com.megatravel.agent.xml.dto.UserCredentialsXMLDTO;
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;
@@ -52,7 +54,21 @@ public class LoginServiceImpl implements LoginService{
 
                 ResponseEntity<String> response = restTemplate.exchange(
                         "http://localhost:8762/login-service/auth/login", HttpMethod.POST, entity, String.class);
-                return response.getBody();
+
+
+                JSONObject jsonObject= null;
+                try {
+                    jsonObject = new JSONObject(response.getBody());
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                String tokenza = null;
+                try {
+                    tokenza = jsonObject.getString("token");
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                return tokenza;
             }
         }
         String faultString = "Bad credentials";

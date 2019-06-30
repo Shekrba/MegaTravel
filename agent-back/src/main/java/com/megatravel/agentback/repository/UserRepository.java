@@ -9,8 +9,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
     User findByUsername(String username);
 
-    @Query(value = "SELECT u FROM User u LEFT JOIN FETCH u.smestaji WHERE u.username = :username")
-    User fetchAccommodations(@Param("username") String username);
+
 
     User findOneByUsername(String username);
 	

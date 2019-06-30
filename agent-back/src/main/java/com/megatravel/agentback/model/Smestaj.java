@@ -124,7 +124,7 @@ public class Smestaj {
     @ManyToOne(fetch = FetchType.EAGER)
     private Category category;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     private User agent;
 
     public void setIdGlBaza(Long idGlBaza) {

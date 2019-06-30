@@ -10,10 +10,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
-import java.util.ArrayList;
-import java.util.Base64;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 @Service
 public class AgentServiceImpl implements AgentService {
@@ -57,10 +54,13 @@ public class AgentServiceImpl implements AgentService {
 
     @Override
     public List<Smestaj> getSmestaje() {
-        User u = userRepository.fetchAccommodations(SecurityContextHolder.getContext().getAuthentication().getName());
-        List<Smestaj> ret = u.getSmestaji();
+        System.out.println(SecurityContextHolder.getContext().getAuthentication().getName());
+        User u = userRepository.findByUsername(SecurityContextHolder.getContext().getAuthentication().getName());
+        Set<Smestaj> ret = u.getSmestaji();
+        ArrayList<Smestaj> retList=new ArrayList<>();
+        retList.addAll(ret);
 
-        return ret;
+        return retList;
     }
 
     @Override
@@ -203,7 +203,7 @@ public class AgentServiceImpl implements AgentService {
         List<Category> foundCategories = new ArrayList<>();
         for(Category category: categories)
         {
-            List<Usluga> categoryServices = category.getUslugaList();
+            Set<Usluga> categoryServices = category.getUslugaList();
             List<Usluga> accomodationServices = smestaj.getUslugaList();
             if(accomodationServices.size() >= categoryServices.size())
             {

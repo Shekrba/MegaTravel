@@ -15,7 +15,9 @@ import org.springframework.security.core.userdetails.UserDetails;
 import javax.persistence.*;
 import java.sql.Timestamp;
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 
 @Entity
@@ -43,11 +45,11 @@ public class User implements UserDetails {
     @Column(name = "email")
     private String email;
 
-    @Column(name = "token")
+    @Column(name="token",columnDefinition="LONGTEXT")
     private String token;
 
     @Column(name = "enabled")
-    private boolean enabled;
+    private boolean enabled=true;
 
     @Column(name = "last_password_reset_date")
     private Timestamp lastPasswordResetDate;
@@ -59,8 +61,8 @@ public class User implements UserDetails {
             inverseJoinColumns = @JoinColumn(name = "authority_id", referencedColumnName = "id"))
     private List<Authority> authorities;
 
-    @OneToMany(mappedBy = "agent")
-    private List<Smestaj> smestaji;
+    @OneToMany(mappedBy = "agent", fetch = FetchType.EAGER)
+    private Set<Smestaj> smestaji=new HashSet<>();
 
 
     public User() {
@@ -68,11 +70,11 @@ public class User implements UserDetails {
     }
 
 
-    public List<Smestaj> getSmestaji() {
+    public Set<Smestaj> getSmestaji() {
         return smestaji;
     }
 
-    public void setSmestaji(List<Smestaj> smestaji) {
+    public void setSmestaji(Set<Smestaj> smestaji) {
         this.smestaji = smestaji;
     }
 

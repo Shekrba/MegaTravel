@@ -59,7 +59,7 @@ public class User implements UserDetails {
             inverseJoinColumns = @JoinColumn(name = "authority_id", referencedColumnName = "id"))
     private List<Authority> authorities;
 
-    @OneToMany(mappedBy = "agent")
+    @OneToMany(mappedBy = "agent", fetch = FetchType.EAGER)
     private Set<Smestaj> smestaji = new HashSet<>();
 
     @OneToMany(mappedBy = "primalac")

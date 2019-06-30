@@ -12,7 +12,9 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import javax.persistence.*;
 import javax.xml.bind.annotation.*;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 
 /**
@@ -71,21 +73,27 @@ public class Usluga {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     protected Long id;
 
-    protected Long idGlBaza;
 
-    @ManyToMany(mappedBy = "uslugaList")
+
+    @ManyToMany(mappedBy = "uslugaList",fetch = FetchType.EAGER)
     @JsonIgnore
-    private List<Smestaj> smestajList = new ArrayList<>();
+    private Set<Smestaj> smestajList = new HashSet<>();
 
+    @ManyToMany(mappedBy = "uslugaList",fetch = FetchType.EAGER)
+    private Set<Category> categoryList = new HashSet<>();
 
+    public Usluga(){
 
-    public void setIdGlBaza(Long idGlBaza) {
-        this.idGlBaza = idGlBaza;
     }
 
-    public Long getIdGlBaza() {
-        return idGlBaza;
+    public Set<Category> getCategoryList() {
+        return categoryList;
     }
+
+    public void setCategoryList(Set<Category> categoryList) {
+        this.categoryList = categoryList;
+    }
+
 
     /**
      * Gets the value of the naziv property.
@@ -175,12 +183,14 @@ public class Usluga {
         this.id = value;
     }
 
-    public List<Smestaj> getSmestajList() {
+    public Set<Smestaj> getSmestajList() {
         return smestajList;
     }
 
     @JsonIgnore
-    public void setSmestajList(List<Smestaj> smestajList) {
+    public void setSmestajList(Set<Smestaj> smestajList) {
         this.smestajList = smestajList;
     }
+
+
 }

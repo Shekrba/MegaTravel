@@ -33,7 +33,7 @@ import java.util.List;
 public class ImageXMLDTO {
 
     @XmlElement(nillable = true)
-    protected List<String> slike;
+    protected List<String> slike=new ArrayList<>();
     @XmlAttribute(name = "smestajID", required = true)
     @XmlSchemaType(name = "anySimpleType")
     protected String smestajID;

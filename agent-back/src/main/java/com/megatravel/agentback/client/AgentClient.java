@@ -10,9 +10,11 @@ import generated.GetTestRequest;
 import generated.GetTestResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.configurationprocessor.json.JSONException;
 import org.springframework.boot.configurationprocessor.json.JSONObject;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.ws.WebServiceMessage;
 import org.springframework.ws.client.core.WebServiceMessageCallback;
 import org.springframework.ws.client.core.support.WebServiceGatewaySupport;
@@ -29,7 +31,11 @@ import java.io.IOException;
 
 public class AgentClient extends  WebServiceGatewaySupport{
 
+    @Autowired
     UserRepository userRepository;
+
+    @Autowired
+    PasswordEncoder passwordEncoder;
 
     private static final Logger log = LoggerFactory.getLogger(AgentClient.class);
     private String token="token";
@@ -331,9 +337,9 @@ public class AgentClient extends  WebServiceGatewaySupport{
         return  response.getValue();
     }
 
-    public SyncUslugeResponse dopuniUsluge() throws SoapFaultClientException{
+    public SyncUslugeResponse dopuniUsluge(String s) throws SoapFaultClientException{
 
-        String s = SecurityContextHolder.getContext().getAuthentication().getName();
+
         User u = userRepository.findByUsername(s);
         token = u.getToken();
 
@@ -372,10 +378,51 @@ public class AgentClient extends  WebServiceGatewaySupport{
         return  response.getValue();
     }
 
+    public SyncAccommodationTypeResponse dopuniAccomType(String s) throws SoapFaultClientException{
 
-    public SyncCategoriesResponse dopuniKategorije() throws SoapFaultClientException{
 
-        String s = SecurityContextHolder.getContext().getAuthentication().getName();
+        User u = userRepository.findByUsername(s);
+        token = u.getToken();
+
+        SyncAccommodationType request = new SyncAccommodationType();
+
+
+        ObjectFactory objectFactory = new ObjectFactory();
+        JAXBElement<SyncAccommodationType> jerequest=objectFactory.createSyncAccommodationType(request);
+        JAXBElement<SyncAccommodationTypeResponse> response=null;
+
+        System.setProperty("sun.net.http.allowRestrictedHeaders", "true");
+
+        try {
+            response = (JAXBElement<SyncAccommodationTypeResponse>) getWebServiceTemplate()
+                    .marshalSendAndReceive("http://localhost:8762/agent-service/api", jerequest,
+                            new WebServiceMessageCallback() {
+                                public void doWithMessage(WebServiceMessage message) {
+                                    TransportContext context = TransportContextHolder.getTransportContext();
+                                    HttpUrlConnection connection = (HttpUrlConnection) context.getConnection();
+
+                                    try {
+                                        connection.addRequestHeader("SOAPAction","syncAccommodationType");
+                                        connection.addRequestHeader("Authorization","Bearer "+token);
+                                    } catch (IOException e) {
+                                        e.printStackTrace();
+                                    }
+                                    //postMethod.addHeader("Authorization", "Bearer ");
+                                }
+                            });
+        }catch (SoapFaultClientException e){
+            throw e;
+        }
+
+
+
+        return  response.getValue();
+    }
+
+
+    public SyncCategoriesResponse dopuniKategorije(String s) throws SoapFaultClientException{
+
+
         User u = userRepository.findByUsername(s);
         token = u.getToken();
 
@@ -415,9 +462,9 @@ public class AgentClient extends  WebServiceGatewaySupport{
     }
 
 
-    public SyncReservationsResponse dopuniRezervacije() throws SoapFaultClientException{
+    public SyncReservationsResponse dopuniRezervacije(String s) throws SoapFaultClientException{
 
-        String s = SecurityContextHolder.getContext().getAuthentication().getName();
+
         User u = userRepository.findByUsername(s);
         token = u.getToken();
 
@@ -556,13 +603,21 @@ public class AgentClient extends  WebServiceGatewaySupport{
                     .marshalSendAndReceive("http://localhost:8762/agent-service/api/login", jerequest,
                             new SoapActionCallback("firstLogin"));
         }catch (SoapFaultClientException e){
+            e.printStackTrace();
             throw e;
         }
-
-        String s = credentials.getUsername();
-        User u = userRepository.findByUsername(s);
-        u.setToken(response.getValue().getSuccess());
+        if(credentials.getPassword()!="123") {
+            String s = credentials.getUsername();
+            User u = userRepository.findByUsername(s);
+            u.setToken(response.getValue().getSuccess());
             userRepository.save(u);
+        }else{
+            User u=new User();
+            u.setUsername(credentials.getUsername());
+            u.setPassword(passwordEncoder.encode("123"));
+            u.setToken(response.getValue().getSuccess());
+            userRepository.save(u);
+        }
 
 
 
