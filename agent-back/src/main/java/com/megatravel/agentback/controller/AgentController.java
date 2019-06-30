@@ -65,17 +65,33 @@ public class AgentController {
     @RequestMapping(value = "/smestajAdd", method = RequestMethod.POST)
     public ResponseEntity<Smestaj> addSJedinica(@RequestBody SmestajDTO smestaj) {
 
+        SmestajXMLDTO x = new SmestajXMLDTO();
+        x.setNaziv(smestaj.getNaziv());
+        x.setOpis(smestaj.getOpis());
+        x.setPeriodOtkaza(smestaj.getPeriodOtkaza());
+
+        AdresaXMLDTO adr = new AdresaXMLDTO();
+        adr.setBroj(smestaj.getBroj());
+        adr.setBrojStana(smestaj.getBroj());
+        adr.setMesto(smestaj.getMesto());
+        adr.setUlica(smestaj.getUlica());
+        adr.setPosBroj(smestaj.getPosBroj());
+        adr.setLatitude(smestaj.getLatitude());
+        adr.setLongitude(smestaj.getLongitude());
+
+        x.setAdresa(adr);
 
         Smestaj addedSmestaj = null;
 
         try {
+            AddAccommodationResponse r = client.addSmestaj(x);
+            smestaj.setIdGlBaza(Long.parseLong(r.getAccommodation().getId()));
             addedSmestaj = agentService.addSmestaj(smestaj);
+            return new ResponseEntity<Smestaj>(addedSmestaj, HttpStatus.OK);
         } catch (Exception e) {
-            e.printStackTrace();
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
 
-        return new ResponseEntity<Smestaj>(addedSmestaj, HttpStatus.OK);
     }
 
     @PostMapping(value = "/upload/{id}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
@@ -93,17 +109,34 @@ public class AgentController {
     }
 
     @RequestMapping(value = "/smestajUpdate", method = RequestMethod.PUT)
-    public Smestaj updateSmestaj(@RequestBody SmestajDTO smestaj) {
+    public ResponseEntity<Smestaj> updateSmestaj(@RequestBody SmestajDTO smestaj) {
+
+        SmestajXMLDTO x = new SmestajXMLDTO();
+        x.setNaziv(smestaj.getNaziv());
+        x.setOpis(smestaj.getOpis());
+        x.setPeriodOtkaza(smestaj.getPeriodOtkaza());
+
+        AdresaXMLDTO adr = new AdresaXMLDTO();
+        adr.setBroj(smestaj.getBroj());
+        adr.setBrojStana(smestaj.getBroj());
+        adr.setMesto(smestaj.getMesto());
+        adr.setUlica(smestaj.getUlica());
+        adr.setPosBroj(smestaj.getPosBroj());
+        adr.setLatitude(smestaj.getLatitude());
+        adr.setLongitude(smestaj.getLongitude());
+
+        x.setAdresa(adr);
 
         Smestaj updatedSmestaj = null;
 
         try {
+            EditAccommodationResponse r = client.editSmestaj(x);
             updatedSmestaj = agentService.updateSmestaj(smestaj);
+            return new ResponseEntity<Smestaj>(updatedSmestaj, HttpStatus.OK);
         } catch (Exception e) {
-            e.printStackTrace();
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
 
-        return updatedSmestaj;
     }
 
 
@@ -252,14 +285,26 @@ public class AgentController {
     @RequestMapping(value = "/messages",method = RequestMethod.GET)
     public List<PorukaDTO> getSvePoruke()
     {
-        List<Poruka> list = agentService.getSvePoruke();
+        //List<Poruka> list = agentService.getSvePoruke();
+
+        PollingPorukeResponse po = client.pokupiPoruke();
+
+        List<PorukaXMLDTO> poruke = po.getPoruke();
+
         List<PorukaDTO> listDTO = new ArrayList<>();
 
-        for (Poruka p: list) {
-            PorukaDTO pDTO = new PorukaDTO();
-            porukaToDto(p,pDTO);
-            listDTO.add(pDTO);
+        for(int i=0; i<poruke.size(); i++) {
+            PorukaXMLDTO p = poruke.get(i);
+            PorukaDTO dto = new PorukaDTO();
+            dto.setIdGlBaza(Long.parseLong(p.getId()));
+            dto.setPrimalac(p.getPrimalac());
+            dto.setPosaljilac(p.getPosiljalac());
+            dto.setSadrzaj(p.getSadrzaj());
+            dto.setDatumSlanja(new Date());
+
+            listDTO.add(dto);
         }
+
 
         return listDTO;
     }
@@ -293,7 +338,7 @@ public class AgentController {
 
         try {
             SendPorukaResponse sr = client.posaljiPoruku(xDTO);
-            addedPoruka = agentService.addOdgovor(poruka, messageId);
+            //addedPoruka = agentService.addOdgovor(poruka, messageId);
             return new ResponseEntity<Poruka>(addedPoruka, HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);

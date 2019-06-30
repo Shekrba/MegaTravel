@@ -10,7 +10,7 @@ public class RezervacijaDTO {
     private Date datumRez;
     private Date od;
     private Date _do;
-    private int uCena;
+    private double uCena;
     private StatusRezervacije statusRezervacije;
     private String korisnik;
     private Long idGlBaza;
@@ -67,7 +67,11 @@ public class RezervacijaDTO {
         return _do;
     }
 
-    public int getuCena() {
+    public void setuCena(double uCena) {
+        this.uCena = uCena;
+    }
+
+    public double getuCena() {
         return uCena;
     }
 

@@ -179,7 +179,7 @@ public class AuthenticationController {
 			Date reee2 = new Date(y2, m2, d2);
 			re.setOd(reee2);
 			re.setKorisnik(r.getKorisnik());
-			
+
 		}
 
 		for (int i = 0; i < listaUsluga.size(); i++) {
