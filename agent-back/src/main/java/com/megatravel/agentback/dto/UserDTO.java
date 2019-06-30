@@ -16,8 +16,17 @@ public class UserDTO {
     private String token;
     private int expiresIn;
     private boolean firstLogin;
+    private String password;
 
     public UserDTO() {
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public void setId(Long id) {

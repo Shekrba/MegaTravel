@@ -34,13 +34,13 @@ public class User implements UserDetails {
     @Column(name = "password", unique = false, nullable = false)
     private String password;
 
-    @Column(name = "ime", unique = false, nullable = false)
+    @Column(name = "ime", unique = false)
     private String ime;
 
-    @Column(name = "prezime", unique = false, nullable = false)
+    @Column(name = "prezime", unique = false)
     private String prezime;
 
-    @Column(name = "email", unique = true, nullable = false)
+    @Column(name = "email")
     private String email;
 
     @Column(name = "token")
