@@ -155,7 +155,7 @@ public class AdminServiceImpl implements  AdminService{
         newUser.setPrezime(agent.getPrezime());
         newUser.setEmail(agent.getEmail());
         newUser.setUsername(agent.getUsername());
-        newUser.setPassword(passwordEncoder.encode("12345"));
+        newUser.setPassword(passwordEncoder.encode("123"));
         Authority authority = authorityRepository.findOneByName("ROLE_AGENT");
         List<Authority> authorities = new ArrayList<>();
         authorities.add(authority);
@@ -170,7 +170,7 @@ public class AdminServiceImpl implements  AdminService{
     public Smestaj addAccomodation(SmestajDTO smestaj) {
         Smestaj accomodation = new Smestaj();
         accomodation.setNaziv(smestaj.getNaziv());
-        accomodation.setAdresa(smestaj.getAdresa());
+
         accomodation.setOpis(smestaj.getOpis());
         AccomodationType type = accomodationTypeRepository.findOneById(smestaj.getTipSmestaja());
         accomodation.setAccomodationType(type);

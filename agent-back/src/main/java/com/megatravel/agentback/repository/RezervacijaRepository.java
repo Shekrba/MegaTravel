@@ -15,4 +15,6 @@ public interface RezervacijaRepository extends JpaRepository<Rezervacija, Long> 
 
     @Query("select distinct r from Rezervacija r where r.sJedinica.id=?1")
     List<Rezervacija> findSveRezervacijeSJedinice(Long sjedId);
+
+    Rezervacija findByIdGlBaza(Long idGlBaza);
 }

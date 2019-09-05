@@ -22,6 +22,7 @@ import java.util.List;
  *         &lt;element name="cost" type="{http://www.w3.org/2001/XMLSchema}double"/>
  *         &lt;element name="sjedinicaId" type="{http://www.w3.org/2001/XMLSchema}long" minOccurs="0"/>
  *         &lt;element name="services" type="{http://service.agent.megatravel.com/}uslugaXMLDTO" maxOccurs="unbounded" minOccurs="0"/>
+ *         &lt;element name="token" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *       &lt;/sequence>
  *       &lt;attribute name="id" type="{http://www.w3.org/2001/XMLSchema}anySimpleType" />
  *     &lt;/restriction>
@@ -37,7 +38,8 @@ import java.util.List;
     "to",
     "cost",
     "sjedinicaId",
-    "services"
+    "services",
+    "token"
 })
 public class RezervacijaMakeXMLDTO {
 
@@ -49,6 +51,7 @@ public class RezervacijaMakeXMLDTO {
     protected Long sjedinicaId;
     @XmlElement(nillable = true)
     protected List<UslugaXMLDTO> services;
+    protected String token;
     @XmlAttribute(name = "id")
     @XmlSchemaType(name = "anySimpleType")
     protected String id;
@@ -168,6 +171,30 @@ public class RezervacijaMakeXMLDTO {
             services = new ArrayList<UslugaXMLDTO>();
         }
         return this.services;
+    }
+
+    /**
+     * Gets the value of the token property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
+     */
+    public String getToken() {
+        return token;
+    }
+
+    /**
+     * Sets the value of the token property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
+    public void setToken(String value) {
+        this.token = value;
     }
 
     /**

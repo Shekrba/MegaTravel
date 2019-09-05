@@ -76,8 +76,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 				.antMatchers("/admin-service/api/admin/**").hasRole("ADMIN")
 				.antMatchers("/agent-service/api").hasRole("AGENT")
 				.antMatchers("/agent-service/api/login").permitAll()
-				.antMatchers("/reservation-service/api/**").hasRole("USER")
-				.antMatchers("/reservation-service/api/reservations").hasRole("AGENT")
+				.antMatchers("/reservation-service/api/**").hasAnyRole("USER","AGENT")
+
 				// svaki zahtev mora biti autorizovan
 			.anyRequest().authenticated().and()
 			

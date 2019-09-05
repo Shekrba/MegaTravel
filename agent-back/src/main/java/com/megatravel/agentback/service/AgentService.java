@@ -25,7 +25,7 @@ public interface AgentService {
 
     public void setCategoryForAccomodation(Smestaj smestaj);
 
-    public Rezervacija zauzmiSJedinicu(Long sjedId, Date odDatum, Date doDatum);
+    public Rezervacija zauzmiSJedinicu(Long sjedId, Date odDatum, Date doDatum,Long idGlBaza);
     public List<Rezervacija> getRezervacijeSJedinice(Long sjedId);
     public Rezervacija realizovanaRezervacija(Long id);
     public Rezervacija nerealizovanaRezervacija(Long id);

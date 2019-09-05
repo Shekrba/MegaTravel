@@ -4,7 +4,10 @@ package com.megatravel.agentback.controller;
 import com.megatravel.agentback.client.AgentClient;
 import com.megatravel.agentback.dto.*;
 import com.megatravel.agentback.model.*;
+import com.megatravel.agentback.repository.RezervacijaRepository;
+import com.megatravel.agentback.repository.SJedinicaRepository;
 import com.megatravel.agentback.repository.SmestajRepository;
+import com.megatravel.agentback.repository.UserRepository;
 import com.megatravel.agentback.service.AgentService;
 import com.megatravel.agentback.xml.dto.*;
 import com.megatravel.agentback.xml.dto.RezervacijaMakeXMLDTO;
@@ -13,9 +16,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.xml.datatype.DatatypeConfigurationException;
+import javax.xml.datatype.DatatypeFactory;
+import javax.xml.datatype.XMLGregorianCalendar;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.util.*;
@@ -67,6 +74,18 @@ public class AgentController {
         x.setNaziv(smestaj.getNaziv());
         x.setOpis(smestaj.getOpis());
         x.setPeriodOtkaza(smestaj.getPeriodOtkaza());
+
+        AccomodationTypeXMLDTO accTXML=new AccomodationTypeXMLDTO();
+        accTXML.setId(smestaj.getTip().toString());
+
+        x.setAccomodationType(accTXML);
+
+        for(Long usluge : smestaj.getAdditionalServices()){
+            UslugaXMLDTO uslugaXMLDTO=new UslugaXMLDTO();
+            uslugaXMLDTO.setId(usluge.toString());
+            x.getUslugaList().add(uslugaXMLDTO);
+        }
+
 
         AdresaXMLDTO adr = new AdresaXMLDTO();
         adr.setBroj(smestaj.getBroj());
@@ -126,10 +145,24 @@ public class AgentController {
     @RequestMapping(value = "/smestajUpdate", method = RequestMethod.PUT)
     public ResponseEntity<Smestaj> updateSmestaj(@RequestBody SmestajDTO smestaj) {
 
+        Smestaj s=smestajRepository.findOneById(smestaj.getId());
+
         SmestajXMLDTO x = new SmestajXMLDTO();
         x.setNaziv(smestaj.getNaziv());
         x.setOpis(smestaj.getOpis());
         x.setPeriodOtkaza(smestaj.getPeriodOtkaza());
+        x.setId(s.getIdGlBaza().toString());
+
+        AccomodationTypeXMLDTO accTXML=new AccomodationTypeXMLDTO();
+        accTXML.setId(smestaj.getTip().toString());
+
+        x.setAccomodationType(accTXML);
+
+        for(Long usluge : smestaj.getAdditionalServices()){
+            UslugaXMLDTO uslugaXMLDTO=new UslugaXMLDTO();
+            uslugaXMLDTO.setId(usluge.toString());
+            x.getUslugaList().add(uslugaXMLDTO);
+        }
 
         AdresaXMLDTO adr = new AdresaXMLDTO();
         adr.setBroj(smestaj.getBroj());
@@ -220,15 +253,23 @@ public class AgentController {
 
     }
 
+    @Autowired
+    SJedinicaRepository sJedinicaRepository;
+
     @RequestMapping(value = "/accomodationUnit/{id}", method = RequestMethod.PUT)
     public ResponseEntity<SJedinica> updateSJedinica(@PathVariable("id") Long id, @RequestBody SJedinicaDTO sJedinica) {
+
+
+        SJedinica sjed=sJedinicaRepository.findOneById(sJedinica.getId());
+        Smestaj s=sjed.getSmestaj();
 
         SJedinicaXMLDTO xdto = new SJedinicaXMLDTO();
         xdto.setBroj(sJedinica.getBroj());
         xdto.setBrojKreveta(sJedinica.getBroj());
         xdto.setCena(sJedinica.getCena());
-        xdto.setDostupnost(sJedinica.getDostupnost());
-        xdto.setSmestajID(sJedinica.getIdSmestaj().toString());
+        xdto.setDostupnost(true);
+        xdto.setSmestajID(s.getIdGlBaza().toString());
+        xdto.setId(sjed.getIdGlBaza().toString());
 
         SJedinica updatedSJedinica = null;
 
@@ -243,16 +284,25 @@ public class AgentController {
     }
 
 
+    @Autowired
+    UserRepository userRepository;
 
     @RequestMapping(value = "/occupancy/{id}",method = RequestMethod.POST)
-    public ResponseEntity<Rezervacija> zauzmiSJedinica(@PathVariable("id")Long id, @RequestBody ZauzetostDTO zauzetostDTO){
+    public ResponseEntity<Rezervacija> zauzmiSJedinica(@PathVariable("id")Long id, @RequestBody ZauzetostDTO zauzetostDTO) throws DatatypeConfigurationException {
 
+        User u=userRepository.findByUsername(SecurityContextHolder.getContext().getAuthentication().getName());
         RezervacijaMakeXMLDTO re = new RezervacijaMakeXMLDTO();
-        re.getFrom().toGregorianCalendar().setTime(zauzetostDTO.getOdDatum());
-        re.getTo().toGregorianCalendar().setTime(zauzetostDTO.getDoDatum());
+        GregorianCalendar cFrom = new GregorianCalendar();
+        cFrom.setTime(zauzetostDTO.getOdDatum());
+        XMLGregorianCalendar from = DatatypeFactory.newInstance().newXMLGregorianCalendar(cFrom);
+        re.setFrom(from);
+        GregorianCalendar cTo = new GregorianCalendar();
+        cTo.setTime(zauzetostDTO.getDoDatum());
+        XMLGregorianCalendar to = DatatypeFactory.newInstance().newXMLGregorianCalendar(cTo);
+        re.setTo(to);
         re.setCost(zauzetostDTO.getCena());
         re.setSjedinicaId(id);
-        String g = zauzetostDTO.getDoDatum().toString();
+        re.setToken(u.getToken());
 
 
 
@@ -261,9 +311,10 @@ public class AgentController {
         try {
             MakeReservationResponse res = client.napraviRezervaciju(re);
             zauzetostDTO.setIdGlBaza(res.getReservation().getId());
-            r = agentService.zauzmiSJedinicu(id, zauzetostDTO.getOdDatum(), zauzetostDTO.getDoDatum());
+            r = agentService.zauzmiSJedinicu(id, zauzetostDTO.getOdDatum(), zauzetostDTO.getDoDatum(),Long.parseLong(res.getReservation().getId()));
             return  new ResponseEntity<Rezervacija>(r, HttpStatus.OK);
         } catch (Exception e) {
+            e.printStackTrace();
             return  new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
 
@@ -284,9 +335,21 @@ public class AgentController {
         return listDTO;
     }
 
+    @Autowired
+    RezervacijaRepository rezervacijaRepository;
+
     @RequestMapping(value = "/confirmReservation/{id}",method = RequestMethod.PUT)
     public Rezervacija realizovanaRezervacija(@PathVariable("id")Long id)
     {
+        Rezervacija rezervacija=rezervacijaRepository.findOneById(id);
+        ConfirmArrivalXMLDTO ca=new ConfirmArrivalXMLDTO();
+        ca.setId(rezervacija.getIdGlBaza().toString());
+        try{
+            client.confrimArrival(ca);
+        }catch (Exception e){
+            e.printStackTrace();
+            return null;
+        }
         Rezervacija r = agentService.realizovanaRezervacija(id);
 
         return r;
@@ -343,11 +406,12 @@ public class AgentController {
     }
 
 
-    @RequestMapping(value = "/answerMessage/{messageId}",method = RequestMethod.POST)
-    public ResponseEntity<Poruka> addSJedinica(@PathVariable("messageId")Long messageId, @RequestBody PorukaDTO poruka){
+    @RequestMapping(value = "/answerMessage",method = RequestMethod.POST)
+    public ResponseEntity<Poruka> addSJedinica(@RequestBody PorukaDTO poruka){
 
+        String user= SecurityContextHolder.getContext().getAuthentication().getName();
         PorukaXMLDTO xDTO = new PorukaXMLDTO();
-        xDTO.setPosiljalac(poruka.getPosaljilac());
+        xDTO.setPosiljalac(user);
         xDTO.setPrimalac(poruka.getPrimalac());
         xDTO.setSadrzaj(poruka.getSadrzaj());
 
@@ -359,6 +423,7 @@ public class AgentController {
             //addedPoruka = agentService.addOdgovor(poruka, messageId);
             return new ResponseEntity<Poruka>(addedPoruka, HttpStatus.OK);
         } catch (Exception e) {
+            e.printStackTrace();
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
 

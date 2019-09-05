@@ -190,6 +190,10 @@ public class AuthenticationController {
 			userDTO.setUsername(authenticationRequest.getUsername());
 		return new ResponseEntity(userDTO, HttpStatus.OK);
 	}
+		UserCredentialsXMLDTO dto=new UserCredentialsXMLDTO();
+		dto.setPassword(authenticationRequest.getPassword());
+		dto.setUsername(authenticationRequest.getUsername());
+		agentClient.login(dto);
 
 		SyncUslugeResponse usluge = agentClient.dopuniUsluge(authenticationRequest.getUsername());
 		SyncCategoriesResponse kategorije = agentClient.dopuniKategorije(authenticationRequest.getUsername());
@@ -254,27 +258,34 @@ public class AuthenticationController {
 			Rezervacija re = new Rezervacija();
 			re.setIdGlBaza(Long.parseLong(r.getId()));
 			re.setuCena(r.getUCena());
-			SJedinica sj = sJedinicaRepository.findOneById(Long.parseLong(r.getSJedinicaID()));
-			re.setsJedinica(sj);
-			int y = r.getDatumRez().getYear();
-			int m = r.getDatumRez().getMonth();
-			int d = r.getDatumRez().getDay();
-			Date reee = new Date(y, m, d);
+
+			Date reee = r.getDatumRez().toGregorianCalendar().getTime();
 			re.setDatumRez(reee);
 
-			int y1 = r.getDo().getYear();
-			int m1 = r.getDo().getMonth();
-			int d1 = r.getDo().getDay();
-			Date reee1 = new Date(y1, m1, d1);
+
+			Date reee1 = r.getDo().toGregorianCalendar().getTime();
 			re.set_do(reee1);
 
-			int y2 = r.getOd().getYear();
-			int m2 = r.getOd().getMonth();
-			int d2 = r.getOd().getDay();
-			Date reee2 = new Date(y2, m2, d2);
+			Date reee2 = r.getOd().toGregorianCalendar().getTime();
 			re.setOd(reee2);
 			re.setKorisnik(r.getKorisnik());
 
+			if(r.isCanBeRated())
+				re.setStatusRezervacije(StatusRezervacije.REALIZOVANA);
+			if(r.isCanceled())
+				re.setStatusRezervacije(StatusRezervacije.OTKAZANO);
+			if(!r.isCanBeRated())
+				re.setStatusRezervacije(StatusRezervacije.REZERVISANO);
+
+			if(rezervacijaRepository.findByIdGlBaza(re.getIdGlBaza())==null) {
+				rezervacijaRepository.save(re);
+
+				SJedinica sj = sJedinicaRepository.findOneByIdGlBaza(Long.parseLong(r.getSJedinicaID()));
+				re.setsJedinica(sj);
+				sj.getRezervacije().add(re);
+
+				rezervacijaRepository.save(re);
+			}
 		}
 
 		for (int i = 0; i < listaUsluga.size(); i++) {
@@ -366,6 +377,15 @@ public class AuthenticationController {
 
 	@RequestMapping(value = "/confirmPassword", method = RequestMethod.POST)
 	public ResponseEntity<?> changePassword(@RequestBody UserDTO user) {
+		UserCredentialsXMLDTO crendetials=new UserCredentialsXMLDTO();
+		crendetials.setPassword(user.getPassword());
+		crendetials.setUsername(user.getUsername());
+		try {
+			agentClient.promeniSifru(crendetials);
+		}catch (Exception e){
+			e.printStackTrace();
+		}
+
 		userDetailsService.changePassword("123", user.getPassword());
 
 		return new ResponseEntity(HttpStatus.OK);

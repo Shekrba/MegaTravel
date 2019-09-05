@@ -88,45 +88,53 @@ public class SearchController {
         sDTO.setNaziv(s.getNaziv());
         sDTO.setOpis(s.getOpis());
         sDTO.setPeriodOtkaza(s.getPeriodOtkaza());
-        sDTO.setTip(s.getAccomodationType().getNaziv());
-        sDTO.setMesto(s.getAdresa().getMesto());
-        sDTO.setBroj(s.getAdresa().getBroj());
-        sDTO.setUlica(s.getAdresa().getUlica());
-
-
-        for (Usluga usluga: s.getUslugaList()) {
-            UslugaDTO uslugaDTO = new UslugaDTO();
-            uslugaDTO.setId(usluga.getId());
-            uslugaDTO.setNaziv(usluga.getNaziv());
-            uslugaDTO.setCena(usluga.getCena());
-            uslugaDTO.setOpis(usluga.getOpis());
-
-            sDTO.getUsluge().add(uslugaDTO);
+        if(s.getAccomodationType()!=null)
+            sDTO.setTip(s.getAccomodationType().getNaziv());
+        if(s.getAdresa()!=null) {
+            sDTO.setMesto(s.getAdresa().getMesto());
+            sDTO.setBroj(s.getAdresa().getBroj());
+            sDTO.setUlica(s.getAdresa().getUlica());
         }
 
-        for (SJedinica sj: s.getSJedinica()) {
-            SJedinicaDTO sjDTO = new SJedinicaDTO();
-            sjDTO.setId(sj.getId());
-            sjDTO.setBroj(sj.getBroj());
-            sjDTO.setBrojKreveta(sj.getBrojKreveta());
-            sjDTO.setCena(sj.getCena());
-            sjDTO.setDostupnost(sj.getDostupnost());
-            System.out.println(sj.getVersion());
-            sjDTO.setVersion(sj.getVersion());
 
-            sDTO.getSjedinice().add(sjDTO);
-        }
+        if(s.getUslugaList()!=null) {
+            for (Usluga usluga : s.getUslugaList()) {
+                UslugaDTO uslugaDTO = new UslugaDTO();
+                uslugaDTO.setId(usluga.getId());
+                uslugaDTO.setNaziv(usluga.getNaziv());
+                uslugaDTO.setCena(usluga.getCena());
+                uslugaDTO.setOpis(usluga.getOpis());
 
-        for (Image img: s.getSlike()){
-            byte[] encodeBase64 = Base64.getEncoder().encode(img.getData());
-            String base64Encoded = null;
-            try {
-                base64Encoded = new String(encodeBase64, "UTF-8");
-            } catch (UnsupportedEncodingException e) {
-                e.printStackTrace();
+                sDTO.getUsluge().add(uslugaDTO);
             }
+        }
 
-            sDTO.getSlike().add("data:image/jpeg;base64,"+base64Encoded);
+        if(s.getSJedinica()!=null) {
+            for (SJedinica sj : s.getSJedinica()) {
+                SJedinicaDTO sjDTO = new SJedinicaDTO();
+                sjDTO.setId(sj.getId());
+                sjDTO.setBroj(sj.getBroj());
+                sjDTO.setBrojKreveta(sj.getBrojKreveta());
+                sjDTO.setCena(sj.getCena());
+                sjDTO.setDostupnost(sj.getDostupnost());
+                System.out.println(sj.getVersion());
+                sjDTO.setVersion(sj.getVersion());
+
+                sDTO.getSjedinice().add(sjDTO);
+            }
+        }
+
+        if(s.getSlike()!=null) {
+            for (Image img : s.getSlike()) {
+                String base64Encoded = null;
+                try {
+                    base64Encoded = new String(img.getData(), "UTF-8");
+                } catch (UnsupportedEncodingException e) {
+                    e.printStackTrace();
+                }
+
+                sDTO.getSlike().add(base64Encoded);
+            }
         }
     }
 }

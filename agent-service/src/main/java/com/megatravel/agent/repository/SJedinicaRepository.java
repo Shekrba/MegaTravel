@@ -8,7 +8,7 @@ import java.util.Date;
 
 public interface SJedinicaRepository extends JpaRepository<SJedinica,Long> {
 
-    @Query("SELECT DISTINCT sj FROM SJedinica sj LEFT OUTER JOIN sj.rezervacije r WHERE sj.id=?2 AND (r.od >=?1 OR r._do >= ?1)")
+    @Query("SELECT DISTINCT sj FROM SJedinica sj LEFT OUTER JOIN sj.rezervacije r WHERE sj.id=?2 AND (r.od >=?1 OR r._do >= ?1) AND r is not empty")
     SJedinica findIfEditable(Date date,Long id);
 
 }

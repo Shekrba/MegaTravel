@@ -27,8 +27,7 @@ public class Smestaj {
     @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private AccomodationType accomodationType;
 
-    @OneToOne(fetch=FetchType.LAZY, cascade=CascadeType.ALL, optional=true)
-    private Adresa adresa;
+
 
     @Column(name = "opis", unique = false, nullable = true)
     private String opis;
@@ -99,14 +98,7 @@ public class Smestaj {
 
 
 
-    public Adresa getAdresa() {
-        return adresa;
-    }
 
-
-    public void setAdresa(Adresa value) {
-        this.adresa = value;
-    }
 
 
     public String getOpis() {

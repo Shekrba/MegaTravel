@@ -40,7 +40,7 @@ public class Usluga {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToMany(mappedBy = "uslugaList")
+    @ManyToMany(mappedBy = "uslugaList",fetch = FetchType.EAGER)
     @JsonIgnore
     private Set<Smestaj> smestajList = new HashSet<>();
 

@@ -1,6 +1,6 @@
 package com.megatravel.admin.dto;
 
-import com.megatravel.admin.model.Adresa;
+
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,7 +11,6 @@ public class SmestajDTO {
 
     private Long tipSmestaja;
 
-    private Adresa adresa;
 
     private String opis;
 
@@ -40,13 +39,8 @@ public class SmestajDTO {
         this.tipSmestaja = tipSmestaja;
     }
 
-    public Adresa getAdresa() {
-        return adresa;
-    }
 
-    public void setAdresa(Adresa adresa) {
-        this.adresa = adresa;
-    }
+
 
     public String getOpis() {
         return opis;

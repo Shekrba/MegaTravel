@@ -33,10 +33,7 @@ import javax.xml.soap.SOAPFault;
 import javax.xml.ws.handler.MessageContext;
 import javax.xml.ws.soap.SOAPFaultException;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 
 @Service
@@ -80,6 +77,9 @@ public class AgentServiceImpl implements AgentService {
 	@Autowired
 	AccommodationTypeRepository accomodationTypeRepository;
 
+	@Autowired
+	AdresaRepository adresaRepository;
+
 	@Override
 	public SmestajXMLDTO addAccommodation(SmestajXMLDTO accommodation) throws SOAPFaultException, SOAPException {
 		Message message=PhaseInterceptorChain.getCurrentMessage();
@@ -93,7 +93,7 @@ public class AgentServiceImpl implements AgentService {
 			//postavi usluge i sacuvaj ga
 			if(accommodation.getUslugaList()!=null) {
 				for (UslugaXMLDTO uXML : accommodation.getUslugaList()) {
-					Usluga usluga = uslugaRepository.getOne(uXML.getId());
+					Usluga usluga = uslugaRepository.findById(uXML.getId()).orElse(null);
 					usluga.getSmestaj().add(s);
 					s.getUslugaList().add(usluga);
 					uslugaRepository.save(usluga);
@@ -102,13 +102,17 @@ public class AgentServiceImpl implements AgentService {
 
 			//postavi AccomodationType i sacuvaj ga
 			if(accommodation.getAccomodationType()!=null) {
-				AccomodationType accomodationType = accomodationRepository.getOne(accommodation.getAccomodationType().getId());
+				AccomodationType accomodationType = accomodationRepository.findById(accommodation.getAccomodationType().getId()).orElse(null);
 				accomodationType.getSmestajList().add(s);
 				s.setAccomodationType(accomodationType);
 			}
-			/*
-				Dodaj izracunavanje kategorije - pitaj Mandica
-			 */
+			Adresa addr=new Adresa(accommodation.getAdresa());
+			adresaRepository.save(addr);
+			addr.setSmestaj(s);
+			s.setAdresa(addr);
+
+			setCategoryForAccomodation(s);
+
 			//postavi Agenta i sacuvaj ga
 			u.getSmestaji().add(s);
 			userRepository.save(u);
@@ -139,12 +143,12 @@ public class AgentServiceImpl implements AgentService {
 		String username=request.getHeader("Username");
 		User u=userRepository.findByUsername(username);
 		if(u!=null){
-			Smestaj s=smestajRepository.getOne(accommodation.getId());
+			Smestaj s=smestajRepository.findById(accommodation.getId()).orElse(null);
 			s.getUslugaList().clear();
 			//postavi usluge i sacuvaj ga
 			if(accommodation.getUslugaList()!=null) {
 				for (UslugaXMLDTO uXML : accommodation.getUslugaList()) {
-					Usluga usluga = uslugaRepository.getOne(uXML.getId());
+					Usluga usluga = uslugaRepository.findById(uXML.getId()).orElse(null);
 					usluga.getSmestaj().add(s);
 					s.getUslugaList().add(usluga);
 					uslugaRepository.save(usluga);
@@ -153,13 +157,16 @@ public class AgentServiceImpl implements AgentService {
 
 			//postavi AccomodationType i sacuvaj ga
 			if(accommodation.getAccomodationType()!=null) {
-				AccomodationType accomodationType = accomodationRepository.getOne(accommodation.getAccomodationType().getId());
+				AccomodationType accomodationType = accomodationRepository.findById(accommodation.getAccomodationType().getId()).orElse(null);
 				accomodationType.getSmestajList().add(s);
 				s.setAccomodationType(accomodationType);
 			}
-			/*
-				Dodaj izracunavanje kategorije - pitaj Mandica
-			 */
+			Adresa addr=new Adresa(accommodation.getAdresa());
+			adresaRepository.save(addr);
+			addr.setSmestaj(s);
+			s.setAdresa(addr);
+
+			setCategoryForAccomodation(s);
 
 			smestajRepository.save(s);
 
@@ -334,6 +341,14 @@ public class AgentServiceImpl implements AgentService {
 		HttpHeaders headers = new HttpHeaders();
 		headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
 		headers.setContentType(MediaType.APPLICATION_JSON);
+		//headers.setBearerAuth(request.get);
+		/*Enumeration<String> str = request.getHeaderNames();
+		while(str.hasMoreElements()){
+			System.out.println(str.nextElement());
+		}*/
+		SJedinica sjed=sJedinicaRepository.findById(reservation.getSjedinicaId()).orElse(null);
+		headers.setBearerAuth(reservation.getToken());
+		System.out.println(headers.get("Authorization"));
 		ObjectMapper om = new ObjectMapper();
 		String json = "";
 		MakeResDTO makeRes=new MakeResDTO();
@@ -342,6 +357,7 @@ public class AgentServiceImpl implements AgentService {
 		makeRes.setKorisnikId(u.getId());
 		makeRes.setSjedinicaId(reservation.getSjedinicaId());
 		makeRes.setTo(reservation.getTo());
+		makeRes.setVersion(sjed.getVersion());
 		//List<UslugaDTO> uslugeDTO=ObjectMapperUtils.mapAll(reservation.getServices(), UslugaDTO.class);
 		List<UslugaDTO> uslugeDTO=new ArrayList<>();
 		makeRes.setServices(uslugeDTO);
@@ -379,7 +395,7 @@ public class AgentServiceImpl implements AgentService {
 		HttpServletRequest request=(HttpServletRequest)message.get(AbstractHTTPDestination.HTTP_REQUEST);
 		String username=request.getHeader("Username");
 		List<RezervacijaXMLDTO> ret=new ArrayList<>();
-		for(Rezervacija r : rezervacijaRepository.getAllByUsername(username)){
+		for(Rezervacija r : rezervacijaRepository.getAllByUsername(username,new Date())){
 			RezervacijaXMLDTO rXML=new RezervacijaXMLDTO(r);
 			ret.add(rXML);
 		}
@@ -420,6 +436,14 @@ public class AgentServiceImpl implements AgentService {
 		return ret;
 	}
 
+	@Override
+	public boolean confirmArrival(ConfirmArrivalXMLDTO confirm) throws SOAPFaultException, SOAPException {
+		Rezervacija r = rezervacijaRepository.findById(confirm.getId()).orElse(null);
+		r.setCanBeRated(true);
+		rezervacijaRepository.save(r);
+		return true;
+	}
+
 	public boolean uploadImages(Long idSmestaj, byte[] slika) throws IOException {
         Smestaj smestaj = smestajRepository.findById(idSmestaj).orElse(null);
 
@@ -430,5 +454,45 @@ public class AgentServiceImpl implements AgentService {
         return true;
     }
 
+
+	public void setCategoryForAccomodation(Smestaj smestaj) {
+		List<Category> categories = categoryRepository.findAll();
+		List<Category> foundCategories = new ArrayList<>();
+		for(Category category: categories)
+		{
+			Set<Usluga> categoryServices = category.getUslugaList();
+			Set<Usluga> accomodationServices = smestaj.getUsluge();
+			if(accomodationServices.size() >= categoryServices.size())
+			{
+				boolean isOk = true;
+				for(Usluga categoryService : categoryServices)
+				{
+
+					boolean foundService = false;
+					for(Usluga accomodationService : accomodationServices)
+					{
+						if(accomodationService.getId() == categoryService.getId()) {
+							foundService = true;
+							break;
+						}
+					}
+					if(!foundService) {
+						isOk = false;
+						break;
+					}
+				}
+				if(isOk)
+					foundCategories.add(category);
+			}
+		}
+		if(foundCategories.size() > 0){
+			smestaj.setCategory(foundCategories.get(0));
+			for(Category category : foundCategories){
+				if(category.getVrednost() > smestaj.getCategory().getVrednost())
+					smestaj.setCategory(category);
+			}
+		}
+
+	}
 
 }

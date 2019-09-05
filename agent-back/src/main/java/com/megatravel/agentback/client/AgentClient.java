@@ -588,6 +588,48 @@ public class AgentClient extends  WebServiceGatewaySupport{
         return  response.getValue();
     }
 
+    public ConfirmArrivalResponse confrimArrival(ConfirmArrivalXMLDTO confrim) throws SoapFaultClientException{
+
+        String s = SecurityContextHolder.getContext().getAuthentication().getName();
+        User u = userRepository.findByUsername(s);
+        token = u.getToken();
+
+        ConfirmArrival request = new ConfirmArrival();
+        request.setReservationID(confrim);
+
+
+        ObjectFactory objectFactory = new ObjectFactory();
+        JAXBElement<ConfirmArrival> jerequest=objectFactory.createConfirmArrival(request);
+        JAXBElement<ConfirmArrivalResponse> response=null;
+
+        System.setProperty("sun.net.http.allowRestrictedHeaders", "true");
+
+        try {
+            response = (JAXBElement<ConfirmArrivalResponse>) getWebServiceTemplate()
+                    .marshalSendAndReceive("http://localhost:8762/agent-service/api", jerequest,
+                            new WebServiceMessageCallback() {
+                                public void doWithMessage(WebServiceMessage message) {
+                                    TransportContext context = TransportContextHolder.getTransportContext();
+                                    HttpUrlConnection connection = (HttpUrlConnection) context.getConnection();
+
+                                    try {
+                                        connection.addRequestHeader("SOAPAction","confirmArrival");
+                                        connection.addRequestHeader("Authorization","Bearer "+token);
+                                    } catch (IOException e) {
+                                        e.printStackTrace();
+                                    }
+                                    //postMethod.addHeader("Authorization", "Bearer ");
+                                }
+                            });
+        }catch (SoapFaultClientException e){
+            throw e;
+        }
+
+
+
+        return  response.getValue();
+    }
+
     public FirstLoginResponse login(UserCredentialsXMLDTO credentials) throws SoapFaultClientException {
 
         FirstLogin request = new FirstLogin();

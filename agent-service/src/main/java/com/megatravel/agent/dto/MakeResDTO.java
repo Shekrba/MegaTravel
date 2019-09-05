@@ -10,9 +10,18 @@ public class MakeResDTO {
     private Long korisnikId;
     private Long sjedinicaId;
     private List<UslugaDTO> services;
+    private Long version;
 
     public MakeResDTO(){
 
+    }
+
+    public Long getVersion() {
+        return version;
+    }
+
+    public void setVersion(Long version) {
+        this.version = version;
     }
 
     public Date getFrom() {

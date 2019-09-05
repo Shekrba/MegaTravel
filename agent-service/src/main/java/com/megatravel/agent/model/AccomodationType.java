@@ -18,7 +18,7 @@ public class AccomodationType {
     @Column(name = "naziv", unique = false, nullable = false)
     private String naziv;
 
-    @OneToMany(mappedBy = "accomodationType")
+    @OneToMany(mappedBy = "accomodationType", fetch = FetchType.EAGER)
     private Set<Smestaj> smestajList = new HashSet<>();
 
     public AccomodationType() {}

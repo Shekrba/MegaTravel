@@ -41,7 +41,7 @@ public class Smestaj {
     private String opis;
 
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "services_smestaj",
             joinColumns = @JoinColumn(name = "smestaj_id"),

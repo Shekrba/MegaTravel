@@ -42,7 +42,10 @@ public class ObjectFactory {
     private final static QName _SmestajXMLDTO_QNAME = new QName("http://service.agent.megatravel.com/", "SmestajXMLDTO");
     private final static QName _SOAPException_QNAME = new QName("http://service.agent.megatravel.com/", "SOAPException");
     private final static QName _UslugaXMLDTO_QNAME = new QName("http://service.agent.megatravel.com/", "UslugaXMLDTO");
+    private final static QName _ConfirmArrivalXMLDTO_QNAME = new QName("http://service.agent.megatravel.com/", "ConfirmArrivalXMLDTO");
+    private final static QName _ConfirmArrivalResponse_QNAME = new QName("http://service.agent.megatravel.com/", "confirmArrivalResponse");
     private final static QName _AddAccommodationResponse_QNAME = new QName("http://service.agent.megatravel.com/", "addAccommodationResponse");
+    private final static QName _ConfirmArrival_QNAME = new QName("http://service.agent.megatravel.com/", "confirmArrival");
     private final static QName _EditAccommodation_QNAME = new QName("http://service.agent.megatravel.com/", "editAccommodation");
     private final static QName _ChangePassword_QNAME = new QName("http://service.agent.megatravel.com/", "changePassword");
     private final static QName _PorukaXMLDTO_QNAME = new QName("http://service.agent.megatravel.com/", "PorukaXMLDTO");
@@ -90,6 +93,7 @@ public class ObjectFactory {
     public FirstLogin createFirstLogin() {
         return new FirstLogin();
     }
+
 
 
 
@@ -207,6 +211,22 @@ public class ObjectFactory {
      */
     public SyncUslugeResponse createSyncUslugeResponse() {
         return new SyncUslugeResponse();
+    }
+
+    /**
+     * Create an instance of {@link ConfirmArrivalXMLDTO }
+     * 
+     */
+    public ConfirmArrivalXMLDTO createConfirmArrivalXMLDTO() {
+        return new ConfirmArrivalXMLDTO();
+    }
+
+    /**
+     * Create an instance of {@link ConfirmArrivalResponse }
+     * 
+     */
+    public ConfirmArrivalResponse createConfirmArrivalResponse() {
+        return new ConfirmArrivalResponse();
     }
 
     /**
@@ -351,6 +371,14 @@ public class ObjectFactory {
      */
     public AddAccommodationResponse createAddAccommodationResponse() {
         return new AddAccommodationResponse();
+    }
+
+    /**
+     * Create an instance of {@link ConfirmArrival }
+     * 
+     */
+    public ConfirmArrival createConfirmArrival() {
+        return new ConfirmArrival();
     }
 
     /**
@@ -596,12 +624,39 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link ConfirmArrivalXMLDTO }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://service.agent.megatravel.com/", name = "ConfirmArrivalXMLDTO")
+    public JAXBElement<ConfirmArrivalXMLDTO> createConfirmArrivalXMLDTO(ConfirmArrivalXMLDTO value) {
+        return new JAXBElement<ConfirmArrivalXMLDTO>(_ConfirmArrivalXMLDTO_QNAME, ConfirmArrivalXMLDTO.class, null, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link ConfirmArrivalResponse }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://service.agent.megatravel.com/", name = "confirmArrivalResponse")
+    public JAXBElement<ConfirmArrivalResponse> createConfirmArrivalResponse(ConfirmArrivalResponse value) {
+        return new JAXBElement<ConfirmArrivalResponse>(_ConfirmArrivalResponse_QNAME, ConfirmArrivalResponse.class, null, value);
+    }
+
+    /**
      * Create an instance of {@link JAXBElement }{@code <}{@link AddAccommodationResponse }{@code >}}
      * 
      */
     @XmlElementDecl(namespace = "http://service.agent.megatravel.com/", name = "addAccommodationResponse")
     public JAXBElement<AddAccommodationResponse> createAddAccommodationResponse(AddAccommodationResponse value) {
         return new JAXBElement<AddAccommodationResponse>(_AddAccommodationResponse_QNAME, AddAccommodationResponse.class, null, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link ConfirmArrival }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://service.agent.megatravel.com/", name = "confirmArrival")
+    public JAXBElement<ConfirmArrival> createConfirmArrival(ConfirmArrival value) {
+        return new JAXBElement<ConfirmArrival>(_ConfirmArrival_QNAME, ConfirmArrival.class, null, value);
     }
 
     /**

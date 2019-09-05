@@ -11,6 +11,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 import javax.xml.bind.annotation.*;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -85,13 +86,13 @@ public class SJedinica {
     protected int broj;
 
     @OneToMany
-    protected List<Rezervacija> rezervacije;
+    protected List<Rezervacija> rezervacije=new ArrayList<>();
 
     @OneToMany
-    protected List<Zauzetost> listaZauzetosti;
+    protected List<Zauzetost> listaZauzetosti=new ArrayList<>();
 
     @OneToMany
-    protected List<Cenovnik> listaCena;
+    protected List<Cenovnik> listaCena=new ArrayList<>();
 
 
     public void setIdGlBaza(Long idGlBaza) {

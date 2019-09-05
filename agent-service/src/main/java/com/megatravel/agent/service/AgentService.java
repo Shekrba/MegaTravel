@@ -84,4 +84,9 @@ public interface AgentService {
 	@WebMethod(action = "syncAccommodationType")
 	@WebResult(name = "AccommodationTypes")
 	public List<AccomodationTypeXMLDTO> syncAccommodationType() throws SOAPFaultException, SOAPException;
+
+
+	@WebMethod(action = "confirmArrival")
+	@WebResult(name = "Successful")
+	public boolean confirmArrival(@WebParam(name="ReservationID") ConfirmArrivalXMLDTO confirm) throws SOAPFaultException, SOAPException;
 }

@@ -239,7 +239,7 @@ public class AgentServiceImpl implements AgentService {
     }
 
     @Override
-    public Rezervacija zauzmiSJedinicu(Long sjedId, Date odDatum, Date doDatum) {
+    public Rezervacija zauzmiSJedinicu(Long sjedId, Date odDatum, Date doDatum,Long idGlbaza) {
 
         Rezervacija z = new Rezervacija();
         z.setsJedinica(sjedinicaRepository.findOneById(sjedId));
@@ -249,6 +249,7 @@ public class AgentServiceImpl implements AgentService {
         z.setStatusRezervacije(StatusRezervacije.REZERVISANO);
         z.setKorisnik(SecurityContextHolder.getContext().getAuthentication().getName());
         z.setuCena(0);
+        z.setIdGlBaza(idGlbaza);
 
         rezervacijaRepository.save(z);
 
