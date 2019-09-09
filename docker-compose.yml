@@ -17,8 +17,6 @@ services:
       dockerfile: Dockerfile
     ports:
       - "8761:8761"
-    depends_on:
-      - mysql-standalone
     links:
       - mysql-standalone:mysql-standalone
 
@@ -30,8 +28,6 @@ services:
       dockerfile: Dockerfile
     ports:
       - "8762:8762"
-    depends_on:
-      - discovery-server
     links:
       - mysql-standalone:mysql-standalone
       - discovery-server:discovery-server
@@ -44,8 +40,6 @@ services:
       dockerfile: Dockerfile
     ports:
       - "8082:8082"
-    depends_on:
-      - zuul
     links:
       - mysql-standalone:mysql-standalone
       - discovery-server:discovery-server
@@ -59,8 +53,45 @@ services:
       dockerfile: Dockerfile
     ports:
       - "8083:8083"
-    depends_on:
-      - zuul
+    links:
+      - mysql-standalone:mysql-standalone
+      - discovery-server:discovery-server
+      - zuul:zuul
+
+  rezervacija:
+    image: rezervacija
+    container_name: rezervacija
+    build:
+      context: ./rezervacija
+      dockerfile: Dockerfile
+    ports:
+      - "8086:8086"
+    links:
+      - mysql-standalone:mysql-standalone
+      - discovery-server:discovery-server
+      - zuul:zuul
+
+  admin:
+    image: admin
+    container_name: admin
+    build:
+      context: ./admin
+      dockerfile: Dockerfile
+    ports:
+      - "8085:8085"
+    links:
+      - mysql-standalone:mysql-standalone
+      - discovery-server:discovery-server
+      - zuul:zuul
+
+  agent:
+    image: agent
+    container_name: agent
+    build:
+      context: ./agent-service
+      dockerfile: Dockerfile
+    ports:
+      - "8088:8088"
     links:
       - mysql-standalone:mysql-standalone
       - discovery-server:discovery-server
