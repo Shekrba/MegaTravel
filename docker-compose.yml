@@ -32,6 +32,19 @@ services:
       - mysql-standalone:mysql-standalone
       - discovery-server:discovery-server
 
+  search:
+    image: search
+    container_name: search
+    build:
+      context: ./search
+      dockerfile: Dockerfile
+    ports:
+      - "8083:8083"
+    links:
+      - mysql-standalone:mysql-standalone
+      - discovery-server:discovery-server
+      - zuul:zuul
+
   login:
     image: login
     container_name: login
@@ -45,18 +58,7 @@ services:
       - discovery-server:discovery-server
       - zuul:zuul
 
-  search:
-    image: search
-    container_name: search
-    build:
-      context: ./search
-      dockerfile: Dockerfile
-    ports:
-      - "8083:8083"
-    links:
-      - mysql-standalone:mysql-standalone
-      - discovery-server:discovery-server
-      - zuul:zuul
+
 
   rezervacija:
     image: rezervacija
