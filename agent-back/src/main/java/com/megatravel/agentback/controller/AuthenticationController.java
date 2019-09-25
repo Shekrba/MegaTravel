@@ -103,9 +103,10 @@ public class AuthenticationController {
 			SyncCategoriesResponse kategorije = agentClient.dopuniKategorije(authenticationRequest.getUsername());
 			SyncAccommodationTypeResponse ats=agentClient.dopuniAccomType(authenticationRequest.getUsername());
 
-			List<UslugaXMLDTO> listaUsluga = usluge.getUsluge();
 			List<CategoryXMLDTO> listaKategorija = kategorije.getCategories();
 			List<AccomodationTypeXMLDTO> listAT=ats.getAccommodationTypes();
+			
+			List<UslugaXMLDTO> listaUsluga = usluge.getUsluge();
 
 			for (int i = 0; i < listaUsluga.size(); i++) {
 				UslugaXMLDTO u = listaUsluga.get(i);
