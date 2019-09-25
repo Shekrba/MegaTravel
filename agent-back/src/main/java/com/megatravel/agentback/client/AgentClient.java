@@ -83,7 +83,8 @@ public class AgentClient extends  WebServiceGatewaySupport{
         return  response.getValue();
     }
 
-    public AddAccommodationUnitResponse addSJedinica(SJedinicaXMLDTO accommodation) throws SoapFaultClientException {
+    public AddAccommodationUnitResponse addSJedinica(SJedinicaXMLDTO accommodation) 
+        throws SoapFaultClientException {
 
         String s = SecurityContextHolder.getContext().getAuthentication().getName();
         User u = userRepository.findByUsername(s);
@@ -91,7 +92,6 @@ public class AgentClient extends  WebServiceGatewaySupport{
 
         AddAccommodationUnit request = new AddAccommodationUnit();
         request.setAccommodationUnit(accommodation);
-
 
         ObjectFactory objectFactory = new ObjectFactory();
         JAXBElement<AddAccommodationUnit> jerequest=objectFactory.createAddAccommodationUnit(request);
@@ -113,14 +113,11 @@ public class AgentClient extends  WebServiceGatewaySupport{
                                     } catch (IOException e) {
                                         e.printStackTrace();
                                     }
-                                    //postMethod.addHeader("Authorization", "Bearer ");
                                 }
                             });
         }catch (SoapFaultClientException e){
             throw e;
         }
-
-
 
         return  response.getValue();
     }
