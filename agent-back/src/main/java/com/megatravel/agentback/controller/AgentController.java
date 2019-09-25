@@ -227,7 +227,8 @@ public class AgentController {
 
 
     @RequestMapping(value = "/accomodationUnit/{smestajId}", method = RequestMethod.POST)
-    public ResponseEntity<SJedinica> addSJedinica(@PathVariable("smestajId") Long smestajId, @RequestBody SJedinicaDTO sJedinica) {
+    public ResponseEntity<SJedinica> addSJedinica(
+        @PathVariable("smestajId") Long smestajId, @RequestBody SJedinicaDTO sJedinica) {
 
         Smestaj s=smestajRepository.findOneById(smestajId);
 
@@ -249,8 +250,6 @@ public class AgentController {
             e.printStackTrace();
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
-
-
     }
 
     @Autowired
