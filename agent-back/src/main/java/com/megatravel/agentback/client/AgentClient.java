@@ -345,7 +345,6 @@ public class AgentClient extends  WebServiceGatewaySupport{
 
         SyncUsluge request = new SyncUsluge();
 
-
         ObjectFactory objectFactory = new ObjectFactory();
         JAXBElement<SyncUsluge> jerequest=objectFactory.createSyncUsluge(request);
         JAXBElement<SyncUslugeResponse> response=null;
@@ -366,14 +365,11 @@ public class AgentClient extends  WebServiceGatewaySupport{
                                     } catch (IOException e) {
                                         e.printStackTrace();
                                     }
-                                    //postMethod.addHeader("Authorization", "Bearer ");
                                 }
                             });
         }catch (SoapFaultClientException e){
             throw e;
         }
-
-
 
         return  response.getValue();
     }
